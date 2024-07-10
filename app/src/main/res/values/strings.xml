@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SEP4-AND</string>
+    <string name="co2_value">CO2: %d ppm</string>
 </resources>
