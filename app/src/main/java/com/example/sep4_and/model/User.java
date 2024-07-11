@@ -1,19 +1,29 @@
 package com.example.sep4_and.model;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity(tableName = "users")
 public class User {
+    @PrimaryKey(autoGenerate = true)
     private int id;
+
     private String userName;
     private String password;
-    private int email;
+    private String email;
+
+    @Ignore
     private List<Notification> notifications = new ArrayList<>(); // Association with Notification
+    @Ignore
     private List<GreenHouse> greenHouses = new ArrayList<>(); // Association with GreenHouse
 
     // Constructor
-    public User(int id, String userName, String password, int email) {
-        this.id = id;
+    public User(String userName, String password, String email) {
         this.userName = userName;
         this.password = password;
         this.email = email;
@@ -44,11 +54,11 @@ public class User {
         this.password = password;
     }
 
-    public int getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(int email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 

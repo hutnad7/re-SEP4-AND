@@ -9,4 +9,28 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <Button
+        android:id="@+id/buttonGoToUserFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to User Fragment"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_alignParentLeft="true" />
+
+    <Button
+        android:id="@+id/buttonGoToUserListFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Users"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_toEndOf="@id/buttonGoToUserFragment"
+        android:layout_alignParentRight="true" />
+
 </RelativeLayout>
