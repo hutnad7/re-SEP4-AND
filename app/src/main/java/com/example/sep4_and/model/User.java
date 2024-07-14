@@ -2,8 +2,12 @@ package com.example.sep4_and.model;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.Junction;
 import androidx.room.PrimaryKey;
+import androidx.room.Relation;
 import androidx.room.TypeConverters;
+
+import com.example.sep4_and.model.DbCrossReference.GreenHouseUserCrossRef;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,17 +16,13 @@ import java.util.List;
 public class User {
     @PrimaryKey(autoGenerate = true)
     private int id;
-
     private String userName;
     private String password;
     private String email;
 
     @Ignore
-    private List<Notification> notifications = new ArrayList<>(); // Association with Notification
-    @Ignore
-    private List<GreenHouse> greenHouses = new ArrayList<>(); // Association with GreenHouse
+    private List<GreenHouse> greenHouses;
 
-    // Constructor
     public User(String userName, String password, String email) {
         this.userName = userName;
         this.password = password;
@@ -62,13 +62,6 @@ public class User {
         this.email = email;
     }
 
-    public List<Notification> getNotifications() {
-        return notifications;
-    }
-
-    public void setNotifications(List<Notification> notifications) {
-        this.notifications = notifications;
-    }
 
     public List<GreenHouse> getGreenHouses() {
         return greenHouses;

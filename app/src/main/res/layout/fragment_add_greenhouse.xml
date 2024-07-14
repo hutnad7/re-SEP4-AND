@@ -6,28 +6,20 @@
     android:padding="16dp">
 
     <EditText
-        android:id="@+id/editTextUserName"
+        android:id="@+id/editTextGreenHouseName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username" />
+        android:hint="Name" />
 
     <EditText
-        android:id="@+id/editTextPassword"
+        android:id="@+id/editTextGreenHouseLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword" />
-
-    <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="textEmailAddress" />
+        android:hint="Location" />
 
     <Button
-        android:id="@+id/buttonAddUser"
+        android:id="@+id/buttonAddGreenHouse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add User" />
+        android:text="Add GreenHouse" />
 </LinearLayout>

@@ -1,21 +1,31 @@
 package com.example.sep4_and.model;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.Junction;
+import androidx.room.PrimaryKey;
+import androidx.room.Relation;
+
+import com.example.sep4_and.model.DbCrossReference.GreenHouseUserCrossRef;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity(tableName = "greenhouses")
 public class GreenHouse {
+    @PrimaryKey(autoGenerate = true)
     private int id;
-    private int name;
+    private String name;
     private String location;
-    private List<User> users = new ArrayList<>(); //Allows for multiple users
-    private List<Threshold> thresholds = new ArrayList<>();
 
-    // Constructor
-    public GreenHouse(int id, int name, String location) {
-        this.id = id;
+    @Ignore
+    private List<User> users;
+
+    public GreenHouse(String name, String location) {
         this.name = name;
         this.location = location;
     }
+
 
     // Getters and Setters
     public int getId() {
@@ -26,11 +36,9 @@ public class GreenHouse {
         this.id = id;
     }
 
-    public int getName() {
-        return name;
-    }
+    public String getName() {return name;}
 
-    public void setName(int name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -50,11 +58,4 @@ public class GreenHouse {
         this.users = users;
     }
 
-    public List<Threshold> getThresholds() {
-        return thresholds;
-    }
-
-    public void setThresholds(List<Threshold> thresholds) {
-        this.thresholds = thresholds;
-    }
 }
