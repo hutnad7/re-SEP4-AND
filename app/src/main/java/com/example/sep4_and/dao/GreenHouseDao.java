@@ -24,5 +24,5 @@ public interface GreenHouseDao {
 
     @Transaction
     @Query("SELECT * FROM greenhouses")
-    LiveData<List<GreenHouseWithUsers>> getGreenHousesWithUsers(); // Change the return type to LiveData
+    LiveData<List<GreenHouseWithUsers>> getGreenHousesWithUsers();
 }

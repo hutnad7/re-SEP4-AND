@@ -14,7 +14,11 @@ public class UserWithGreenHouses {
     @Relation(
             parentColumn = "id",
             entityColumn = "id",
-            associateBy = @Junction(GreenHouseUserCrossRef.class)
+            associateBy = @Junction(
+                    value = GreenHouseUserCrossRef.class,
+                    parentColumn = "userId",
+                    entityColumn = "greenHouseId"
+            )
     )
     public List<GreenHouse> greenHouses;
 }

@@ -29,7 +29,7 @@ public class User {
         this.email = email;
     }
 
-    // Getters and Setters
+    // Getters and setters
     public int getId() {
         return id;
     }
@@ -62,7 +62,6 @@ public class User {
         this.email = email;
     }
 
-
     public List<GreenHouse> getGreenHouses() {
         return greenHouses;
     }
@@ -70,5 +69,4 @@ public class User {
     public void setGreenHouses(List<GreenHouse> greenHouses) {
         this.greenHouses = greenHouses;
     }
-
 }

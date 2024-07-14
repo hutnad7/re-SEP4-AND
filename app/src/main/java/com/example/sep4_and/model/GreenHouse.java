@@ -26,8 +26,7 @@ public class GreenHouse {
         this.location = location;
     }
 
-
-    // Getters and Setters
+    // Getters and setters
     public int getId() {
         return id;
     }
@@ -36,7 +35,9 @@ public class GreenHouse {
         this.id = id;
     }
 
-    public String getName() {return name;}
+    public String getName() {
+        return name;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -57,5 +58,4 @@ public class GreenHouse {
     public void setUsers(List<User> users) {
         this.users = users;
     }
-
 }
