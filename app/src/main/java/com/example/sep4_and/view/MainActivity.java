@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.sep4_and.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -55,7 +56,15 @@ public class MainActivity extends AppCompatActivity {
                 navigateToFragment(new ViewGreenHousesFragment());
             }
         });
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToFragment(new MeasurementsFragment());
+            }
+        });
     }
+
 
     private void navigateToFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
