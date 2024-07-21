@@ -32,7 +32,9 @@ public class GreenHouseRepository {
     public void insertGreenHouseUserCrossRef(GreenHouseUserCrossRef crossRef) {
         executorService.execute(() -> greenHouseDao.insertGreenHouseUserCrossRef(crossRef));
     }
-
+    public LiveData<List<GreenHouse>> getAllGreenHouses() {
+        return greenHouseDao.getAllGreenHouses();
+    }
     public LiveData<List<GreenHouseWithUsers>> getGreenHousesWithUsers() {
         return greenHouseDao.getGreenHousesWithUsers();
     }

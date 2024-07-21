@@ -14,11 +14,13 @@ import java.util.List;
 public class GreenHouseViewModel extends AndroidViewModel {
     private GreenHouseRepository repository;
     private LiveData<List<GreenHouseWithUsers>> allGreenHousesWithUsers;
+    private LiveData<List<GreenHouse>> allGreenHouses;
 
     public GreenHouseViewModel(Application application) {
         super(application);
         repository = new GreenHouseRepository(application);
         allGreenHousesWithUsers = repository.getGreenHousesWithUsers();
+        allGreenHouses = repository.getAllGreenHouses();
     }
 
     public LiveData<List<GreenHouseWithUsers>> getAllGreenHousesWithUsers() {
@@ -29,6 +31,9 @@ public class GreenHouseViewModel extends AndroidViewModel {
         repository.insert(greenHouse);
     }
 
+    public LiveData<List<GreenHouse>> getAllGreenHouses() {
+        return allGreenHouses;
+    }
     public void insertGreenHouseUserCrossRef(GreenHouseUserCrossRef crossRef) {
         repository.insertGreenHouseUserCrossRef(crossRef);
     }

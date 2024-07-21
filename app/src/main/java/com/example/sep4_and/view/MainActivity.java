@@ -63,6 +63,14 @@ public class MainActivity extends AppCompatActivity {
                 navigateToFragment(new MeasurementsFragment());
             }
         });
+
+        Button buttonGoToAddThreshold = findViewById(R.id.buttonGoToAddThreshold);
+        buttonGoToAddThreshold.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToFragment(new AddThresholdFragment());
+            }
+        });
     }
 
 

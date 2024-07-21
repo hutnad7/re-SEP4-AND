@@ -25,12 +25,13 @@ import com.example.sep4_and.viewmodel.UserViewModel;
 
 import java.util.List;
 
-public class ViewGreenHousesFragment extends Fragment implements GreenHouseAdapter.OnPairButtonClickListener {
+
+public class ViewGreenHousesFragment extends Fragment {
 
     private GreenHouseViewModel greenHouseViewModel;
     private UserViewModel userViewModel;
     private RecyclerView recyclerView;
-    private GreenHouseAdapter greenHouseAdapter;
+    private GreenHouseAdapter adapter;
 
     @Nullable
     @Override
@@ -38,11 +39,22 @@ public class ViewGreenHousesFragment extends Fragment implements GreenHouseAdapt
         View view = inflater.inflate(R.layout.fragment_view_greenhouses, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerViewGreenHouses);
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        greenHouseAdapter = new GreenHouseAdapter(this);
-        recyclerView.setAdapter(greenHouseAdapter);
+        adapter = new GreenHouseAdapter(
+                this::onPairButtonClick,
+                this::onAddThresholdButtonClick
+        );
+
+        recyclerView.setAdapter(adapter);
+
+        greenHouseViewModel = new ViewModelProvider(this).get(GreenHouseViewModel.class);
+        greenHouseViewModel.getAllGreenHousesWithUsers().observe(getViewLifecycleOwner(), new Observer<List<GreenHouseWithUsers>>() {
+            @Override
+            public void onChanged(List<GreenHouseWithUsers> greenHousesWithUsers) {
+                adapter.setGreenHousesWithUsers(greenHousesWithUsers);
+            }
+        });
 
         return view;
     }
@@ -56,12 +68,12 @@ public class ViewGreenHousesFragment extends Fragment implements GreenHouseAdapt
         greenHouseViewModel.getAllGreenHousesWithUsers().observe(getViewLifecycleOwner(), new Observer<List<GreenHouseWithUsers>>() {
             @Override
             public void onChanged(List<GreenHouseWithUsers> greenHousesWithUsers) {
-                greenHouseAdapter.setGreenHousesWithUsers(greenHousesWithUsers);
+                adapter.setGreenHousesWithUsers(greenHousesWithUsers);
             }
         });
     }
 
-    @Override
+
     public void onPairButtonClick(GreenHouse greenHouse) {
         userViewModel.getAllUsers().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
             @Override
@@ -75,5 +87,12 @@ public class ViewGreenHousesFragment extends Fragment implements GreenHouseAdapt
                 }
             }
         });
+    }
+    private void onAddThresholdButtonClick(GreenHouse greenHouse) {
+        AddThresholdFragment addThresholdFragment = AddThresholdFragment.newInstance(greenHouse.getId());
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, addThresholdFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

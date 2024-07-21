@@ -5,6 +5,7 @@ import androidx.room.Junction;
 import androidx.room.Relation;
 
 import com.example.sep4_and.model.GreenHouse;
+import com.example.sep4_and.model.Threshold;
 import com.example.sep4_and.model.User;
 
 import java.util.List;
@@ -21,4 +22,9 @@ public class GreenHouseWithUsers {
             )
     )
     public List<User> users;
+    @Relation(
+            parentColumn = "id",
+            entityColumn = "greenHouseId"
+    )
+    public List<Threshold> thresholds;
 }

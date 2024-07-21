@@ -1,20 +1,40 @@
 package com.example.sep4_and.model;
 
-public class Threshold {
-    private int id;
-    private int min;
-    private int max;
-    private GreenHouse greenHouse;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
-    // Constructor
-    public Threshold(int id, int min, int max, GreenHouse greenHouse) {
-        this.id = id;
-        this.min = min;
-        this.max = max;
-        this.greenHouse = greenHouse;
+import com.example.sep4_and.convertors.MeasurementTypeConverter;
+
+@Entity(
+        tableName = "thresholds",
+        foreignKeys = @ForeignKey(
+                entity = GreenHouse.class,
+                parentColumns = "id",
+                childColumns = "greenHouseId",
+                onDelete = ForeignKey.CASCADE
+        )
+)
+public class Threshold {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    @TypeConverters(MeasurementTypeConverter.class)
+    private MeasurementType type;
+
+    private float minValue;
+    private float maxValue;
+    private int greenHouseId;
+
+    public Threshold(MeasurementType type, float minValue, float maxValue, int greenHouseId) {
+        this.type = type;
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+        this.greenHouseId = greenHouseId;
     }
 
-    // Getters and Setters
+    // Getters and setters
     public int getId() {
         return id;
     }
@@ -23,28 +43,35 @@ public class Threshold {
         this.id = id;
     }
 
-    public int getMin() {
-        return min;
+    public MeasurementType getType() {
+        return type;
     }
 
-    public void setMin(int min) {
-        this.min = min;
+    public void setType(MeasurementType type) {
+        this.type = type;
     }
 
-    public int getMax() {
-        return max;
+    public float getMinValue() {
+        return minValue;
     }
 
-    public void setMax(int max) {
-        this.max = max;
+    public void setMinValue(float minValue) {
+        this.minValue = minValue;
     }
 
-    public GreenHouse getGreenHouse() {
-        return greenHouse;
+    public float getMaxValue() {
+        return maxValue;
     }
 
-    public void setGreenHouse(GreenHouse greenHouse) {
-        this.greenHouse = greenHouse;
+    public void setMaxValue(float maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    public int getGreenHouseId() {
+        return greenHouseId;
+    }
+
+    public void setGreenHouseId(int greenHouseId) {
+        this.greenHouseId = greenHouseId;
     }
 }
-
