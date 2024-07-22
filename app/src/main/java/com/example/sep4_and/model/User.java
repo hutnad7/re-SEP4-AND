@@ -23,6 +23,10 @@ public class User {
     @Ignore
     private List<GreenHouse> greenHouses;
 
+    @Ignore
+    @Relation(parentColumn = "id", entityColumn = "userId")
+    private List<Notification> notifications;
+
     public User(String userName, String password, String email) {
         this.userName = userName;
         this.password = password;
@@ -68,5 +72,12 @@ public class User {
 
     public void setGreenHouses(List<GreenHouse> greenHouses) {
         this.greenHouses = greenHouses;
+    }
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
     }
 }

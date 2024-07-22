@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -17,49 +18,64 @@
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
             android:src="@drawable/ic_fab"
-            android:contentDescription="Add Measurements" />
+            android:contentDescription="Add Measurements"
+            app:tint="@android:color/white" />
 
     </FrameLayout>
 
-    <LinearLayout
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:scrollbars="none">
 
-        <Button
-            android:id="@+id/buttonGoToUserFragment"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Add User" />
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/buttonGoToUserListFragment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="View Users" />
+            <Button
+                android:id="@+id/buttonGoToUserFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add User" />
 
-        <Button
-            android:id="@+id/buttonGoToAddGreenHouse"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Add GreenHouse" />
+            <Button
+                android:id="@+id/buttonGoToUserListFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View Users" />
 
-        <Button
-            android:id="@+id/buttonGoToViewGreenHouses"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="View GreenHouses" />
+            <Button
+                android:id="@+id/buttonGoToAddGreenHouse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add GreenHouse" />
 
-        <Button
-            android:id="@+id/buttonGoToAddThreshold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Add Threshold" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/buttonGoToViewGreenHouses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View GreenHouses" />
+
+<!--            <Button-->
+<!--                android:id="@+id/buttonGoToAddThreshold"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Add Threshold" />-->
+
+            <Button
+                android:id="@+id/buttonGoToAddNotification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Notification" />
+
+            <Button
+                android:id="@+id/buttonGoToViewNotifications"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View Notifications" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
 </LinearLayout>

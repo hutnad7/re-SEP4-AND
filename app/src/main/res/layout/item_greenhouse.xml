@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Pair with User" />
+            android:text="Pair User" />
 
         <Button
             android:id="@+id/buttonAddThreshold"
@@ -49,6 +49,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Add Threshold" />
+        <Button
+            android:id="@+id/buttonViewMeasurements"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="View Measure" />
 
     </LinearLayout>
 </LinearLayout>

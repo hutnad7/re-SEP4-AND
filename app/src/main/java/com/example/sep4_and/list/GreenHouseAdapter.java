@@ -22,6 +22,7 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
     private List<GreenHouseWithUsers> greenHousesWithUsers = new ArrayList<>();
     private OnPairButtonClickListener onPairButtonClickListener;
     private OnAddThresholdButtonClickListener onAddThresholdButtonClickListener;
+    private OnViewMeasurementsButtonClickListener onViewMeasurementsButtonClickListener;
 
     public interface OnPairButtonClickListener {
         void onPairButtonClick(GreenHouse greenHouse);
@@ -31,9 +32,14 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
         void onAddThresholdButtonClick(GreenHouse greenHouse);
     }
 
-    public GreenHouseAdapter(OnPairButtonClickListener pairListener, OnAddThresholdButtonClickListener addThresholdListener) {
+    public interface OnViewMeasurementsButtonClickListener {
+        void onViewMeasurementsButtonClick(GreenHouse greenHouse);
+    }
+
+    public GreenHouseAdapter(OnPairButtonClickListener pairListener, OnAddThresholdButtonClickListener addThresholdListener, OnViewMeasurementsButtonClickListener viewMeasurementsListener) {
         this.onPairButtonClickListener = pairListener;
         this.onAddThresholdButtonClickListener = addThresholdListener;
+        this.onViewMeasurementsButtonClickListener = viewMeasurementsListener;
     }
 
     @NonNull
@@ -59,19 +65,6 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
             holder.buttonPairWithUser.setVisibility(View.GONE);
         }
 
-        // Display the last threshold and additional count
-        if (!currentGreenHouseWithUsers.thresholds.isEmpty()) {
-            int thresholdCount = currentGreenHouseWithUsers.thresholds.size();
-            Threshold lastThreshold = currentGreenHouseWithUsers.thresholds.get(thresholdCount - 1);
-            holder.textViewThreshold.setText("Last Threshold: " + lastThreshold.getType());
-
-            if (thresholdCount > 1) {
-                holder.textViewThreshold.append(" (+" + (thresholdCount - 1) + ")");
-            }
-        } else {
-            holder.textViewThreshold.setText("No thresholds");
-        }
-
         holder.buttonPairWithUser.setOnClickListener(v -> {
             if (onPairButtonClickListener != null) {
                 onPairButtonClickListener.onPairButtonClick(currentGreenHouse);
@@ -81,6 +74,12 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
         holder.buttonAddThreshold.setOnClickListener(v -> {
             if (onAddThresholdButtonClickListener != null) {
                 onAddThresholdButtonClickListener.onAddThresholdButtonClick(currentGreenHouse);
+            }
+        });
+
+        holder.buttonViewMeasurements.setOnClickListener(v -> {
+            if (onViewMeasurementsButtonClickListener != null) {
+                onViewMeasurementsButtonClickListener.onViewMeasurementsButtonClick(currentGreenHouse);
             }
         });
     }
@@ -103,18 +102,18 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
         private TextView textViewName;
         private TextView textViewLocation;
         private TextView textViewOwner;
-        private TextView textViewThreshold;
         private Button buttonPairWithUser;
         private Button buttonAddThreshold;
+        private Button buttonViewMeasurements;
 
         public GreenHouseViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewName = itemView.findViewById(R.id.textViewGreenHouseName);
             textViewLocation = itemView.findViewById(R.id.textViewGreenHouseLocation);
             textViewOwner = itemView.findViewById(R.id.textViewOwner);
-            textViewThreshold = itemView.findViewById(R.id.textViewThreshold);
             buttonPairWithUser = itemView.findViewById(R.id.buttonPairWithUser);
             buttonAddThreshold = itemView.findViewById(R.id.buttonAddThreshold);
+            buttonViewMeasurements = itemView.findViewById(R.id.buttonViewMeasurements);
         }
     }
 }

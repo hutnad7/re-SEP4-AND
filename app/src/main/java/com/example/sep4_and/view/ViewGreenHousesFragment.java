@@ -19,16 +19,21 @@ import com.example.sep4_and.list.GreenHouseAdapter;
 import com.example.sep4_and.model.DbCrossReference.GreenHouseUserCrossRef;
 import com.example.sep4_and.model.DbCrossReference.GreenHouseWithUsers;
 import com.example.sep4_and.model.GreenHouse;
+import com.example.sep4_and.model.Measurement;
+import com.example.sep4_and.model.MeasurementType;
 import com.example.sep4_and.model.User;
 import com.example.sep4_and.viewmodel.GreenHouseViewModel;
+import com.example.sep4_and.viewmodel.MeasurementViewModel;
 import com.example.sep4_and.viewmodel.UserViewModel;
 
+import java.util.Date;
 import java.util.List;
 
 
 public class ViewGreenHousesFragment extends Fragment {
 
     private GreenHouseViewModel greenHouseViewModel;
+    private MeasurementViewModel measurementViewModel;
     private UserViewModel userViewModel;
     private RecyclerView recyclerView;
     private GreenHouseAdapter adapter;
@@ -43,12 +48,14 @@ public class ViewGreenHousesFragment extends Fragment {
 
         adapter = new GreenHouseAdapter(
                 this::onPairButtonClick,
-                this::onAddThresholdButtonClick
+                this::onAddThresholdButtonClick,
+                this::onViewMeasurementsButtonClick
         );
-
         recyclerView.setAdapter(adapter);
 
         greenHouseViewModel = new ViewModelProvider(this).get(GreenHouseViewModel.class);
+        measurementViewModel = new ViewModelProvider(this).get(MeasurementViewModel.class);
+
         greenHouseViewModel.getAllGreenHousesWithUsers().observe(getViewLifecycleOwner(), new Observer<List<GreenHouseWithUsers>>() {
             @Override
             public void onChanged(List<GreenHouseWithUsers> greenHousesWithUsers) {
@@ -59,19 +66,7 @@ public class ViewGreenHousesFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        greenHouseViewModel = new ViewModelProvider(this).get(GreenHouseViewModel.class);
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
-        greenHouseViewModel.getAllGreenHousesWithUsers().observe(getViewLifecycleOwner(), new Observer<List<GreenHouseWithUsers>>() {
-            @Override
-            public void onChanged(List<GreenHouseWithUsers> greenHousesWithUsers) {
-                adapter.setGreenHousesWithUsers(greenHousesWithUsers);
-            }
-        });
-    }
 
 
     public void onPairButtonClick(GreenHouse greenHouse) {
@@ -95,4 +90,24 @@ public class ViewGreenHousesFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
+    private void onViewMeasurementsButtonClick(GreenHouse greenHouse) {
+        measurementViewModel.getMeasurementsForGreenHouse(greenHouse.getId()).observe(getViewLifecycleOwner(), new Observer<List<Measurement>>() {
+            @Override
+            public void onChanged(List<Measurement> measurements) {
+                if (measurements == null || measurements.isEmpty()) {
+                    // Add fictitious measurement
+                    //TODO: Remove when connected to API
+                    Measurement fictitiousMeasurement = new Measurement(MeasurementType.TEMPERATURE, 0.0f, new Date(), greenHouse.getId());
+                    measurementViewModel.insert(fictitiousMeasurement);
+                } else {
+                    // Navigate to measurements fragment
+                    ViewMeasurementsFragment viewMeasurementsFragment = ViewMeasurementsFragment.newInstance(greenHouse.getId());
+                    getParentFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, viewMeasurementsFragment)
+                            .addToBackStack(null)
+                            .commit();
+                }
+            }
+        });
+}
 }

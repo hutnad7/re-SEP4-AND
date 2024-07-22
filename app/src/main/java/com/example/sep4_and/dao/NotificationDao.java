@@ -1,20 +1,19 @@
 package com.example.sep4_and.dao;
-
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.sep4_and.model.Measurement;
+import com.example.sep4_and.model.Notification;
 
 import java.util.List;
 
 @Dao
-public interface MeasurementDao {
+public interface NotificationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Measurement measurement);
+    void insert(Notification notification);
 
-    @Query("SELECT * FROM measurements WHERE greenHouseId = :greenHouseId")
-    LiveData<List<Measurement>> getMeasurementsForGreenHouse(int greenHouseId);
+    @Query("SELECT * FROM notifications WHERE userId = :userId")
+    LiveData<List<Notification>> getNotificationsForUser(int userId);
 }
