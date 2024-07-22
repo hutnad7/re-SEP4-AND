@@ -19,18 +19,28 @@ import com.example.sep4_and.list.GreenHouseAdapter;
 import com.example.sep4_and.model.DbCrossReference.GreenHouseUserCrossRef;
 import com.example.sep4_and.model.DbCrossReference.GreenHouseWithUsers;
 import com.example.sep4_and.model.GreenHouse;
+import com.example.sep4_and.model.Measurement;
+import com.example.sep4_and.model.MeasurementType;
 import com.example.sep4_and.model.User;
 import com.example.sep4_and.viewmodel.GreenHouseViewModel;
+import com.example.sep4_and.viewmodel.MeasurementViewModel;
 import com.example.sep4_and.viewmodel.UserViewModel;
 
+import java.util.Date;
 import java.util.List;
+
+
+
+public class ViewGreenHousesFragment extends Fragment {
 
 /*public class ViewGreenHousesFragment extends Fragment implements GreenHouseAdapter.OnPairButtonClickListener {
 
+
     private GreenHouseViewModel greenHouseViewModel;
+    private MeasurementViewModel measurementViewModel;
     private UserViewModel userViewModel;
     private RecyclerView recyclerView;
-    private GreenHouseAdapter greenHouseAdapter;
+    private GreenHouseAdapter adapter;
 
     @Nullable
     @Override
@@ -38,30 +48,31 @@ import java.util.List;
         View view = inflater.inflate(R.layout.fragment_view_greenhouses, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerViewGreenHouses);
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        greenHouseAdapter = new GreenHouseAdapter(this);
-        recyclerView.setAdapter(greenHouseAdapter);
+        adapter = new GreenHouseAdapter(
+                this::onPairButtonClick,
+                this::onAddThresholdButtonClick,
+                this::onViewMeasurementsButtonClick
+        );
+        recyclerView.setAdapter(adapter);
 
-        return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         greenHouseViewModel = new ViewModelProvider(this).get(GreenHouseViewModel.class);
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        measurementViewModel = new ViewModelProvider(this).get(MeasurementViewModel.class);
 
         greenHouseViewModel.getAllGreenHousesWithUsers().observe(getViewLifecycleOwner(), new Observer<List<GreenHouseWithUsers>>() {
             @Override
             public void onChanged(List<GreenHouseWithUsers> greenHousesWithUsers) {
-                greenHouseAdapter.setGreenHousesWithUsers(greenHousesWithUsers);
+                adapter.setGreenHousesWithUsers(greenHousesWithUsers);
             }
         });
+
+        return view;
     }
 
-    @Override
+
+
+
     public void onPairButtonClick(GreenHouse greenHouse) {
         userViewModel.getAllUsers().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
             @Override
@@ -76,4 +87,34 @@ import java.util.List;
             }
         });
     }
+    private void onAddThresholdButtonClick(GreenHouse greenHouse) {
+        AddThresholdFragment addThresholdFragment = AddThresholdFragment.newInstance(greenHouse.getId());
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, addThresholdFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+    private void onViewMeasurementsButtonClick(GreenHouse greenHouse) {
+        measurementViewModel.getMeasurementsForGreenHouse(greenHouse.getId()).observe(getViewLifecycleOwner(), new Observer<List<Measurement>>() {
+            @Override
+            public void onChanged(List<Measurement> measurements) {
+                if (measurements == null || measurements.isEmpty()) {
+                    // Add fictitious measurement
+                    //TODO: Remove when connected to API
+                    Measurement fictitiousMeasurement = new Measurement(MeasurementType.TEMPERATURE, 0.0f, new Date(), greenHouse.getId());
+                    measurementViewModel.insert(fictitiousMeasurement);
+                } else {
+                    // Navigate to measurements fragment
+                    ViewMeasurementsFragment viewMeasurementsFragment = ViewMeasurementsFragment.newInstance(greenHouse.getId());
+                    getParentFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, viewMeasurementsFragment)
+                            .addToBackStack(null)
+                            .commit();
+                }
+            }
+        });
+}
+}
+
 }*/
+

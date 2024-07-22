@@ -70,6 +70,30 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
                 navigateToFragment(new MeasurementsFragment());
             }
         });
+
+        // AddThreshold needs to be accessed from a greenhouse to work properly
+//        Button buttonGoToAddThreshold = findViewById(R.id.buttonGoToAddThreshold);
+//        buttonGoToAddThreshold.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                navigateToFragment(new AddThresholdFragment());
+//            }
+//        });
+        Button buttonGoToAddNotification = findViewById(R.id.buttonGoToAddNotification);
+        buttonGoToAddNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToFragment(new AddNotificationFragment());
+            }
+        });
+
+        Button buttonGoToViewNotifications = findViewById(R.id.buttonGoToViewNotifications);
+        buttonGoToViewNotifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToFragment(new ViewNotificationsFragment());
+            }
+        });
     }
 
 

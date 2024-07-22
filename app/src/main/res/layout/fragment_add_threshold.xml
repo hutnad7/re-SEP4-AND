@@ -1,0 +1,38 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <Spinner
+        android:id="@+id/spinnerThresholdType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown" />
+
+    <EditText
+        android:id="@+id/editTextMinValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Min Value"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/editTextMaxValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Max Value"
+        android:inputType="numberDecimal" />
+
+    <Spinner
+        android:id="@+id/spinnerGreenHouse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown" />
+
+    <Button
+        android:id="@+id/buttonAddThreshold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Threshold" />
+</LinearLayout>

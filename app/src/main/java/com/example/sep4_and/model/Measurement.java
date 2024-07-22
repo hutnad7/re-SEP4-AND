@@ -22,15 +22,11 @@ import java.util.Date;
 public class Measurement {
     @PrimaryKey(autoGenerate = true)
     private int id;
-
     @TypeConverters(MeasurementTypeConverter.class)
     private MeasurementType type;
-
     private float value;
-
     @TypeConverters(DateConverter.class)
     private Date timestamp;
-
     private int greenHouseId;
 
     public Measurement(MeasurementType type, float value, Date timestamp, int greenHouseId) {

@@ -22,6 +22,9 @@ public interface GreenHouseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertGreenHouseUserCrossRef(GreenHouseUserCrossRef crossRef);
 
+    @Query("SELECT * FROM greenhouses")
+    LiveData<List<GreenHouse>> getAllGreenHouses();
+
     @Transaction
     @Query("SELECT * FROM greenhouses")
     LiveData<List<GreenHouseWithUsers>> getGreenHousesWithUsers();

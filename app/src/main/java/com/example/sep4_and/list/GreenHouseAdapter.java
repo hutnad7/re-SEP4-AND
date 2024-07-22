@@ -11,21 +11,35 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sep4_and.R;
 import com.example.sep4_and.model.DbCrossReference.GreenHouseWithUsers;
 import com.example.sep4_and.model.GreenHouse;
+import com.example.sep4_and.model.Threshold;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.GreenHouseViewHolder> {
 
     private List<GreenHouseWithUsers> greenHousesWithUsers = new ArrayList<>();
     private OnPairButtonClickListener onPairButtonClickListener;
+    private OnAddThresholdButtonClickListener onAddThresholdButtonClickListener;
+    private OnViewMeasurementsButtonClickListener onViewMeasurementsButtonClickListener;
 
     public interface OnPairButtonClickListener {
         void onPairButtonClick(GreenHouse greenHouse);
     }
 
-    public GreenHouseAdapter(OnPairButtonClickListener listener) {
-        this.onPairButtonClickListener = listener;
+    public interface OnAddThresholdButtonClickListener {
+        void onAddThresholdButtonClick(GreenHouse greenHouse);
+    }
+
+    public interface OnViewMeasurementsButtonClickListener {
+        void onViewMeasurementsButtonClick(GreenHouse greenHouse);
+    }
+
+    public GreenHouseAdapter(OnPairButtonClickListener pairListener, OnAddThresholdButtonClickListener addThresholdListener, OnViewMeasurementsButtonClickListener viewMeasurementsListener) {
+        this.onPairButtonClickListener = pairListener;
+        this.onAddThresholdButtonClickListener = addThresholdListener;
+        this.onViewMeasurementsButtonClickListener = viewMeasurementsListener;
     }
 
     @NonNull
@@ -56,14 +70,27 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
                 onPairButtonClickListener.onPairButtonClick(currentGreenHouse);
             }
         });
+
+        holder.buttonAddThreshold.setOnClickListener(v -> {
+            if (onAddThresholdButtonClickListener != null) {
+                onAddThresholdButtonClickListener.onAddThresholdButtonClick(currentGreenHouse);
+            }
+        });
+
+        holder.buttonViewMeasurements.setOnClickListener(v -> {
+            if (onViewMeasurementsButtonClickListener != null) {
+                onViewMeasurementsButtonClickListener.onViewMeasurementsButtonClick(currentGreenHouse);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        if(greenHousesWithUsers!=null)
+        if (greenHousesWithUsers != null) {
             return greenHousesWithUsers.size();
-        else
+        } else {
             return 0;
+        }
     }
 
     public void setGreenHousesWithUsers(List<GreenHouseWithUsers> greenHousesWithUsers) {
@@ -76,6 +103,8 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
         private TextView textViewLocation;
         private TextView textViewOwner;
         private Button buttonPairWithUser;
+        private Button buttonAddThreshold;
+        private Button buttonViewMeasurements;
 
         public GreenHouseViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -83,6 +112,8 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
             textViewLocation = itemView.findViewById(R.id.textViewGreenHouseLocation);
             textViewOwner = itemView.findViewById(R.id.textViewOwner);
             buttonPairWithUser = itemView.findViewById(R.id.buttonPairWithUser);
+            buttonAddThreshold = itemView.findViewById(R.id.buttonAddThreshold);
+            buttonViewMeasurements = itemView.findViewById(R.id.buttonViewMeasurements);
         }
     }
 }

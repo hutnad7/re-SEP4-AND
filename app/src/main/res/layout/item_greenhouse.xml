@@ -24,9 +24,37 @@
         android:layout_height="wrap_content"
         android:textSize="14sp" />
 
-    <Button
-        android:id="@+id/buttonPairWithUser"
+    <TextView
+        android:id="@+id/textViewThreshold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pair with User" />
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/buttonPairWithUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Pair User" />
+
+        <Button
+            android:id="@+id/buttonAddThreshold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Add Threshold" />
+        <Button
+            android:id="@+id/buttonViewMeasurements"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="View Measure" />
+
+    </LinearLayout>
 </LinearLayout>

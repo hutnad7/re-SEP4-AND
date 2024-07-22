@@ -6,15 +6,16 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.sep4_and.model.Measurement;
+import com.example.sep4_and.model.Threshold;
 
 import java.util.List;
 
-@Dao
-public interface MeasurementDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Measurement measurement);
 
-    @Query("SELECT * FROM measurements WHERE greenHouseId = :greenHouseId")
-    LiveData<List<Measurement>> getMeasurementsForGreenHouse(int greenHouseId);
+@Dao
+public interface ThresholdDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(Threshold threshold);
+
+    @Query("SELECT * FROM thresholds WHERE greenHouseId = :greenHouseId")
+    LiveData<List<Threshold>> getThresholdsForGreenHouse(int greenHouseId);
 }
