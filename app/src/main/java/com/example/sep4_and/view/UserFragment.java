@@ -16,7 +16,7 @@ import com.example.sep4_and.R;
 import com.example.sep4_and.model.User;
 import com.example.sep4_and.viewmodel.UserViewModel;
 
-/*public class UserFragment extends Fragment {
+public class UserFragment extends Fragment {
 
     private UserViewModel userViewModel;
     private EditText editTextUserName;
@@ -65,4 +65,3 @@ import com.example.sep4_and.viewmodel.UserViewModel;
         editTextEmail.setText("");
     }
 }
-*/

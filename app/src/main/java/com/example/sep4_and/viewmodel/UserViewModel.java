@@ -88,4 +88,8 @@ public class UserViewModel extends AndroidViewModel {
     public void insert(User user) {
         repository.insert(user);
     }
+
+    public LiveData<List<User>> getAllUsers() {
+        return null;
+    }
 }

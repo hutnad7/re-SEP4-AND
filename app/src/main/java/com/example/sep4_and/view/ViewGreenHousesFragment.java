@@ -33,7 +33,6 @@ import java.util.List;
 
 public class ViewGreenHousesFragment extends Fragment {
 
-/*public class ViewGreenHousesFragment extends Fragment implements GreenHouseAdapter.OnPairButtonClickListener {
 
 
     private GreenHouseViewModel greenHouseViewModel;
@@ -116,5 +115,4 @@ public class ViewGreenHousesFragment extends Fragment {
 }
 }
 
-}*/
 
