@@ -21,7 +21,7 @@ import com.example.sep4_and.viewmodel.UserViewModel;
 
 import java.util.List;
 
-public class UserListFragment extends Fragment {
+/*public class UserListFragment extends Fragment {
 
     private UserViewModel userViewModel;
     private RecyclerView recyclerView;
@@ -54,4 +54,4 @@ public class UserListFragment extends Fragment {
             }
         });
     }
-}
+}*/

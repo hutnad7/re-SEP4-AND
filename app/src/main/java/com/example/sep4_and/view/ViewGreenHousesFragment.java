@@ -30,7 +30,11 @@ import java.util.Date;
 import java.util.List;
 
 
+
 public class ViewGreenHousesFragment extends Fragment {
+
+/*public class ViewGreenHousesFragment extends Fragment implements GreenHouseAdapter.OnPairButtonClickListener {
+
 
     private GreenHouseViewModel greenHouseViewModel;
     private MeasurementViewModel measurementViewModel;
@@ -111,3 +115,6 @@ public class ViewGreenHousesFragment extends Fragment {
         });
 }
 }
+
+}*/
+

@@ -1,16 +1,17 @@
 package com.example.sep4_and.network;
 
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetrofitInstance {
-    private static Retrofit retrofit;
-    private static final String BASE_URL = "https://api.mygreenhouse.com/";
 
-    public static Retrofit getRetrofitInstance() {
+public class RetrofitInstance {
+    private static Retrofit retrofit = null;
+
+    public static Retrofit getClient(String baseUrl) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl("https://dev-80rxgkd12lqyzoeg.us.auth0.com/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }

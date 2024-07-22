@@ -16,7 +16,7 @@ import com.example.sep4_and.R;
 import com.example.sep4_and.model.User;
 import com.example.sep4_and.viewmodel.UserViewModel;
 
-public class UserFragment extends Fragment {
+/*public class UserFragment extends Fragment {
 
     private UserViewModel userViewModel;
     private EditText editTextUserName;
@@ -35,6 +35,8 @@ public class UserFragment extends Fragment {
         buttonAddUser = view.findViewById(R.id.buttonAddUser);
 
         buttonAddUser.setOnClickListener(v -> addUser());
+
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         return view;
     }
@@ -63,3 +65,4 @@ public class UserFragment extends Fragment {
         editTextEmail.setText("");
     }
 }
+*/

@@ -25,4 +25,10 @@ public interface UserDao {
     @Transaction
     @Query("SELECT * FROM users")
     LiveData<List<UserWithGreenHouses>> getUsersWithGreenHouses();
+
+    @Query("SELECT * FROM users WHERE email = :email AND password = :password LIMIT 1")
+    LiveData<User> login(String email, String password);
+
+    @Query("SELECT * FROM users WHERE email = :email AND password = :password")
+    User getUser(String email, String password);
 }
