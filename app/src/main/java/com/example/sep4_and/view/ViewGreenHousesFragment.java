@@ -25,7 +25,7 @@ import com.example.sep4_and.viewmodel.UserViewModel;
 
 import java.util.List;
 
-public class ViewGreenHousesFragment extends Fragment implements GreenHouseAdapter.OnPairButtonClickListener {
+/*public class ViewGreenHousesFragment extends Fragment implements GreenHouseAdapter.OnPairButtonClickListener {
 
     private GreenHouseViewModel greenHouseViewModel;
     private UserViewModel userViewModel;
@@ -76,4 +76,4 @@ public class ViewGreenHousesFragment extends Fragment implements GreenHouseAdapt
             }
         });
     }
-}
+}*/
