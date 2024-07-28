@@ -1,6 +1,7 @@
 package com.example.sep4_and.view;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -66,12 +69,23 @@ public class AddThresholdFragment extends Fragment {
         buttonAddThreshold.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String minValueStr = editTextMinValue.getText().toString();
+                String maxValueStr = editTextMaxValue.getText().toString();
+
+                if (TextUtils.isEmpty(minValueStr) || TextUtils.isEmpty(maxValueStr)) {
+                    Toast.makeText(getContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 MeasurementType type = (MeasurementType) spinnerThresholdType.getSelectedItem();
-                float minValue = Float.parseFloat(editTextMinValue.getText().toString());
-                float maxValue = Float.parseFloat(editTextMaxValue.getText().toString());
+                float minValue = Float.parseFloat(minValueStr);
+                float maxValue = Float.parseFloat(maxValueStr);
 
                 Threshold threshold = new Threshold(type, minValue, maxValue, greenHouseId);
                 thresholdViewModel.insert(threshold);
+
+                // Navigate back to the previous fragment
+                getParentFragmentManager().popBackStack();
             }
         });
 

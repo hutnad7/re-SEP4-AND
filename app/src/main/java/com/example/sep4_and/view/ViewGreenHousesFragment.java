@@ -33,11 +33,8 @@ import java.util.List;
 
 public class ViewGreenHousesFragment extends Fragment {
 
-
-
     private GreenHouseViewModel greenHouseViewModel;
     private MeasurementViewModel measurementViewModel;
-    private UserViewModel userViewModel;
     private RecyclerView recyclerView;
     private GreenHouseAdapter adapter;
 
@@ -52,12 +49,14 @@ public class ViewGreenHousesFragment extends Fragment {
         adapter = new GreenHouseAdapter(
                 this::onPairButtonClick,
                 this::onAddThresholdButtonClick,
-                this::onViewMeasurementsButtonClick
+                this::onViewMeasurementsButtonClick,
+                this::onDeleteButtonClick
         );
+
         recyclerView.setAdapter(adapter);
 
         greenHouseViewModel = new ViewModelProvider(this).get(GreenHouseViewModel.class);
-        measurementViewModel = new ViewModelProvider(this).get(MeasurementViewModel.class);
+        measurementViewModel = new ViewModelProvider(this).get(MeasurementViewModel.class); // Initialize here
 
         greenHouseViewModel.getAllGreenHousesWithUsers().observe(getViewLifecycleOwner(), new Observer<List<GreenHouseWithUsers>>() {
             @Override
@@ -69,23 +68,10 @@ public class ViewGreenHousesFragment extends Fragment {
         return view;
     }
 
-
-
-
-    public void onPairButtonClick(GreenHouse greenHouse) {
-        userViewModel.getAllUsers().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
-            @Override
-            public void onChanged(List<User> users) {
-                if (!users.isEmpty()) {
-                    User firstUser = users.get(0); // Get the first user in the database
-                    GreenHouseUserCrossRef crossRef = new GreenHouseUserCrossRef();
-                    crossRef.greenHouseId = greenHouse.getId();
-                    crossRef.userId = firstUser.getId();
-                    greenHouseViewModel.insertGreenHouseUserCrossRef(crossRef); // Add the relationship
-                }
-            }
-        });
+    private void onPairButtonClick(GreenHouse greenHouse) {
+        // Handle pairing with user
     }
+
     private void onAddThresholdButtonClick(GreenHouse greenHouse) {
         AddThresholdFragment addThresholdFragment = AddThresholdFragment.newInstance(greenHouse.getId());
         getParentFragmentManager().beginTransaction()
@@ -93,13 +79,13 @@ public class ViewGreenHousesFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
+
     private void onViewMeasurementsButtonClick(GreenHouse greenHouse) {
         measurementViewModel.getMeasurementsForGreenHouse(greenHouse.getId()).observe(getViewLifecycleOwner(), new Observer<List<Measurement>>() {
             @Override
             public void onChanged(List<Measurement> measurements) {
                 if (measurements == null || measurements.isEmpty()) {
-                    // Add fictitious measurement
-                    //TODO: Remove when connected to API
+                    // Add fictitious measurement TODO: Change
                     Measurement fictitiousMeasurement = new Measurement(MeasurementType.TEMPERATURE, 0.0f, new Date(), greenHouse.getId());
                     measurementViewModel.insert(fictitiousMeasurement);
                 } else {
@@ -112,7 +98,9 @@ public class ViewGreenHousesFragment extends Fragment {
                 }
             }
         });
-}
-}
+    }
 
-
+    private void onDeleteButtonClick(GreenHouse greenHouse) {
+        greenHouseViewModel.delete(greenHouse);
+    }
+}

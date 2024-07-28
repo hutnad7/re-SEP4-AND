@@ -25,6 +25,9 @@ import retrofit2.Response;
 
 public class UserViewModel extends AndroidViewModel {
     private UserRepository repository;
+    private LiveData<List<User>> allUsers;
+
+    // Required by another section
     private MutableLiveData<User> user = new MutableLiveData<>();
     private MutableLiveData<String> authError = new MutableLiveData<>();
     private MutableLiveData<String> token = new MutableLiveData<>();
@@ -32,20 +35,25 @@ public class UserViewModel extends AndroidViewModel {
     public UserViewModel(@NonNull Application application) {
         super(application);
         repository = new UserRepository(application);
+        allUsers = repository.getAllUsers(); // Initialize here
     }
 
+    // Required by another section
     public LiveData<User> getUser() {
         return user;
     }
 
+    // Required by another section
     public LiveData<String> getAuthError() {
         return authError;
     }
 
+    // Required by another section
     public LiveData<String> getToken() {
         return token;
     }
 
+    // Required by another section
     public void login(String email, String password) {
         LiveData<User> localUser = repository.login(email, password);
         localUser.observeForever(user -> {
@@ -58,6 +66,7 @@ public class UserViewModel extends AndroidViewModel {
         });
     }
 
+    // Required by another section
     private void authenticate(String email, String password) {
         AuthRequest authRequest = new AuthRequest(
                 Auth0Config.CLIENT_ID,
@@ -85,11 +94,12 @@ public class UserViewModel extends AndroidViewModel {
         });
     }
 
-    public void insert(User user) {
-        repository.insert(user);
+    // Method to fetch all users
+    public LiveData<List<User>> getAllUsers() {
+        return allUsers;
     }
 
-    public LiveData<List<User>> getAllUsers() {
-        return null;
+    public void insert(User user) {
+        repository.insert(user);
     }
 }

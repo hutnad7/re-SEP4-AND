@@ -24,37 +24,57 @@
         android:layout_height="wrap_content"
         android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/textViewThreshold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="end">
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/buttonPairWithUser"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Pair User" />
+            android:orientation="horizontal"
+            android:gravity="center">
 
-        <Button
-            android:id="@+id/buttonAddThreshold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Add Threshold" />
-        <Button
-            android:id="@+id/buttonViewMeasurements"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="View Measure" />
+            <Button
+                android:id="@+id/buttonPairWithUser"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Pair with User"
+                android:layout_margin="4dp" />
 
+            <Button
+                android:id="@+id/buttonAddThreshold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Add Threshold"
+                android:layout_margin="4dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/buttonViewMeasurements"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="View Measurements"
+                android:layout_margin="4dp" />
+
+            <Button
+                android:id="@+id/buttonDeleteGreenHouse"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Delete"
+                android:layout_margin="4dp" />
+
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
