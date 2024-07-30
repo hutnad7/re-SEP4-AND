@@ -17,11 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.GreenHouseViewHolder> {
 
     private List<GreenHouseWithUsers> greenHousesWithUsers = new ArrayList<>();
     private OnPairButtonClickListener onPairButtonClickListener;
-    private OnAddThresholdButtonClickListener onAddThresholdButtonClickListener;
+    private OnViewThresholdsButtonClickListener onViewThresholdsButtonClickListener;
     private OnViewMeasurementsButtonClickListener onViewMeasurementsButtonClickListener;
     private OnDeleteButtonClickListener onDeleteButtonClickListener;
 
@@ -29,8 +30,8 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
         void onPairButtonClick(GreenHouse greenHouse);
     }
 
-    public interface OnAddThresholdButtonClickListener {
-        void onAddThresholdButtonClick(GreenHouse greenHouse);
+    public interface OnViewThresholdsButtonClickListener {
+        void onViewThresholdsButtonClick(GreenHouse greenHouse);
     }
 
     public interface OnViewMeasurementsButtonClickListener {
@@ -41,9 +42,9 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
         void onDeleteButtonClick(GreenHouse greenHouse);
     }
 
-    public GreenHouseAdapter(OnPairButtonClickListener pairListener, OnAddThresholdButtonClickListener addThresholdListener, OnViewMeasurementsButtonClickListener viewMeasurementsListener, OnDeleteButtonClickListener deleteButtonClickListener) {
+    public GreenHouseAdapter(OnPairButtonClickListener pairListener, OnViewThresholdsButtonClickListener viewThresholdsListener, OnViewMeasurementsButtonClickListener viewMeasurementsListener, OnDeleteButtonClickListener deleteButtonClickListener) {
         this.onPairButtonClickListener = pairListener;
-        this.onAddThresholdButtonClickListener = addThresholdListener;
+        this.onViewThresholdsButtonClickListener = viewThresholdsListener;
         this.onViewMeasurementsButtonClickListener = viewMeasurementsListener;
         this.onDeleteButtonClickListener = deleteButtonClickListener;
     }
@@ -77,9 +78,9 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
             }
         });
 
-        holder.buttonAddThreshold.setOnClickListener(v -> {
-            if (onAddThresholdButtonClickListener != null) {
-                onAddThresholdButtonClickListener.onAddThresholdButtonClick(currentGreenHouse);
+        holder.buttonViewThresholds.setOnClickListener(v -> {
+            if (onViewThresholdsButtonClickListener != null) {
+                onViewThresholdsButtonClickListener.onViewThresholdsButtonClick(currentGreenHouse);
             }
         });
 
@@ -115,7 +116,7 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
         private TextView textViewLocation;
         private TextView textViewOwner;
         private Button buttonPairWithUser;
-        private Button buttonAddThreshold;
+        private Button buttonViewThresholds;
         private Button buttonViewMeasurements;
         private Button buttonDeleteGreenHouse;
 
@@ -125,7 +126,7 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
             textViewLocation = itemView.findViewById(R.id.textViewGreenHouseLocation);
             textViewOwner = itemView.findViewById(R.id.textViewOwner);
             buttonPairWithUser = itemView.findViewById(R.id.buttonPairWithUser);
-            buttonAddThreshold = itemView.findViewById(R.id.buttonAddThreshold);
+            buttonViewThresholds = itemView.findViewById(R.id.buttonViewThresholds);
             buttonViewMeasurements = itemView.findViewById(R.id.buttonViewMeasurements);
             buttonDeleteGreenHouse = itemView.findViewById(R.id.buttonDeleteGreenHouse);
         }

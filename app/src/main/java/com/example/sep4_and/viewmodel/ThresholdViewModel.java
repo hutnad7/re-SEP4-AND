@@ -26,4 +26,8 @@ public class ThresholdViewModel extends AndroidViewModel {
     public LiveData<List<Threshold>> getThresholdsForGreenHouse(int greenHouseId) {
         return repository.getThresholdsForGreenHouse(greenHouseId);
     }
+
+    public void delete(Threshold threshold) {
+        repository.delete(threshold);
+    }
 }

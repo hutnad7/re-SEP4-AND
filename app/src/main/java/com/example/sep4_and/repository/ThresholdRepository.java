@@ -28,4 +28,8 @@ public class ThresholdRepository {
     public LiveData<List<Threshold>> getThresholdsForGreenHouse(int greenHouseId) {
         return thresholdDao.getThresholdsForGreenHouse(greenHouseId);
     }
+
+    public void delete(Threshold threshold) {
+        executorService.execute(() -> thresholdDao.delete(threshold));
+    }
 }
