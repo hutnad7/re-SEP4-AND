@@ -20,6 +20,10 @@ import com.example.sep4_and.R;
 import com.example.sep4_and.viewmodel.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
+
 
 public class DashBoardFragment extends Fragment {
 
@@ -120,6 +124,16 @@ public class DashBoardFragment extends Fragment {
                 navigateToFragment(new ViewNotificationsFragment());
             }
         });
+
+
+
+        // Button to go to Historical Measurements Fragment
+        Button buttonGoToHistoricalMeasurements = view.findViewById(R.id.buttonGoToHistoricalMeasurements);
+        buttonGoToHistoricalMeasurements.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+            navController.navigate(R.id.historicalMeasurementsFragment);
+        });
+
 
         return view;
     }

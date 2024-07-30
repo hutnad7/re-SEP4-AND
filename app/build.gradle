@@ -48,6 +48,10 @@ dependencies {
     implementation 'androidx.room:room-ktx:2.4.3'
     //------------------END Local DB-----------------
 
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    
+
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"

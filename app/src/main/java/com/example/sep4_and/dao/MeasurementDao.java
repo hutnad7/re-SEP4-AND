@@ -8,6 +8,7 @@ import androidx.room.Query;
 
 import com.example.sep4_and.model.Measurement;
 
+import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -17,4 +18,7 @@ public interface MeasurementDao {
 
     @Query("SELECT * FROM measurements WHERE greenHouseId = :greenHouseId")
     LiveData<List<Measurement>> getMeasurementsForGreenHouse(int greenHouseId);
+
+    @Query("SELECT * FROM measurements WHERE timestamp BETWEEN :startDate AND :endDate")
+    LiveData<List<Measurement>> getMeasurementsForDateRange(Date startDate, Date endDate);
 }
