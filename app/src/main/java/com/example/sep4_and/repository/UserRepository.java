@@ -19,8 +19,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import com.example.sep4_and.dao.AppDatabase;
 import com.example.sep4_and.dao.UserDao;
-import com.example.sep4_and.model.AuthRequest;
-import com.example.sep4_and.model.AuthResponse;
 import com.example.sep4_and.model.DbCrossReference.UserWithGreenHouses;
 import com.example.sep4_and.model.User;
 import com.example.sep4_and.network.ApiService;
@@ -28,7 +26,6 @@ import com.example.sep4_and.network.RetrofitInstance;
 import com.example.sep4_and.network.api.UserApi;
 import com.example.sep4_and.network.requests.LoginRequest;
 import com.example.sep4_and.network.responses.LoginResponse;
-import com.example.sep4_and.utils.Auth0Config;
 
 public class UserRepository {
     private UserDao userDao;
@@ -39,7 +36,6 @@ public class UserRepository {
         AppDatabase db = AppDatabase.getDatabase(application);
         userDao = db.userDao();
         executorService = Executors.newSingleThreadExecutor();
-        Retrofit retrofit = RetrofitInstance.getClient(Auth0Config.DOMAIN);
         userApi = RetrofitInstance.getClient("").create(UserApi.class);
     }
 
