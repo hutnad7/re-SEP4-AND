@@ -46,19 +46,11 @@ public class UserViewModel extends AndroidViewModel {
         return token;
     }
 
-    public void login(String email, String password) {
-        LiveData<User> localUser = repository.login(email, password);
-        localUser.observeForever(user -> {
-            if (user != null) {
-                this.user.postValue(user);
-                token.postValue(JWTUtils.createToken(user.getEmail()));
-            } else {
-                authenticate(email, password);
-            }
-        });
+    public LiveData<String> login(String email, String password) {
+        return repository.login(email, password);
     }
 
-    private void authenticate(String email, String password) {
+   /* private void authenticate(String email, String password) {
         AuthRequest authRequest = new AuthRequest(
                 Auth0Config.CLIENT_ID,
                 Auth0Config.CLIENT_SECRET,
@@ -83,7 +75,7 @@ public class UserViewModel extends AndroidViewModel {
                 authError.postValue("Network Error: " + t.getMessage());
             }
         });
-    }
+    }*/
 
     public void insert(User user) {
         repository.insert(user);

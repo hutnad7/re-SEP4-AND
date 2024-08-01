@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import java.util.List;
@@ -24,19 +25,22 @@ import com.example.sep4_and.model.DbCrossReference.UserWithGreenHouses;
 import com.example.sep4_and.model.User;
 import com.example.sep4_and.network.ApiService;
 import com.example.sep4_and.network.RetrofitInstance;
+import com.example.sep4_and.network.api.UserApi;
+import com.example.sep4_and.network.requests.LoginRequest;
+import com.example.sep4_and.network.responses.LoginResponse;
 import com.example.sep4_and.utils.Auth0Config;
 
 public class UserRepository {
     private UserDao userDao;
     private ExecutorService executorService;
-    private ApiService apiService;
+    private UserApi userApi;
 
     public UserRepository(Application application) {
         AppDatabase db = AppDatabase.getDatabase(application);
         userDao = db.userDao();
         executorService = Executors.newSingleThreadExecutor();
         Retrofit retrofit = RetrofitInstance.getClient(Auth0Config.DOMAIN);
-        apiService = retrofit.create(ApiService.class);
+        userApi = RetrofitInstance.getClient("").create(UserApi.class);
     }
 
     public LiveData<List<User>> getAllUsers() {
@@ -54,11 +58,11 @@ public class UserRepository {
         });
     }
 
-    public Call<AuthResponse> authenticate(AuthRequest authRequest) {
+    /*public Call<AuthResponse> authenticate(AuthRequest authRequest) {
         return apiService.login(authRequest);
-    }
+    }*/
 
-    public LiveData<User> login(String email, String password) {
+   /* public LiveData<User> login(String email, String password) {
         Log.d("UserRepository", "Attempting to login with email: " + email + " and password: " + password);
         LiveData<User> user = userDao.login(email, password);
         user.observeForever(new Observer<User>() {
@@ -72,9 +76,56 @@ public class UserRepository {
             }
         });
         return user;
+    }*/
+
+    public LiveData<String> login(String email, String password) {
+        MutableLiveData<String> tokenLiveData = new MutableLiveData<>();
+        LoginRequest loginRequest = new LoginRequest(email, password);
+
+        userApi.login(loginRequest).enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String token = response.body().getToken();
+                    RetrofitInstance.setAuthToken(token);
+                    tokenLiveData.setValue(token);
+                } else {
+                    tokenLiveData.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                tokenLiveData.setValue(null);
+            }
+        });
+
+        return tokenLiveData;
     }
 
-    public Call<User> register(User user) {
-        return apiService.register(user);
+
+    public LiveData<Boolean> register(User user) {
+        MutableLiveData<Boolean> registerResult = new MutableLiveData<>();
+
+        userApi.register(user).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    insert(user);  // Save the user locally after successful registration
+                    registerResult.setValue(true);
+                } else {
+                    registerResult.setValue(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                registerResult.setValue(false);
+            }
+        });
+
+        return registerResult;
     }
+
+
 }
