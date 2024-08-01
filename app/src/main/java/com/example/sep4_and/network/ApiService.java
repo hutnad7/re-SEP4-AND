@@ -18,8 +18,4 @@ public interface ApiService {
     Call<User> getUserById(@Path("id") int id);
 
 
-
-    @POST("users")
-    Call<User> register(@Body User user);
-
 }

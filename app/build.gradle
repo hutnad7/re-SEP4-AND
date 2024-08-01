@@ -27,10 +27,10 @@ android {
         }
 
         release {
-            manifestPlaceholders = [auth0Domain: "dev-80rxgkd12lqyzoeg.us.auth0.com", auth0Scheme: "dev-80rxgkd12lqyzoeg"]
+            manifestPlaceholders = [auth0Domain: "", auth0Scheme: ""]
         }
         debug {
-            manifestPlaceholders = [auth0Domain: "dev-80rxgkd12lqyzoeg.us.auth0.com", auth0Scheme: "dev-80rxgkd12lqyzoeg"]
+            manifestPlaceholders = [auth0Domain: "", auth0Scheme: ""]
         }
     }
     compileOptions {

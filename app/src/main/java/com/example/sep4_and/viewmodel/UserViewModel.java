@@ -13,7 +13,6 @@ import java.util.List;
 import com.example.sep4_and.model.DbCrossReference.UserWithGreenHouses;
 import com.example.sep4_and.model.User;
 import com.example.sep4_and.repository.UserRepository;
-import com.example.sep4_and.utils.JWTUtils;
 
 import retrofit2.Call;
 import retrofit2.Callback;

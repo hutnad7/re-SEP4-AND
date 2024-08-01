@@ -29,8 +29,7 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".view.CO2DetailsActivity"/>
+
 
     </application>
 
