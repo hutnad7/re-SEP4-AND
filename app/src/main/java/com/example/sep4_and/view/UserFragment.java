@@ -34,7 +34,7 @@ public class UserFragment extends Fragment {
         editTextEmail = view.findViewById(R.id.editTextEmail);
         buttonAddUser = view.findViewById(R.id.buttonAddUser);
 
-        buttonAddUser.setOnClickListener(v -> addUser());
+//        buttonAddUser.setOnClickListener(v -> addUser());
 
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
@@ -47,21 +47,21 @@ public class UserFragment extends Fragment {
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
     }
 
-    private void addUser() {
-        String userName = editTextUserName.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
-        String email = editTextEmail.getText().toString().trim();
-
-        if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(password) || TextUtils.isEmpty(email)) {
-            Toast.makeText(getActivity(), "All fields are required", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        User user = new User(userName, password, email);
-        userViewModel.insert(user);
-        Toast.makeText(getActivity(), "User added", Toast.LENGTH_SHORT).show();
-        editTextUserName.setText("");
-        editTextPassword.setText("");
-        editTextEmail.setText("");
-    }
+//    private void addUser() {
+//        String userName = editTextUserName.getText().toString().trim();
+//        String password = editTextPassword.getText().toString().trim();
+//        String email = editTextEmail.getText().toString().trim();
+//
+//        if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(password) || TextUtils.isEmpty(email)) {
+//            Toast.makeText(getActivity(), "All fields are required", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        User user = new User(userName, password, email);
+//        userViewModel.insert(user);
+//        Toast.makeText(getActivity(), "User added", Toast.LENGTH_SHORT).show();
+//        editTextUserName.setText("");
+//        editTextPassword.setText("");
+//        editTextEmail.setText("");
+//    }
 }

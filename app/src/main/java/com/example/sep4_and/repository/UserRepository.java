@@ -25,7 +25,9 @@ import com.example.sep4_and.network.ApiService;
 import com.example.sep4_and.network.RetrofitInstance;
 import com.example.sep4_and.network.api.UserApi;
 import com.example.sep4_and.network.requests.LoginRequest;
+import com.example.sep4_and.network.requests.RegisterRequest;
 import com.example.sep4_and.network.responses.LoginResponse;
+import com.example.sep4_and.network.responses.RegisterResponse;
 
 public class UserRepository {
     private UserDao userDao;
@@ -50,73 +52,53 @@ public class UserRepository {
     public void insert(User user) {
         executorService.execute(() -> {
             userDao.insert(user);
-            Log.d("UserRepository", "User inserted: " + user.getEmail() + ", Password: " + user.getPassword());
         });
     }
 
-    /*public Call<AuthResponse> authenticate(AuthRequest authRequest) {
-        return apiService.login(authRequest);
-    }*/
 
-   /* public LiveData<User> login(String email, String password) {
-        Log.d("UserRepository", "Attempting to login with email: " + email + " and password: " + password);
-        LiveData<User> user = userDao.login(email, password);
-        user.observeForever(new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-                if (user != null) {
-
-                } else {
-                    Log.d("UserRepository", "No user found with email: " + email + " and password: " + password);
-                }
-            }
-        });
-        return user;
-    }*/
-
-    public LiveData<String> login(String email, String password) {
-        MutableLiveData<String> tokenLiveData = new MutableLiveData<>();
+    public LiveData<User> login(String email, String password) {
+        MutableLiveData<User> userLiveData = new MutableLiveData<>();
         LoginRequest loginRequest = new LoginRequest(email, password);
 
-        userApi.login(loginRequest).enqueue(new Callback<LoginResponse>() {
+        userApi.login(loginRequest).enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    String token = response.body().getToken();
-                    RetrofitInstance.setAuthToken(token);
-                    tokenLiveData.setValue(token);
+                    User user = response.body();
+                    userLiveData.setValue(user);
                 } else {
-                    tokenLiveData.setValue(null);
+                    userLiveData.setValue(null);
                 }
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                tokenLiveData.setValue(null);
+            public void onFailure(Call<User> call, Throwable t) {
+                userLiveData.setValue(null);
             }
         });
 
-        return tokenLiveData;
+        return userLiveData;
     }
 
 
-    public LiveData<Boolean> register(User user) {
-        MutableLiveData<Boolean> registerResult = new MutableLiveData<>();
+    public LiveData<User> register(RegisterRequest registerRequest) {
+        MutableLiveData<User> registerResult = new MutableLiveData<>();
 
-        userApi.register(user).enqueue(new Callback<Void>() {
+        userApi.register(registerRequest).enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<User> call,Response<User> response) {
                 if (response.isSuccessful()) {
-                    insert(user);  // Save the user locally after successful registration
-                    registerResult.setValue(true);
+                    User createdUser = response.body();
+                    insert(createdUser);  // Save the user locally after successful registration
+                    registerResult.setValue(createdUser);
                 } else {
-                    registerResult.setValue(false);
+                    registerResult.setValue(null);
                 }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                registerResult.setValue(false);
+            public void onFailure(Call<User> call, Throwable t) {
+                registerResult.setValue(null);
             }
         });
 

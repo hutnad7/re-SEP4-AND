@@ -12,6 +12,7 @@ import java.util.List;
 
 import com.example.sep4_and.model.DbCrossReference.UserWithGreenHouses;
 import com.example.sep4_and.model.User;
+import com.example.sep4_and.network.requests.RegisterRequest;
 import com.example.sep4_and.repository.UserRepository;
 
 import retrofit2.Call;
@@ -42,7 +43,7 @@ public class UserViewModel extends AndroidViewModel {
         return token;
     }
 
-    public LiveData<String> login(String email, String password) {
+    public LiveData<User> login(String email, String password) {
         return repository.login(email, password);
     }
 
@@ -52,5 +53,10 @@ public class UserViewModel extends AndroidViewModel {
 
     public LiveData<List<User>> getAllUsers() {
         return null;
+    }
+
+    public LiveData<User> register(RegisterRequest registerRequest){
+        return repository.register(registerRequest);
+
     }
 }

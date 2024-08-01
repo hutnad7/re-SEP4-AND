@@ -13,7 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField "String", "BASE_URL", "\"https://709cbc61-2ee7-4877-a918-07936062f17b.mock.pstmn.io/\""
+        buildConfigField "String", "BASE_URL", "\"http://10.0.2.2:18240/api/\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

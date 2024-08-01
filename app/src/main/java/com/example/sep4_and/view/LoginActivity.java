@@ -44,8 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(v -> handleLogin());
         registerButton.setOnClickListener(v -> navigateToSignup());
 
-        userViewModel.getToken().observe(this, this::saveTokenAndRedirect);
-        userViewModel.getAuthError().observe(this, error -> Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT).show());
+//        userViewModel.getToken().observe(this, this::saveTokenAndRedirect);
+//        userViewModel.getAuthError().observe(this, error -> Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT).show());
     }
 
     private void handleLogin() {
@@ -57,9 +57,9 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        userViewModel.login(email, password).observe(this, token -> {
-            if (token != null) {
-                TokenManager.saveToken(token);
+        userViewModel.login(email, password).observe(this, user -> {
+            if (user != null) {
+                TokenManager.saveToken(String.valueOf(user.getId()));
                 Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                 redirectToMainActivity();
             } else {
