@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.sep4_and.R;
+import com.example.sep4_and.utils.TokenManager;
 import com.example.sep4_and.viewmodel.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -125,10 +126,7 @@ public class DashBoardFragment extends Fragment {
     }
 
     private void logout() {
-        SharedPreferences prefs = requireActivity().getSharedPreferences(PREFS_NAME, requireActivity().MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.remove("access_token");
-        editor.apply();
+        TokenManager.clearToken();
 
         Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
         startActivity(loginIntent);
