@@ -33,8 +33,6 @@ import java.util.List;
 
 public class ViewGreenHousesFragment extends Fragment {
 
-
-
     private GreenHouseViewModel greenHouseViewModel;
     private MeasurementViewModel measurementViewModel;
     private UserViewModel userViewModel;
@@ -51,13 +49,17 @@ public class ViewGreenHousesFragment extends Fragment {
 
         adapter = new GreenHouseAdapter(
                 this::onPairButtonClick,
-                this::onAddThresholdButtonClick,
-                this::onViewMeasurementsButtonClick
+                this::onViewThresholdsButtonClick,
+                this::onViewMeasurementsButtonClick,
+                this::onDeleteButtonClick,
+                this::onViewGreenhouseDetailsButtonClick
         );
+
         recyclerView.setAdapter(adapter);
 
         greenHouseViewModel = new ViewModelProvider(this).get(GreenHouseViewModel.class);
-        measurementViewModel = new ViewModelProvider(this).get(MeasurementViewModel.class);
+        measurementViewModel = new ViewModelProvider(this).get(MeasurementViewModel.class); // Initialize here
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         greenHouseViewModel.getAllGreenHousesWithUsers().observe(getViewLifecycleOwner(), new Observer<List<GreenHouseWithUsers>>() {
             @Override
@@ -69,10 +71,7 @@ public class ViewGreenHousesFragment extends Fragment {
         return view;
     }
 
-
-
-
-    public void onPairButtonClick(GreenHouse greenHouse) {
+    private void onPairButtonClick(GreenHouse greenHouse) {
         userViewModel.getAllUsers().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> users) {
@@ -86,20 +85,28 @@ public class ViewGreenHousesFragment extends Fragment {
             }
         });
     }
-    private void onAddThresholdButtonClick(GreenHouse greenHouse) {
-        AddThresholdFragment addThresholdFragment = AddThresholdFragment.newInstance(greenHouse.getId());
+    private void onViewThresholdsButtonClick(GreenHouse greenHouse) {
+        ThresholdListFragment thresholdListFragment = ThresholdListFragment.newInstance(greenHouse.getId());
         getParentFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, addThresholdFragment)
+                .replace(R.id.fragment_container, thresholdListFragment)
                 .addToBackStack(null)
                 .commit();
     }
+    //TODO: Test
+    private void onViewGreenhouseDetailsButtonClick(GreenHouse greenHouse) {
+        GreenhouseDetailsFragment detailsFragment = GreenhouseDetailsFragment.newInstance(greenHouse.getId());
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, detailsFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
     private void onViewMeasurementsButtonClick(GreenHouse greenHouse) {
         measurementViewModel.getMeasurementsForGreenHouse(greenHouse.getId()).observe(getViewLifecycleOwner(), new Observer<List<Measurement>>() {
             @Override
             public void onChanged(List<Measurement> measurements) {
                 if (measurements == null || measurements.isEmpty()) {
                     // Add fictitious measurement
-                    //TODO: Remove when connected to API
                     Measurement fictitiousMeasurement = new Measurement(MeasurementType.TEMPERATURE, 0.0f, new Date(), greenHouse.getId());
                     measurementViewModel.insert(fictitiousMeasurement);
                 } else {
@@ -112,7 +119,9 @@ public class ViewGreenHousesFragment extends Fragment {
                 }
             }
         });
-}
-}
+    }
 
-
+    private void onDeleteButtonClick(GreenHouse greenHouse) {
+        greenHouseViewModel.delete(greenHouse);
+    }
+}

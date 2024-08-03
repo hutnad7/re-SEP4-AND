@@ -29,11 +29,19 @@ public class GreenHouseRepository {
         executorService.execute(() -> greenHouseDao.insert(greenHouse));
     }
 
+    public void delete(GreenHouse greenHouse) {
+        executorService.execute(() -> greenHouseDao.delete(greenHouse));
+    }
+
     public void insertGreenHouseUserCrossRef(GreenHouseUserCrossRef crossRef) {
         executorService.execute(() -> greenHouseDao.insertGreenHouseUserCrossRef(crossRef));
     }
+
     public LiveData<List<GreenHouse>> getAllGreenHouses() {
         return greenHouseDao.getAllGreenHouses();
+    }
+    public LiveData<GreenHouse> getGreenHouseById(int greenHouseId) {
+        return greenHouseDao.getGreenHouseById(greenHouseId);
     }
     public LiveData<List<GreenHouseWithUsers>> getGreenHousesWithUsers() {
         return greenHouseDao.getGreenHousesWithUsers();

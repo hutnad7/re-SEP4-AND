@@ -1,6 +1,17 @@
 <resources>
+    <string name="measurements">Measurements</string>
+    <string name="temperature">Temperature </string>
+    <string name="lighting">Lighting</string>
+    <string name="co2">Co2</string>
+    <string name="add_threshold">Add Threshold</string>
+    <string name="empty"></string>
+    <string name="Lorem_ipsum">Lorem ipsum dolor sit amet, ea mel consul definitiones reprehendunt, ne detraxit rationibus quo. Pro te facer latine pertinax</string>
+    <string name="humidity">Humidity</string>
+    <string name="last_record">Latest record:</string>
+    <string name="data_not_loaded_title">Title not loaded</string>
     <string name="app_name">SEP4-AND</string>
     <string name="co2_value">CO2: %d ppm</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <item name="alpha_value" format="float" type="dimen">0.2</item>
 </resources>

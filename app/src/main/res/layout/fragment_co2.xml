@@ -18,14 +18,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="442 ppm"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textSize="24sp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Click for details"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textSize="14sp"/>
     </LinearLayout>
 

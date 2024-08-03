@@ -23,7 +23,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import android.content.Context;
 
-@Database(entities = {User.class, GreenHouse.class, GreenHouseUserCrossRef.class, Measurement.class, Threshold.class, Notification.class}, version = 13, exportSchema = false)
+@Database(entities = {User.class, GreenHouse.class, GreenHouseUserCrossRef.class, Measurement.class, Threshold.class, Notification.class}, version = 14, exportSchema = false)
 @TypeConverters({MeasurementTypeConverter.class, DateConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     private static volatile AppDatabase INSTANCE;
