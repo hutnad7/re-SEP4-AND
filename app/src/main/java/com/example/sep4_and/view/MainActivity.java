@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.sep4_and.R;
 import com.example.sep4_and.utils.SharedPreferencesManager;
+import com.example.sep4_and.utils.TokenManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        TokenManager.init(this);
 
         sharedPreferencesManager = new SharedPreferencesManager(this);
 
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if (!sharedPreferencesManager.isUserLoggedIn()) {
+        if (TokenManager.getToken() == null) {
             redirectToLogin();
             return;
         }

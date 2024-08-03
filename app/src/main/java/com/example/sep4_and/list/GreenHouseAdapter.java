@@ -76,7 +76,7 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
             holder.textViewOwner.setText("Owner: None");
             holder.buttonPairWithUser.setVisibility(View.VISIBLE);
         } else {
-            holder.textViewOwner.setText("Owner: " + currentGreenHouseWithUsers.users.get(0).getUserName());
+            holder.textViewOwner.setText("Owner: " + "Hardcoded string");
             holder.buttonPairWithUser.setVisibility(View.GONE);
         }
 

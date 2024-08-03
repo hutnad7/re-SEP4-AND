@@ -13,9 +13,13 @@ android {
         versionCode 1
         versionName "1.0"
 
+        buildConfigField "String", "BASE_URL", "\"http://10.0.2.2:18240/api/\""
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    buildFeatures {
+        buildConfig = true
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -23,10 +27,10 @@ android {
         }
 
         release {
-            manifestPlaceholders = [auth0Domain: "dev-80rxgkd12lqyzoeg.us.auth0.com", auth0Scheme: "dev-80rxgkd12lqyzoeg"]
+            manifestPlaceholders = [auth0Domain: "", auth0Scheme: ""]
         }
         debug {
-            manifestPlaceholders = [auth0Domain: "dev-80rxgkd12lqyzoeg.us.auth0.com", auth0Scheme: "dev-80rxgkd12lqyzoeg"]
+            manifestPlaceholders = [auth0Domain: "", auth0Scheme: ""]
         }
     }
     compileOptions {
@@ -71,6 +75,8 @@ dependencies {
     implementation 'com.auth0:java-jwt:4.4.0'
 
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
 
 
     implementation libs.appcompat

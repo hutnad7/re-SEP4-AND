@@ -13,11 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sep4_and.R;
-import com.example.sep4_and.model.AuthRequest;
-import com.example.sep4_and.model.AuthResponse;
-import com.example.sep4_and.model.User;
-import com.example.sep4_and.utils.Auth0Config;
-import com.example.sep4_and.utils.JWTUtils;
+import com.example.sep4_and.utils.TokenManager;
 import com.example.sep4_and.viewmodel.UserViewModel;
 
 import java.io.IOException;
@@ -28,28 +24,31 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     private UserViewModel userViewModel;
+    private EditText emailEditText, passwordEditText;
+    private Button loginButton, registerButton;
     private static final String PREFS_NAME = "auth";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        TokenManager.init(this);
 
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
-        EditText emailEditText = findViewById(R.id.email);
-        EditText passwordEditText = findViewById(R.id.password);
-        Button loginButton = findViewById(R.id.login_button);
-        Button signupButton = findViewById(R.id.signup_button);
+        emailEditText = findViewById(R.id.email);
+        passwordEditText = findViewById(R.id.password);
+        loginButton = findViewById(R.id.login_button);
+        registerButton = findViewById(R.id.signup_button);
 
-        loginButton.setOnClickListener(v -> handleLogin(emailEditText, passwordEditText));
-        signupButton.setOnClickListener(v -> navigateToSignup());
+        loginButton.setOnClickListener(v -> handleLogin());
+        registerButton.setOnClickListener(v -> navigateToSignup());
 
-        userViewModel.getToken().observe(this, this::saveTokenAndRedirect);
-        userViewModel.getAuthError().observe(this, error -> Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT).show());
+//        userViewModel.getToken().observe(this, this::saveTokenAndRedirect);
+//        userViewModel.getAuthError().observe(this, error -> Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT).show());
     }
 
-    private void handleLogin(EditText emailEditText, EditText passwordEditText) {
+    private void handleLogin() {
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
@@ -58,7 +57,15 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        userViewModel.login(email, password);
+        userViewModel.login(email, password).observe(this, user -> {
+            if (user != null) {
+                TokenManager.saveToken(String.valueOf(user.getId()));
+                Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                redirectToMainActivity();
+            } else {
+                Toast.makeText(LoginActivity.this, "Login failed!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void saveTokenAndRedirect(String token) {
