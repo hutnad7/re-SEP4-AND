@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="min_co2">400</integer>
+    <integer name="max_co2">1000</integer>
+    <integer name="min_temperature">-10</integer>
+    <integer name="max_temperature">50</integer>
+    <integer name="min_humidity">0</integer>
+    <integer name="max_humidity">100</integer>
+    <integer name="min_light">0</integer>
+    <integer name="max_light">10000</integer>
+</resources>

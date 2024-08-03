@@ -2,37 +2,89 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#002A30">
 
+    <!-- Title -->
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Threshold"
+        android:textSize="24sp"
+        android:textColor="@color/white"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="8dp"/>
+
+    <!-- Description -->
+    <TextView
+        android:id="@+id/textViewDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Lorem_ipsum"
+        android:textColor="@color/light_gray"
+        android:textSize="16sp"
+        android:paddingBottom="16dp"/>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/dark_gray"
+        android:paddingBottom="16dp"/>
+
+    <!-- Set CO2 Levels Section -->
+    <TextView
+        android:id="@+id/textViewSetLevels"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set the CO2 levels"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:paddingBottom="16dp"/>
+
+    <!-- Spinner for Threshold Type -->
     <Spinner
         android:id="@+id/spinnerThresholdType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:spinnerMode="dropdown" />
+        android:spinnerMode="dropdown"
 
+        android:paddingBottom="16dp"/>
+
+    <!-- Minimum Value -->
     <EditText
         android:id="@+id/editTextMinValue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Min Value"
-        android:inputType="numberDecimal" />
+        android:inputType="numberDecimal"
+        android:background="@drawable/edit_text_background"
+        android:textColor="@color/white"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"/>
 
+    <!-- Maximum Value -->
     <EditText
         android:id="@+id/editTextMaxValue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Max Value"
-        android:inputType="numberDecimal" />
+        android:inputType="numberDecimal"
+        android:background="@drawable/edit_text_background"
+        android:textColor="@color/white"
+        android:padding="12dp"
+        android:layout_marginBottom="32dp"/>
 
-    <Spinner
-        android:id="@+id/spinnerGreenHouse"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:spinnerMode="dropdown" />
-
+    <!-- Add Threshold Button -->
     <Button
         android:id="@+id/buttonAddThreshold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Threshold" />
+        android:text="Save"
+        android:textColor="@color/white"
+
+        android:padding="16dp"
+        android:layout_gravity="center_horizontal"/>
+
 </LinearLayout>
