@@ -11,6 +11,7 @@ import java.util.List;
 
 public class MeasurementViewModel extends AndroidViewModel {
     private MeasurementRepository repository;
+    private LiveData<List<Measurement>> measurements;
 
     public MeasurementViewModel(Application application) {
         super(application);

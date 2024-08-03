@@ -25,6 +25,7 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
     private OnViewThresholdsButtonClickListener onViewThresholdsButtonClickListener;
     private OnViewMeasurementsButtonClickListener onViewMeasurementsButtonClickListener;
     private OnDeleteButtonClickListener onDeleteButtonClickListener;
+    private OnViewDetailsButtonClickListener onViewDetailsButtonClickListener;
 
     public interface OnPairButtonClickListener {
         void onPairButtonClick(GreenHouse greenHouse);
@@ -42,11 +43,18 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
         void onDeleteButtonClick(GreenHouse greenHouse);
     }
 
-    public GreenHouseAdapter(OnPairButtonClickListener pairListener, OnViewThresholdsButtonClickListener viewThresholdsListener, OnViewMeasurementsButtonClickListener viewMeasurementsListener, OnDeleteButtonClickListener deleteButtonClickListener) {
+    public interface OnViewDetailsButtonClickListener {
+        void onViewDetailsButtonClick(GreenHouse greenHouse);
+    }
+
+    public GreenHouseAdapter(OnPairButtonClickListener pairListener, OnViewThresholdsButtonClickListener viewThresholdsListener,
+                             OnViewMeasurementsButtonClickListener viewMeasurementsListener,
+                             OnDeleteButtonClickListener deleteButtonClickListener, OnViewDetailsButtonClickListener viewDetailsListener) {
         this.onPairButtonClickListener = pairListener;
         this.onViewThresholdsButtonClickListener = viewThresholdsListener;
         this.onViewMeasurementsButtonClickListener = viewMeasurementsListener;
         this.onDeleteButtonClickListener = deleteButtonClickListener;
+        this.onViewDetailsButtonClickListener = viewDetailsListener;
     }
 
     @NonNull
@@ -95,6 +103,11 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
                 onDeleteButtonClickListener.onDeleteButtonClick(currentGreenHouse);
             }
         });
+        holder.buttonViewDetails.setOnClickListener(v -> {
+            if (onViewDetailsButtonClickListener != null) {
+                onViewDetailsButtonClickListener.onViewDetailsButtonClick(currentGreenHouse);
+            }
+        });
     }
 
     @Override
@@ -119,6 +132,7 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
         private Button buttonViewThresholds;
         private Button buttonViewMeasurements;
         private Button buttonDeleteGreenHouse;
+        private Button buttonViewDetails;
 
         public GreenHouseViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -129,6 +143,7 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
             buttonViewThresholds = itemView.findViewById(R.id.buttonViewThresholds);
             buttonViewMeasurements = itemView.findViewById(R.id.buttonViewMeasurements);
             buttonDeleteGreenHouse = itemView.findViewById(R.id.buttonDeleteGreenHouse);
+            buttonViewDetails = itemView.findViewById(R.id.buttonViewDetails);
         }
     }
 }

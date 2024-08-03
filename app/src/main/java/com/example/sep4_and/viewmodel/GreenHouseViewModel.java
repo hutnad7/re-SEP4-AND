@@ -36,6 +36,9 @@ public class GreenHouseViewModel extends AndroidViewModel {
     public LiveData<List<GreenHouse>> getAllGreenHouses() {
         return allGreenHouses;
     }
+    public LiveData<GreenHouse> getGreenHouseById(int greenHouseId) {
+        return repository.getGreenHouseById(greenHouseId);
+    }
     public void insertGreenHouseUserCrossRef(GreenHouseUserCrossRef crossRef) {
         repository.insertGreenHouseUserCrossRef(crossRef);
     }

@@ -51,7 +51,8 @@ public class ViewGreenHousesFragment extends Fragment {
                 this::onPairButtonClick,
                 this::onViewThresholdsButtonClick,
                 this::onViewMeasurementsButtonClick,
-                this::onDeleteButtonClick
+                this::onDeleteButtonClick,
+                this::onViewGreenhouseDetailsButtonClick
         );
 
         recyclerView.setAdapter(adapter);
@@ -88,6 +89,14 @@ public class ViewGreenHousesFragment extends Fragment {
         ThresholdListFragment thresholdListFragment = ThresholdListFragment.newInstance(greenHouse.getId());
         getParentFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, thresholdListFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+    //TODO: Test
+    private void onViewGreenhouseDetailsButtonClick(GreenHouse greenHouse) {
+        GreenhouseDetailsFragment detailsFragment = GreenhouseDetailsFragment.newInstance(greenHouse.getId());
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, detailsFragment)
                 .addToBackStack(null)
                 .commit();
     }
