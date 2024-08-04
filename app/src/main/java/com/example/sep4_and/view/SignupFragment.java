@@ -36,6 +36,7 @@ public class SignupFragment extends Fragment {
         EditText emailEditText = view.findViewById(R.id.email);
         EditText passwordEditText = view.findViewById(R.id.password);
         Button signupButton = view.findViewById(R.id.signup_button);
+        Button loginButton = view.findViewById(R.id.login_button);
 
         signupButton.setOnClickListener(v -> {
             String firstName = firstNameEditText.getText().toString();
@@ -61,6 +62,11 @@ public class SignupFragment extends Fragment {
             } else {
                 Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        loginButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
         });
 
         return view;
