@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#093731"
+    android:padding="16dp">
+
+    <RelativeLayout
+        android:id="@+id/groupedElements"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:paddingTop="48dp"
+        android:paddingBottom="24dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <TextView
+            android:id="@+id/helloText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello, John"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:layout_marginBottom="8dp" />
+
+        <FrameLayout
+            android:id="@+id/notificationIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ellipse_background"
+            android:elevation="6dp"
+            android:layout_marginTop="4dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/baseline_settings_24"
+                android:scaleType="centerInside"
+                app:tint="#A9EFDD" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/settingsIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@id/notificationIcon"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ellipse_background"
+            android:elevation="6dp"
+            android:layout_marginTop="4dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/baseline_notifications_active_24"
+                android:scaleType="centerInside"
+                app:tint="#A9EFDD" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/greenhouseCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You got 5 Greenhouses"
+            android:textColor="#BDF5E6"
+            android:textSize="16sp"
+            android:layout_below="@id/helloText"
+            android:layout_marginBottom="16dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/greenhouseList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/groupedElements"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp">
+
+        <!-- Repeat this block for each greenhouse entry -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/stroke"
+            android:padding="16dp"
+            android:layout_marginBottom="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_location_pin_24"
+                    android:layout_marginRight="8dp"
+                    app:tint="#BDF5E6" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="The Pandaan, Pasuruan"
+                    android:textColor="#BDF5E6"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="The Greenhouse Aarhus"
+                android:textColor="#BDF5E6"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_cloud_24"
+                    android:layout_marginRight="4dp"
+                    app:tint="#59B59D" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="414ppm"
+                    android:textColor="#59B59D"
+                    android:textSize="14sp"
+                    android:layout_marginRight="16dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_water_drop_24"
+                    android:layout_marginRight="4dp"
+                    app:tint="#59B59D" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20%"
+                    android:textColor="#59B59D"
+                    android:textSize="14sp"
+                    android:layout_marginRight="16dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_thermostat_24"
+                    android:layout_marginRight="4dp"
+                    app:tint="#59B59D" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="24.5C"
+                    android:textColor="#59B59D"
+                    android:textSize="14sp"
+                    android:layout_marginRight="16dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_lightbulb_24"
+                    android:layout_marginRight="4dp"
+                    app:tint="#59B59D" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="80%"
+                    android:textColor="#59B59D"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- End of greenhouse entry block -->
+        <!-- Repeat this block for each greenhouse entry -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/stroke"
+            android:padding="16dp"
+            android:layout_marginBottom="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_location_pin_24"
+                    android:layout_marginRight="8dp"
+                    app:tint="#BDF5E6" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="The Pandaan, Pasuruan"
+                    android:textColor="#BDF5E6"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="The Greenhouse Aarhus"
+                android:textColor="#BDF5E6"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_cloud_24"
+                    android:layout_marginRight="4dp"
+                    app:tint="#59B59D" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="414ppm"
+                    android:textColor="#59B59D"
+                    android:textSize="14sp"
+                    android:layout_marginRight="16dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_water_drop_24"
+                    android:layout_marginRight="4dp"
+                    app:tint="#59B59D" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20%"
+                    android:textColor="#59B59D"
+                    android:textSize="14sp"
+                    android:layout_marginRight="16dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_thermostat_24"
+                    android:layout_marginRight="4dp"
+                    app:tint="#59B59D" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="24.5C"
+                    android:textColor="#59B59D"
+                    android:textSize="14sp"
+                    android:layout_marginRight="16dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_lightbulb_24"
+                    android:layout_marginRight="4dp"
+                    app:tint="#59B59D" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="80%"
+                    android:textColor="#59B59D"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- End of greenhouse entry block -->
+        <!-- Repeat this block for each greenhouse entry -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/stroke"
+            android:padding="16dp"
+            android:layout_marginBottom="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_location_pin_24"
+                    android:layout_marginRight="8dp"
+                    app:tint="#BDF5E6" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="The Pandaan, Pasuruan"
+                    android:textColor="#BDF5E6"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="The Greenhouse Aarhus"
+                android:textColor="#BDF5E6"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_cloud_24"
+                    android:layout_marginRight="4dp"
+                    app:tint="#59B59D" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="414ppm"
+                    android:textColor="#59B59D"
+                    android:textSize="14sp"
+                    android:layout_marginRight="16dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_water_drop_24"
+                    android:layout_marginRight="4dp"
+                    app:tint="#59B59D" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20%"
+                    android:textColor="#59B59D"
+                    android:textSize="14sp"
+                    android:layout_marginRight="16dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_thermostat_24"
+                    android:layout_marginRight="4dp"
+                    app:tint="#59B59D" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="24.5C"
+                    android:textColor="#59B59D"
+                    android:textSize="14sp"
+                    android:layout_marginRight="16dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_lightbulb_24"
+                    android:layout_marginRight="4dp"
+                    app:tint="#59B59D" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="80%"
+                    android:textColor="#59B59D"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- End of greenhouse entry block -->
+        <!-- Repeat this block for each greenhouse entry -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/stroke"
+            android:padding="16dp"
+            android:layout_marginBottom="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_location_pin_24"
+                    android:layout_marginRight="8dp"
+                    app:tint="#BDF5E6" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="The Pandaan, Pasuruan"
+                    android:textColor="#BDF5E6"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="The Greenhouse Aarhus"
+                android:textColor="#BDF5E6"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_cloud_24"
+                    android:layout_marginRight="4dp"
+                    app:tint="#59B59D" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="414ppm"
+                    android:textColor="#59B59D"
+                    android:textSize="14sp"
+                    android:layout_marginRight="16dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_water_drop_24"
+                    android:layout_marginRight="4dp"
+                    app:tint="#59B59D" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20%"
+                    android:textColor="#59B59D"
+                    android:textSize="14sp"
+                    android:layout_marginRight="16dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_thermostat_24"
+                    android:layout_marginRight="4dp"
+                    app:tint="#59B59D" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="24.5C"
+                    android:textColor="#59B59D"
+                    android:textSize="14sp"
+                    android:layout_marginRight="16dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_lightbulb_24"
+                    android:layout_marginRight="4dp"
+                    app:tint="#59B59D" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="80%"
+                    android:textColor="#59B59D"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- End of greenhouse entry block -->
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/addButton"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:background="@drawable/ellipse_background"
+        android:elevation="6dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/baseline_add_circle_outline_24"
+            android:scaleType="centerInside"
+            app:tint="#A9EFDD" />
+    </FrameLayout>
+
+</RelativeLayout>

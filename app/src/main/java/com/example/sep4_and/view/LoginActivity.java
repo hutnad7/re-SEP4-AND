@@ -25,7 +25,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
     private UserViewModel userViewModel;
     private EditText emailEditText, passwordEditText;
-    private Button loginButton, registerButton;
+    private Button loginButton, signUpButton;
     private static final String PREFS_NAME = "auth";
 
     @Override
@@ -39,10 +39,10 @@ public class LoginActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.email);
         passwordEditText = findViewById(R.id.password);
         loginButton = findViewById(R.id.login_button);
-        registerButton = findViewById(R.id.signup_button);
+        signUpButton = findViewById(R.id.signup_button);
 
         loginButton.setOnClickListener(v -> handleLogin());
-        registerButton.setOnClickListener(v -> navigateToSignup());
+        signUpButton.setOnClickListener(v -> navigateToSignup());
 
 //        userViewModel.getToken().observe(this, this::saveTokenAndRedirect);
 //        userViewModel.getAuthError().observe(this, error -> Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT).show());
