@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 import androidx.room.Relation;
 import androidx.room.TypeConverters;
 
-import com.example.sep4_and.model.DbCrossReference.GreenHouseUserCrossRef;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +19,8 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private String password;
+    // Additional fields to match the API if necessary
 
     @Ignore
     private List<GreenHouse> greenHouses;
@@ -27,10 +29,11 @@ public class User {
     @Relation(parentColumn = "id", entityColumn = "userId")
     private List<Notification> notifications;
 
-    public User(String firstName, String lastName, String email) {
+    public User(String email, String firstName, String lastName, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.password = password;
     }
 
     // Getters and setters
@@ -41,7 +44,6 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
-
 
     public String getFirstName() {
         return firstName;
@@ -67,6 +69,14 @@ public class User {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public List<GreenHouse> getGreenHouses() {
         return greenHouses;
     }
@@ -74,6 +84,7 @@ public class User {
     public void setGreenHouses(List<GreenHouse> greenHouses) {
         this.greenHouses = greenHouses;
     }
+
     public List<Notification> getNotifications() {
         return notifications;
     }

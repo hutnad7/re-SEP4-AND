@@ -36,7 +36,7 @@ public class DashBoardFragment extends Fragment {
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         // Observe LiveData
-        userViewModel.getUser().observe(getViewLifecycleOwner(), user -> {
+        userViewModel.getCurrentUser().observe(getViewLifecycleOwner(), user -> {
             // Handle user data
             if (user != null) {
                 // User is logged in, perform actions

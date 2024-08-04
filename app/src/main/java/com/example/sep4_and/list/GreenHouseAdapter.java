@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sep4_and.R;
-import com.example.sep4_and.model.DbCrossReference.GreenHouseWithUsers;
+
 import com.example.sep4_and.model.GreenHouse;
 import com.example.sep4_and.model.Threshold;
 
@@ -20,7 +20,7 @@ import java.util.List;
 
 public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.GreenHouseViewHolder> {
 
-    private List<GreenHouseWithUsers> greenHousesWithUsers = new ArrayList<>();
+    private List<GreenHouse> greenHouses = new ArrayList<>();
     private OnPairButtonClickListener onPairButtonClickListener;
     private OnViewThresholdsButtonClickListener onViewThresholdsButtonClickListener;
     private OnViewMeasurementsButtonClickListener onViewMeasurementsButtonClickListener;
@@ -66,17 +66,16 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
 
     @Override
     public void onBindViewHolder(@NonNull GreenHouseViewHolder holder, int position) {
-        GreenHouseWithUsers currentGreenHouseWithUsers = greenHousesWithUsers.get(position);
-        GreenHouse currentGreenHouse = currentGreenHouseWithUsers.greenHouse;
+        GreenHouse currentGreenHouse = greenHouses.get(position);
         holder.textViewName.setText(currentGreenHouse.getName());
         holder.textViewLocation.setText(currentGreenHouse.getLocation());
 
         // Check if the greenhouse has an owner
-        if (currentGreenHouseWithUsers.users.isEmpty()) {
+        if (currentGreenHouse.getUserId() == 0) { // Assuming 0 means no owner
             holder.textViewOwner.setText("Owner: None");
             holder.buttonPairWithUser.setVisibility(View.VISIBLE);
         } else {
-            holder.textViewOwner.setText("Owner: " + "Hardcoded string");
+            holder.textViewOwner.setText("Owner: " + "Hardcoded string"); // Replace with actual user info if available
             holder.buttonPairWithUser.setVisibility(View.GONE);
         }
 
@@ -103,24 +102,23 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
                 onDeleteButtonClickListener.onDeleteButtonClick(currentGreenHouse);
             }
         });
+
         holder.buttonViewDetails.setOnClickListener(v -> {
             if (onViewDetailsButtonClickListener != null) {
                 onViewDetailsButtonClickListener.onViewDetailsButtonClick(currentGreenHouse);
             }
         });
     }
-
     @Override
     public int getItemCount() {
-        if (greenHousesWithUsers != null) {
-            return greenHousesWithUsers.size();
+        if (greenHouses != null) {
+            return greenHouses.size();
         } else {
             return 0;
         }
     }
-
-    public void setGreenHousesWithUsers(List<GreenHouseWithUsers> greenHousesWithUsers) {
-        this.greenHousesWithUsers = greenHousesWithUsers;
+    public void setGreenHouses(List<GreenHouse> greenHouses) {
+        this.greenHouses = greenHouses;
         notifyDataSetChanged();
     }
 

@@ -1,13 +1,14 @@
 package com.example.sep4_and.repository;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.sep4_and.dao.AppDatabase;
 import com.example.sep4_and.dao.GreenHouseDao;
-import com.example.sep4_and.model.DbCrossReference.GreenHouseUserCrossRef;
-import com.example.sep4_and.model.DbCrossReference.GreenHouseWithUsers;
+
 import com.example.sep4_and.model.GreenHouse;
 
 import java.util.List;
@@ -25,25 +26,26 @@ public class GreenHouseRepository {
         executorService = Executors.newSingleThreadExecutor();
     }
 
-    public void insert(GreenHouse greenHouse) {
-        executorService.execute(() -> greenHouseDao.insert(greenHouse));
+    public LiveData<Long> insert(GreenHouse greenHouse) {
+        MutableLiveData<Long> result = new MutableLiveData<>();
+        executorService.execute(() -> {
+            long id = greenHouseDao.insert(greenHouse);
+            result.postValue(id);
+        });
+        return result;
+    }
+
+    public LiveData<List<GreenHouse>> getGreenHousesByUserId(int userId) {
+        return greenHouseDao.getGreenHousesByUserId(userId);
     }
 
     public void delete(GreenHouse greenHouse) {
-        executorService.execute(() -> greenHouseDao.delete(greenHouse));
+        executorService.execute(() -> {
+            greenHouseDao.delete(greenHouse);
+        });
     }
 
-    public void insertGreenHouseUserCrossRef(GreenHouseUserCrossRef crossRef) {
-        executorService.execute(() -> greenHouseDao.insertGreenHouseUserCrossRef(crossRef));
-    }
-
-    public LiveData<List<GreenHouse>> getAllGreenHouses() {
-        return greenHouseDao.getAllGreenHouses();
-    }
     public LiveData<GreenHouse> getGreenHouseById(int greenHouseId) {
         return greenHouseDao.getGreenHouseById(greenHouseId);
-    }
-    public LiveData<List<GreenHouseWithUsers>> getGreenHousesWithUsers() {
-        return greenHouseDao.getGreenHousesWithUsers();
     }
 }

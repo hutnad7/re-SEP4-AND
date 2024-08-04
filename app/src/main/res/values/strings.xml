@@ -1,14 +1,33 @@
 <resources>
     <string name="measurements">Measurements</string>
+
     <string name="temperature">Temperature </string>
     <string name="lighting">Lighting</string>
     <string name="co2">Co2</string>
-    <string name="add_threshold">Add Threshold</string>
+    <string name="humidity">Humidity</string>
+
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+
+
+    <string name="waver_warning">The entered data is not encrypted, so please be cautious with the entered information.
+        We highly suggest to enter fake/placeholder values.</string>
+    <string name="personal_information">Personal information</string>
+    <string name="existing_account">Already have an account? Log in</string>
+    <string name="create_account">Create an account</string>
+
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+
     <string name="empty"></string>
     <string name="Lorem_ipsum">Lorem ipsum dolor sit amet, ea mel consul definitiones reprehendunt, ne detraxit rationibus quo. Pro te facer latine pertinax</string>
-    <string name="humidity">Humidity</string>
+
+    <string name="add_threshold">Add Threshold</string>
     <string name="last_record">Latest record:</string>
     <string name="data_not_loaded_title">Title not loaded</string>
+
     <string name="app_name">SEP4-AND</string>
     <string name="co2_value">CO2: %d ppm</string>
     <!-- TODO: Remove or change this placeholder text -->
