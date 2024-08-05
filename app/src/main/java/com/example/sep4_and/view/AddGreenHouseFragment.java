@@ -53,7 +53,7 @@ public class AddGreenHouseFragment extends Fragment {
         }
 
         GreenHouse greenHouse = new GreenHouse(name, location);
-        greenHouseViewModel.insert(greenHouse);
+//        greenHouseViewModel.insert(greenHouse);
         Toast.makeText(getActivity(), "GreenHouse added", Toast.LENGTH_SHORT).show();
         editTextName.setText("");
         editTextLocation.setText("");

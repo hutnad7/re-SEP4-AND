@@ -1,7 +1,5 @@
 package com.example.sep4_and.view;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,7 +15,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.sep4_and.R;
-import com.example.sep4_and.utils.TokenManager;
 import com.example.sep4_and.viewmodel.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -57,8 +54,6 @@ public class DashBoardFragment extends Fragment {
             }
         });
 
-        Button logoutButton = view.findViewById(R.id.logout_button);
-        logoutButton.setOnClickListener(v -> logout());
 
         // Button to go to User Fragment
         Button buttonGoToUserFragment = view.findViewById(R.id.buttonGoToUserFragment);
@@ -123,14 +118,6 @@ public class DashBoardFragment extends Fragment {
         });
 
         return view;
-    }
-
-    private void logout() {
-        TokenManager.clearToken();
-
-        Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
-        startActivity(loginIntent);
-        requireActivity().finish();
     }
 
     private void navigateToFragment(Fragment fragment) {

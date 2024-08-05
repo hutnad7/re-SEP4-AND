@@ -1,5 +1,7 @@
 package com.example.sep4_and.network.interceptors;
 
+import androidx.annotation.NonNull;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -13,13 +15,14 @@ public class AuthInterceptor implements Interceptor {
         this.token = token;
     }
 
+    @NonNull
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request original = chain.request();
         Request.Builder requestBuilder = original.newBuilder();
 
         if (token != null && !original.url().encodedPath().contains("login") && !original.url().encodedPath().contains("register")) {
-            requestBuilder.header("Authorization", "Bearer " + token);
+            requestBuilder.header("Authorization", token);
         }
 
         Request request = requestBuilder.build();

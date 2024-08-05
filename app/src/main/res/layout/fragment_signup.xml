@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#093731"
+    android:background="@color/deep_green"
     android:padding="16dp">
 
     <!-- Title TextView -->
@@ -14,7 +14,7 @@
         android:layout_marginTop="72dp"
         android:layout_marginLeft="24dp"
         android:text="Create your account"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         android:textSize="22sp"
         android:textStyle="bold"
         android:textAlignment="viewStart" />
@@ -29,7 +29,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginLeft="24dp"
         android:text="Join GreenHouse and experience the future of sustainable living. Our innovative solutions connect you with nature while ensuring a greener tomorrow."
-        android:textColor="#BDF5E6"
+        android:textColor="@color/soft_blue_green"
         android:textSize="14sp"
         android:textAlignment="viewStart" />
 
@@ -43,7 +43,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginLeft="24dp"
         android:text="You have an account?"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         android:textSize="13sp"
         android:textAlignment="viewStart" />
 
@@ -59,7 +59,7 @@
         android:background="@android:color/transparent"
         android:text="Login"
         android:textAllCaps="false"
-        android:textColor="#BDF5E6"
+        android:textColor="@color/soft_blue_green"
         android:textSize="13sp" />
 
     <!-- Account Details TextView -->
@@ -72,7 +72,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginLeft="24dp"
         android:text="Account Details"
-        android:textColor="#BDF5E6"
+        android:textColor="@color/soft_blue_green"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textAlignment="viewStart" />
@@ -98,8 +98,8 @@
             android:background="@drawable/rounded_background"
             android:hint="First Name"
             android:padding="12dp"
-            android:textColor="#BDF5E6"
-            android:textColorHint="#BDF5E6" />
+            android:textColor="@color/soft_blue_green"
+            android:textColorHint="@color/soft_blue_green" />
 
         <!-- Last Name EditText -->
         <EditText
@@ -110,8 +110,8 @@
             android:background="@drawable/rounded_background"
             android:hint="Last Name"
             android:padding="12dp"
-            android:textColor="#BDF5E6"
-            android:textColorHint="#BDF5E6" />
+            android:textColor="@color/soft_blue_green"
+            android:textColorHint="@color/soft_blue_green" />
 
         <!-- Email EditText -->
         <EditText
@@ -122,8 +122,8 @@
             android:background="@drawable/rounded_background"
             android:hint="Email"
             android:padding="12dp"
-            android:textColor="#BDF5E6"
-            android:textColorHint="#BDF5E6" />
+            android:textColor="@color/soft_blue_green"
+            android:textColorHint="@color/soft_blue_green" />
 
         <!-- Password EditText -->
         <EditText
@@ -134,8 +134,8 @@
             android:inputType="textPassword"
             android:background="@drawable/rounded_background"
             android:padding="12dp"
-            android:textColor="#BDF5E6"
-            android:textColorHint="#BDF5E6" />
+            android:textColor="@color/soft_blue_green"
+            android:textColorHint="@color/soft_blue_green" />
     </LinearLayout>
 
     <!-- Create Account Button -->
@@ -152,5 +152,5 @@
         android:padding="16dp"
         android:text="Create Account"
         android:textAllCaps="false"
-        android:textColor="#FFFFFF" />
+        android:textColor="@color/white" />
 </RelativeLayout>

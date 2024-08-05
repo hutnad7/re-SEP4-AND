@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="#093731">
+    android:background="@color/deep_green">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:text="The Greenhouse Aarhus"
             android:textSize="24sp"
-            android:textColor="@color/dark_gray"
+            android:textColor="@color/soft_blue_green"
             android:textStyle="bold" />
 
         <TextView
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:text="Measurements"
             android:textSize="18sp"
-            android:textColor="@color/light_gray"
+            android:textColor="@color/white"
             android:layout_marginTop="16dp"
             android:textStyle="bold" />
 
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:text="The last recorded measurements"
             android:textSize="14sp"
-            android:textColor="@color/light_gray"
+            android:textColor="@color/soft_blue_green"
             android:layout_marginBottom="8dp" />
 
         <LinearLayout
@@ -80,12 +80,12 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/co2_text"
-                    app:tint="@color/white" />
+                    android:src="@drawable/baseline_cloud_24"
+                    app:tint="@color/soft_blue_green" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/empty"
+                    android:text="CO2"
                     android:textSize="18sp"
                     android:textColor="@color/white"
                     android:layout_marginBottom="4dp" />
@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:text="414ppm"
                     android:textSize="16sp"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/soft_blue_green" />
             </LinearLayout>
 
             <LinearLayout
@@ -111,7 +111,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/water_drop"
-                    app:tint="@color/white" />
+                    app:tint="@color/soft_blue_green" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:text="20%"
                     android:textSize="16sp"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/soft_blue_green" />
             </LinearLayout>
         </LinearLayout>
 
@@ -149,7 +149,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/temperature_low"
-                    app:tint="@color/white" />
+                    app:tint="@color/soft_blue_green" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -163,7 +163,7 @@
                     android:layout_height="wrap_content"
                     android:text="24.5C"
                     android:textSize="16sp"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/soft_blue_green" />
             </LinearLayout>
 
             <LinearLayout
@@ -179,7 +179,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/lightbulb"
-                    app:tint="@color/white" />
+                    app:tint="@color/soft_blue_green" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -193,7 +193,7 @@
                     android:layout_height="wrap_content"
                     android:text="80%"
                     android:textSize="16sp"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/soft_blue_green" />
             </LinearLayout>
         </LinearLayout>
 
@@ -202,7 +202,7 @@
             android:layout_height="wrap_content"
             android:text="Threshold"
             android:textSize="18sp"
-            android:textColor="@color/dark_gray"
+            android:textColor="@color/white"
             android:layout_marginTop="16dp"
             android:textStyle="bold" />
 
@@ -225,12 +225,12 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/co2_text"
-                    app:tint="@color/white" />
+                    android:src="@drawable/baseline_cloud_24"
+                    app:tint="@color/soft_blue_green" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/empty"
+                    android:text="CO2"
                     android:textSize="18sp"
                     android:textColor="@color/white"
                     android:layout_marginBottom="4dp" />
@@ -240,14 +240,14 @@
                     android:layout_height="wrap_content"
                     android:text="Min 400ppm"
                     android:textSize="16sp"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/soft_blue_green" />
                 <TextView
                     android:id="@+id/co2MaxValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Max 1000ppm"
                     android:textSize="16sp"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/soft_blue_green" />
                 <Button
                     android:id="@+id/co2AddButton"
                     android:layout_width="wrap_content"
@@ -271,7 +271,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/water_drop"
-                    app:tint="@color/white" />
+                    app:tint="@color/soft_blue_green" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -285,14 +285,14 @@
                     android:layout_height="wrap_content"
                     android:text="Min 20%"
                     android:textSize="16sp"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/soft_blue_green" />
                 <TextView
                     android:id="@+id/humidityMaxValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Max 55%"
                     android:textSize="16sp"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/soft_blue_green" />
                 <Button
                     android:id="@+id/humidityAddButton"
                     android:layout_width="wrap_content"
@@ -324,7 +324,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/temperature_low"
-                    app:tint="@color/white" />
+                    app:tint="@color/soft_blue_green" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -338,14 +338,14 @@
                     android:layout_height="wrap_content"
                     android:text="Min 20C"
                     android:textSize="16sp"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/soft_blue_green" />
                 <TextView
                     android:id="@+id/tempMaxValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Max 25C"
                     android:textSize="16sp"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/soft_blue_green" />
                 <Button
                     android:id="@+id/tempAddButton"
                     android:layout_width="wrap_content"
@@ -369,7 +369,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/lightbulb"
-                    app:tint="@color/white" />
+                    app:tint="@color/soft_blue_green" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -383,14 +383,14 @@
                     android:layout_height="wrap_content"
                     android:text="Min 30%"
                     android:textSize="16sp"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/soft_blue_green" />
                 <TextView
                     android:id="@+id/lightMaxValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Max 85%"
                     android:textSize="16sp"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/soft_blue_green" />
                 <Button
                     android:id="@+id/lightAddButton"
                     android:layout_width="wrap_content"
