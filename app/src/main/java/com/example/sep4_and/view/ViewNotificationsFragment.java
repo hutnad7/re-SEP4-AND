@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -29,15 +32,19 @@ public class ViewNotificationsFragment extends Fragment {
     private RecyclerView recyclerView;
     private NotificationAdapter adapter;
     private List<User> users;
+    private Button backButton;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_notifications, container, false);
 
+        TextView pageTitle = view.findViewById(R.id.pageTitle);
+        TextView pageDescription = view.findViewById(R.id.pageDescription);
+        backButton = view.findViewById(R.id.backButton);
         recyclerView = view.findViewById(R.id.recyclerViewNotifications);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new NotificationAdapter();
         recyclerView.setAdapter(adapter);
 
@@ -57,6 +64,13 @@ public class ViewNotificationsFragment extends Fragment {
                         }
                     });
                 }
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
             }
         });
 

@@ -3,7 +3,7 @@
     <style name="Base.Theme.SEP4AND" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">#004d40</item>
         <item name="colorPrimaryDark">#00251a</item>
-        <item name="colorAccent">#FF4081</item>
+        <item name="colorAccent">#AE004D40</item>
     </style>
 
     <style name="Theme.SEP4AND" parent="Base.Theme.SEP4AND" />

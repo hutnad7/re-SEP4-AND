@@ -38,11 +38,11 @@ public class UserViewModel extends AndroidViewModel {
     }
 
     public LiveData<String> getAuthError() {
-        return new MutableLiveData<>(); // Implement as needed
+        return new MutableLiveData<>(); // TODO: Implement
     }
 
     public LiveData<String> getToken() {
-        return new MutableLiveData<>(); // Implement as needed
+        return new MutableLiveData<>(); // TODO: Implement
     }
 
     public LiveData<User> login(String email, String password) {

@@ -111,11 +111,7 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
     }
     @Override
     public int getItemCount() {
-        if (greenHouses != null) {
-            return greenHouses.size();
-        } else {
-            return 0;
-        }
+        return greenHouses != null ? greenHouses.size() : 0;
     }
     public void setGreenHouses(List<GreenHouse> greenHouses) {
         this.greenHouses = greenHouses;

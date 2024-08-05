@@ -6,4 +6,7 @@
     <color name="greenhouse_title">#D4A373</color>
     <color name="light_gray">#D0D0D0</color>
     <color name="dark_gray">#A9A9A9</color>
+    <color name="appColorPrimary">#004d40</color>
+    <color name="appColorPrimaryDark">#00251a</color>
+    <color name="appColorAccent">#AE004D40</color>
 </resources>

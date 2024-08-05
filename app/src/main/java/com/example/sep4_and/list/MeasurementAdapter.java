@@ -46,11 +46,7 @@ public class MeasurementAdapter extends RecyclerView.Adapter<MeasurementAdapter.
 
     @Override
     public int getItemCount() {
-        if (measurements != null) {
-            return measurements.size();
-        } else {
-            return 0;
-        }
+        return measurements != null ? measurements.size() : 0;
     }
 
     public void setMeasurements(List<Measurement> measurements) {

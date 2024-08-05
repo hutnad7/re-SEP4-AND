@@ -8,6 +8,8 @@
 
     <string name="login">Login</string>
     <string name="sign_up">Sign Up</string>
+    <string name="back">Back</string>
+    <string name="save">Save</string>
 
 
     <string name="waver_warning">The entered data is not encrypted, so please be cautious with the entered information.
@@ -22,11 +24,24 @@
     <string name="password">Password</string>
 
     <string name="empty"></string>
+    <string name="replaced">Text to be replaced</string>
     <string name="Lorem_ipsum">Lorem ipsum dolor sit amet, ea mel consul definitiones reprehendunt, ne detraxit rationibus quo. Pro te facer latine pertinax</string>
 
     <string name="add_threshold">Add Threshold</string>
+    <string name="set_level">Set Level</string>
+    <string name="minimum">Minimum</string>
+    <string name="maximum">Maximum</string>
     <string name="last_record">Latest record:</string>
     <string name="data_not_loaded_title">Title not loaded</string>
+
+
+    <string name="your_notifications">Your notifications</string>
+    <string name="notification">Notification</string>
+    <string name="notification_message">Message</string>
+    <string name="pick_date">Pick a date</string>
+    <string name="pick_time">Pick a time</string>
+    <string name="recurrent">Recurrent</string>
+    <string name="add_notification">Add Notification</string>
 
     <string name="app_name">SEP4-AND</string>
     <string name="co2_value">CO2: %d ppm</string>

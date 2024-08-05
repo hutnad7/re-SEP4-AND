@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -37,12 +38,13 @@ public class AddNotificationFragment extends Fragment {
     private EditText editTextMessage;
     private Button buttonPickDate;
     private Button buttonPickTime;
-    private CheckBox checkBoxRecurrent;
+    private Switch switchRecurrent;
     private Button buttonAddNotification;
     private NotificationViewModel notificationViewModel;
     private UserViewModel userViewModel;
     private List<User> users;
     private Calendar calendar;
+    private Button backButton;
 
     @Nullable
     @Override
@@ -52,8 +54,9 @@ public class AddNotificationFragment extends Fragment {
         editTextMessage = view.findViewById(R.id.editTextMessage);
         buttonPickDate = view.findViewById(R.id.buttonPickDate);
         buttonPickTime = view.findViewById(R.id.buttonPickTime);
-        checkBoxRecurrent = view.findViewById(R.id.checkBoxRecurrent);
+        Switch switchRecurrent = view.findViewById(R.id.switchRecurrent);
         buttonAddNotification = view.findViewById(R.id.buttonAddNotification);
+        backButton = view.findViewById(R.id.backButton);
 
         notificationViewModel = new ViewModelProvider(this).get(NotificationViewModel.class);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
@@ -72,21 +75,32 @@ public class AddNotificationFragment extends Fragment {
         buttonAddNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String message = editTextMessage.getText().toString();
-                boolean isRecurrent = checkBoxRecurrent.isChecked();
+                boolean isRecurrent = switchRecurrent.isChecked();
                 Date date = calendar.getTime();
 
+                //TODO: Fix
                 if (users != null && !users.isEmpty()) {
+
                     User latestUser = users.get(users.size() - 1); // Get the latest user
                     Notification notification = new Notification(message, date, isRecurrent, latestUser.getId());
                     notificationViewModel.insert(notification);
                     Toast.makeText(getContext(), "Notification Added", Toast.LENGTH_SHORT).show();
+
                 } else {
                     Toast.makeText(getContext(), "No users available", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
-
+        //Previous fragment might be null
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
         return view;
     }
 
@@ -118,4 +132,5 @@ public class AddNotificationFragment extends Fragment {
         );
         timePickerDialog.show();
     }
+
 }

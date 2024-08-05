@@ -16,7 +16,7 @@ import java.util.Locale;
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder> {
 
     private List<Notification> notifications = new ArrayList<>();
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM", Locale.getDefault());
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
     private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
     @NonNull
@@ -29,17 +29,15 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
         Notification currentNotification = notifications.get(position);
+        holder.textViewType.setText("Notification");
         holder.textViewMessage.setText(currentNotification.getMessage());
+        holder.textViewRecurrent.setText(currentNotification.isRecurrent() ? "Recurrent" : "One-time");
         holder.textViewDate.setText(dateFormat.format(currentNotification.getTime()));
-        holder.textViewTime.setText(timeFormat.format(currentNotification.getTime()));
     }
 
     @Override
     public int getItemCount() {
-        if(notifications!=null)
-            return notifications.size();
-        else
-            return 0;
+        return notifications != null ? notifications.size() : 0;
     }
 
     public void setNotifications(List<Notification> notifications) {
@@ -48,15 +46,17 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     static class NotificationViewHolder extends RecyclerView.ViewHolder {
+        private TextView textViewType;
         private TextView textViewMessage;
+        private TextView textViewRecurrent;
         private TextView textViewDate;
-        private TextView textViewTime;
 
         public NotificationViewHolder(@NonNull View itemView) {
             super(itemView);
+            textViewType = itemView.findViewById(R.id.textViewNotificationType);
             textViewMessage = itemView.findViewById(R.id.textViewNotificationMessage);
+            textViewRecurrent = itemView.findViewById(R.id.textViewNotificationRecurrent);
             textViewDate = itemView.findViewById(R.id.textViewNotificationDate);
-            textViewTime = itemView.findViewById(R.id.textViewNotificationTime);
         }
     }
 }
