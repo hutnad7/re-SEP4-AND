@@ -5,4 +5,13 @@
     <color name="greenhouse_title">#D4A373</color>
     <color name="light_gray">#D0D0D0</color>
     <color name="dark_gray">#A9A9A9</color>
+    <color name="deep_green">#093731</color>
+    <color name="brunswick_green">#0B4338</color>
+    <color name="soft_blue_green">#BDF5E6</color>
+    <color name="jungle_green">#189877</color>
+    <color name="mid_deep_green">#144B41</color>
+    <color name="mid_dark_teal">#21554D </color>
+    <color name="mid_light_teal">#59B59D </color>
+
+
 </resources>

@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sep4_and.R;
+import com.example.sep4_and.network.RetrofitInstance;
 import com.example.sep4_and.utils.TokenManager;
 import com.example.sep4_and.viewmodel.UserViewModel;
 
@@ -59,8 +60,13 @@ public class LoginActivity extends AppCompatActivity {
 
         userViewModel.login(email, password).observe(this, user -> {
             if (user != null) {
-                TokenManager.saveToken(String.valueOf(user.getId()));
+                String userIdString = String.valueOf(user.getId());
+
+                TokenManager.saveToken(userIdString);
+                RetrofitInstance.setAuthToken(userIdString);
+
                 Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+
                 redirectToMainActivity();
             } else {
                 Toast.makeText(LoginActivity.this, "Login failed!", Toast.LENGTH_SHORT).show();
