@@ -6,34 +6,32 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sep4_and.R;
 
 import com.example.sep4_and.model.GreenHouse;
+import com.example.sep4_and.model.MeasurementType;
 import com.example.sep4_and.model.Threshold;
+import com.example.sep4_and.viewmodel.GreenHouseViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 
+
 public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.GreenHouseViewHolder> {
 
     private List<GreenHouse> greenHouses = new ArrayList<>();
-    private OnPairButtonClickListener onPairButtonClickListener;
-    private OnViewThresholdsButtonClickListener onViewThresholdsButtonClickListener;
+    private GreenHouseViewModel greenHouseViewModel;
+
     private OnViewMeasurementsButtonClickListener onViewMeasurementsButtonClickListener;
     private OnDeleteButtonClickListener onDeleteButtonClickListener;
     private OnViewDetailsButtonClickListener onViewDetailsButtonClickListener;
 
-    public interface OnPairButtonClickListener {
-        void onPairButtonClick(GreenHouse greenHouse);
-    }
 
-    public interface OnViewThresholdsButtonClickListener {
-        void onViewThresholdsButtonClick(GreenHouse greenHouse);
-    }
 
     public interface OnViewMeasurementsButtonClickListener {
         void onViewMeasurementsButtonClick(GreenHouse greenHouse);
@@ -47,11 +45,13 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
         void onViewDetailsButtonClick(GreenHouse greenHouse);
     }
 
-    public GreenHouseAdapter(OnPairButtonClickListener pairListener, OnViewThresholdsButtonClickListener viewThresholdsListener,
+    public GreenHouseAdapter(GreenHouseViewModel viewModel,
+
                              OnViewMeasurementsButtonClickListener viewMeasurementsListener,
-                             OnDeleteButtonClickListener deleteButtonClickListener, OnViewDetailsButtonClickListener viewDetailsListener) {
-        this.onPairButtonClickListener = pairListener;
-        this.onViewThresholdsButtonClickListener = viewThresholdsListener;
+                             OnDeleteButtonClickListener deleteButtonClickListener,
+                             OnViewDetailsButtonClickListener viewDetailsListener) {
+        this.greenHouseViewModel = viewModel;
+
         this.onViewMeasurementsButtonClickListener = viewMeasurementsListener;
         this.onDeleteButtonClickListener = deleteButtonClickListener;
         this.onViewDetailsButtonClickListener = viewDetailsListener;
@@ -70,26 +70,32 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
         holder.textViewName.setText(currentGreenHouse.getName());
         holder.textViewLocation.setText(currentGreenHouse.getLocation());
 
-        // Check if the greenhouse has an owner
-        if (currentGreenHouse.getUserId() == 0) { // Assuming 0 means no owner
-            holder.textViewOwner.setText("Owner: None");
-            holder.buttonPairWithUser.setVisibility(View.VISIBLE);
-        } else {
-            holder.textViewOwner.setText("Owner: " + "Hardcoded string"); // Replace with actual user info if available
-            holder.buttonPairWithUser.setVisibility(View.GONE);
-        }
-
-        holder.buttonPairWithUser.setOnClickListener(v -> {
-            if (onPairButtonClickListener != null) {
-                onPairButtonClickListener.onPairButtonClick(currentGreenHouse);
+        // Load the latest measurements for each type
+        greenHouseViewModel.getLatestMeasurementForType(currentGreenHouse.getId(), MeasurementType.CO2).observe((LifecycleOwner) holder.itemView.getContext(), measurement -> {
+            if (measurement != null) {
+                holder.textViewCO2.setText(String.format("%.2f", measurement.getValue()));
             }
         });
 
-        holder.buttonViewThresholds.setOnClickListener(v -> {
-            if (onViewThresholdsButtonClickListener != null) {
-                onViewThresholdsButtonClickListener.onViewThresholdsButtonClick(currentGreenHouse);
+        greenHouseViewModel.getLatestMeasurementForType(currentGreenHouse.getId(), MeasurementType.HUMIDITY).observe((LifecycleOwner) holder.itemView.getContext(), measurement -> {
+            if (measurement != null) {
+                holder.textViewHumidity.setText(String.format("%.2f", measurement.getValue()));
             }
         });
+
+        greenHouseViewModel.getLatestMeasurementForType(currentGreenHouse.getId(), MeasurementType.TEMPERATURE).observe((LifecycleOwner) holder.itemView.getContext(), measurement -> {
+            if (measurement != null) {
+                holder.textViewTemperature.setText(String.format("%.2f", measurement.getValue()));
+            }
+        });
+
+        greenHouseViewModel.getLatestMeasurementForType(currentGreenHouse.getId(), MeasurementType.LIGHT).observe((LifecycleOwner) holder.itemView.getContext(), measurement -> {
+            if (measurement != null) {
+                holder.textViewLight.setText(String.format("%.2f", measurement.getValue()));
+            }
+        });
+
+
 
         holder.buttonViewMeasurements.setOnClickListener(v -> {
             if (onViewMeasurementsButtonClickListener != null) {
@@ -109,10 +115,12 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
             }
         });
     }
+
     @Override
     public int getItemCount() {
         return greenHouses != null ? greenHouses.size() : 0;
     }
+
     public void setGreenHouses(List<GreenHouse> greenHouses) {
         this.greenHouses = greenHouses;
         notifyDataSetChanged();
@@ -121,20 +129,24 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
     static class GreenHouseViewHolder extends RecyclerView.ViewHolder {
         private TextView textViewName;
         private TextView textViewLocation;
-        private TextView textViewOwner;
-        private Button buttonPairWithUser;
-        private Button buttonViewThresholds;
+
+        private TextView textViewCO2;
+        private TextView textViewHumidity;
+        private TextView textViewTemperature;
+        private TextView textViewLight;
         private Button buttonViewMeasurements;
         private Button buttonDeleteGreenHouse;
         private Button buttonViewDetails;
 
         public GreenHouseViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewName = itemView.findViewById(R.id.textViewGreenHouseName);
-            textViewLocation = itemView.findViewById(R.id.textViewGreenHouseLocation);
-            textViewOwner = itemView.findViewById(R.id.textViewOwner);
-            buttonPairWithUser = itemView.findViewById(R.id.buttonPairWithUser);
-            buttonViewThresholds = itemView.findViewById(R.id.buttonViewThresholds);
+            textViewName = itemView.findViewById(R.id.nameTextView);
+            textViewLocation = itemView.findViewById(R.id.locationTextView);
+
+            textViewCO2 = itemView.findViewById(R.id.co2TextView);
+            textViewHumidity = itemView.findViewById(R.id.humidityTextView);
+            textViewTemperature = itemView.findViewById(R.id.temperatureTextView);
+            textViewLight = itemView.findViewById(R.id.lightTextView);
             buttonViewMeasurements = itemView.findViewById(R.id.buttonViewMeasurements);
             buttonDeleteGreenHouse = itemView.findViewById(R.id.buttonDeleteGreenHouse);
             buttonViewDetails = itemView.findViewById(R.id.buttonViewDetails);

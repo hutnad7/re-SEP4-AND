@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import com.example.sep4_and.dao.AppDatabase;
 import com.example.sep4_and.dao.MeasurementDao;
 import com.example.sep4_and.model.Measurement;
+import com.example.sep4_and.model.MeasurementType;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -28,5 +29,9 @@ public class MeasurementRepository {
 
     public LiveData<List<Measurement>> getMeasurementsForGreenHouse(int greenHouseId) {
         return measurementDao.getMeasurementsForGreenHouse(greenHouseId);
+    }
+
+    public LiveData<Measurement> getLatestMeasurementForType(int greenHouseId, MeasurementType type) {
+        return measurementDao.getLatestMeasurementForType(greenHouseId, type);
     }
 }

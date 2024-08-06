@@ -60,23 +60,23 @@ public class DashBoardFragment extends Fragment {
         Button logoutButton = view.findViewById(R.id.logout_button);
         logoutButton.setOnClickListener(v -> logout());
 
-        // Button to go to User Fragment
-        Button buttonGoToUserFragment = view.findViewById(R.id.buttonGoToUserFragment);
-        buttonGoToUserFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateToFragment(new UserFragment());
-            }
-        });
-
-        // Button to go to User List Fragment
-        Button buttonGoToUserListFragment = view.findViewById(R.id.buttonGoToUserListFragment);
-        buttonGoToUserListFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateToFragment(new UserListFragment());
-            }
-        });
+//        // Button to go to User Fragment
+//        Button buttonGoToUserFragment = view.findViewById(R.id.buttonGoToUserFragment);
+//        buttonGoToUserFragment.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                navigateToFragment(new UserFragment());
+//            }
+//        });
+//
+//        // Button to go to User List Fragment
+//        Button buttonGoToUserListFragment = view.findViewById(R.id.buttonGoToUserListFragment);
+//        buttonGoToUserListFragment.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                navigateToFragment(new UserListFragment());
+//            }
+//        });
 
         // Button to go to Add GreenHouse Fragment
         Button buttonGoToAddGreenHouse = view.findViewById(R.id.buttonGoToAddGreenHouse);

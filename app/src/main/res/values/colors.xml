@@ -9,4 +9,13 @@
     <color name="appColorPrimary">#004d40</color>
     <color name="appColorPrimaryDark">#00251a</color>
     <color name="appColorAccent">#AE004D40</color>
+
+
+    <color name="deep_green">#093731</color>
+    <color name="brunswick_green">#0B4338</color>
+    <color name="soft_blue_green">#BDF5E6</color>
+    <color name="jungle_green">#189877</color>
+    <color name="mid_deep_green">#144B41</color>
+    <color name="mid_dark_teal">#21554D </color>
+    <color name="mid_light_teal">#59B59D </color>
 </resources>

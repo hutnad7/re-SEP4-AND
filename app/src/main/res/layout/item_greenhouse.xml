@@ -1,87 +1,139 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:background="@drawable/stroke"
+    android:padding="16dp"
+    android:layout_marginBottom="8dp">
 
-    <TextView
-        android:id="@+id/textViewGreenHouseName"
+    <!-- New LinearLayout for buttons -->
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_location_pin_24"
+            android:layout_marginRight="8dp"
+            app:tint="@color/soft_blue_green" />
+
+        <TextView
+            android:id="@+id/locationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/mid_light_teal"
+            android:textSize="14sp" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/textViewGreenHouseLocation"
+        android:id="@+id/nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp" />
+        android:textColor="@color/mid_light_teal"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp" />
 
-    <TextView
-        android:id="@+id/textViewOwner"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp" />
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_cloud_24"
+            android:layout_marginRight="4dp"
+            app:tint="@color/soft_blue_green" />
+
+        <TextView
+            android:id="@+id/co2TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/mid_light_teal"
+            android:textSize="14sp"
+            android:layout_marginRight="16dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_water_drop_24"
+            android:layout_marginRight="4dp"
+            app:tint="@color/soft_blue_green" />
+
+        <TextView
+            android:id="@+id/humidityTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/mid_light_teal"
+            android:textSize="14sp"
+            android:layout_marginRight="16dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_thermostat_24"
+            android:layout_marginRight="4dp"
+            app:tint="@color/soft_blue_green" />
+
+        <TextView
+            android:id="@+id/temperatureTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/mid_light_teal"
+            android:textSize="14sp"
+            android:layout_marginRight="16dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_lightbulb_24"
+            android:layout_marginRight="4dp"
+            app:tint="@color/soft_blue_green" />
+
+        <TextView
+            android:id="@+id/lightTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/mid_light_teal"
+            android:textSize="14sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginBottom="8dp"
+        android:gravity="start"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+
+        <Button
+            android:id="@+id/buttonViewMeasurements"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_marginEnd="4dp"
+            android:text="View Measurements"
+            android:textSize="12sp" />
 
-            <Button
-                android:id="@+id/buttonPairWithUser"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Pair with User"
-                android:layout_margin="4dp" />
-
-            <Button
-                android:id="@+id/buttonViewThresholds"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="View Thresholds"
-                android:layout_margin="4dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/buttonDeleteGreenHouse"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_marginEnd="4dp"
+            android:text="Delete"
+            android:textSize="12sp" />
 
-            <Button
-                android:id="@+id/buttonViewMeasurements"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="View Measurements"
-                android:layout_margin="4dp" />
-
-            <Button
-                android:id="@+id/buttonDeleteGreenHouse"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Delete"
-                android:layout_margin="4dp" />
-
-            <Button
-                android:id="@+id/buttonViewDetails"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="View Details"
-                android:layout_margin="4dp" /> <!-- Add this button -->
-        </LinearLayout>
+        <Button
+            android:id="@+id/buttonViewDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View Details"
+            android:textSize="12sp" />
     </LinearLayout>
 </LinearLayout>
