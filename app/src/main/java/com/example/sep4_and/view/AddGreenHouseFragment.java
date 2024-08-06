@@ -28,6 +28,7 @@ public class AddGreenHouseFragment extends Fragment {
     private EditText editTextName;
     private EditText editTextLocation;
     private Button buttonAdd;
+    private User currentUser;
 
     @Nullable
     @Override
@@ -58,6 +59,7 @@ public class AddGreenHouseFragment extends Fragment {
         userViewModel.getCurrentUser().observe(getViewLifecycleOwner(), currentUser -> {
             if (currentUser != null) {
                 Log.d("AddGreenHouseFragment", "Current user ID: " + currentUser.getId());
+                this.currentUser = currentUser; // Store the current user
             } else {
                 Log.d("AddGreenHouseFragment", "No current user found");
             }
@@ -75,25 +77,23 @@ public class AddGreenHouseFragment extends Fragment {
             return;
         }
 
-        userViewModel.getCurrentUser().observe(getViewLifecycleOwner(), currentUser -> {
-            if (currentUser != null) {
-                Log.d("AddGreenHouseFragment", "Current user ID: " + currentUser.getId());
-                GreenHouse greenHouse = new GreenHouse(name, location, currentUser.getId());
-                greenHouseViewModel.insert(greenHouse).observe(getViewLifecycleOwner(), greenHouseId -> {
-                    if (greenHouseId != null) {
-                        Log.d("AddGreenHouseFragment", "GreenHouse inserted with ID: " + greenHouseId);
-                        Toast.makeText(getActivity(), "GreenHouse added and paired with user", Toast.LENGTH_SHORT).show();
-                        editTextName.setText("");
-                        editTextLocation.setText("");
-                    } else {
-                        Log.d("AddGreenHouseFragment", "Failed to insert GreenHouse");
-                        Toast.makeText(getActivity(), "Failed to add GreenHouse", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } else {
-                Log.d("AddGreenHouseFragment", "Current User is null");
-                Toast.makeText(getActivity(), "No current user", Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (currentUser != null) {
+            Log.d("AddGreenHouseFragment", "Current user ID: " + currentUser.getId());
+            GreenHouse greenHouse = new GreenHouse(name, location, currentUser.getId());
+            greenHouseViewModel.insert(greenHouse).observe(getViewLifecycleOwner(), greenHouseId -> {
+                if (greenHouseId != null) {
+                    Log.d("AddGreenHouseFragment", "GreenHouse inserted with ID: " + greenHouseId);
+                    Toast.makeText(getActivity(), "GreenHouse added and paired with user", Toast.LENGTH_SHORT).show();
+                    editTextName.setText("");
+                    editTextLocation.setText("");
+                } else {
+                    Log.d("AddGreenHouseFragment", "Failed to insert GreenHouse");
+                    Toast.makeText(getActivity(), "Failed to add GreenHouse", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Log.d("AddGreenHouseFragment", "Current User is null");
+            Toast.makeText(getActivity(), "No current user", Toast.LENGTH_SHORT).show();
+        }
     }
 }

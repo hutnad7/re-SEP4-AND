@@ -31,7 +31,6 @@ public class ViewNotificationsFragment extends Fragment {
     private UserViewModel userViewModel;
     private RecyclerView recyclerView;
     private NotificationAdapter adapter;
-    private List<User> users;
     private Button backButton;
 
     @Nullable
@@ -51,28 +50,16 @@ public class ViewNotificationsFragment extends Fragment {
         notificationViewModel = new ViewModelProvider(this).get(NotificationViewModel.class);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
-        userViewModel.getAllUsers().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
-            @Override
-            public void onChanged(List<User> userList) {
-                users = userList;
-                if (users != null && !users.isEmpty()) {
-                    User latestUser = users.get(users.size() - 1);
-                    notificationViewModel.getNotificationsForUser(latestUser.getId()).observe(getViewLifecycleOwner(), new Observer<List<Notification>>() {
-                        @Override
-                        public void onChanged(List<Notification> notifications) {
-                            adapter.setNotifications(notifications);
-                        }
-                    });
-                }
+        // Observe the current user and fetch notifications for that user
+        userViewModel.getCurrentUser().observe(getViewLifecycleOwner(), currentUser -> {
+            if (currentUser != null) {
+                notificationViewModel.getNotificationsForUser(currentUser.getId()).observe(getViewLifecycleOwner(), notifications -> {
+                    adapter.setNotifications(notifications);
+                });
             }
         });
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        backButton.setOnClickListener(v -> getActivity().onBackPressed());
 
         return view;
     }
