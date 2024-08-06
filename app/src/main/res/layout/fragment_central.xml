@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/deep_green"
     android:padding="16dp">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionAddGreenhouse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:layout_marginEnd="323dp"
+        android:layout_marginBottom="643dp"
+        android:clickable="true"
+        app:backgroundTint="@color/mid_deep_green"
+        app:srcCompat="@drawable/baseline_add_circle_outline_24"
+        />
 
     <RelativeLayout
         android:id="@+id/groupedElements"
@@ -19,7 +35,7 @@
             android:id="@+id/helloText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello, John"
+            android:text="@string/replaced"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:layout_marginBottom="8dp" />
@@ -33,7 +49,9 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/ellipse_background"
             android:elevation="6dp"
-            android:layout_marginTop="4dp">
+            android:layout_marginTop="4dp"
+            android:clickable="true"
+            android:focusable="true">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -82,7 +100,7 @@
             android:id="@+id/greenhouseCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="You got 5 Greenhouses"
+            android:text="@string/replaced"
             android:textColor="@color/soft_blue_green"
             android:textSize="16sp"
             android:layout_below="@id/helloText"
@@ -95,21 +113,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/groupedElements"
         android:orientation="vertical"
-        android:layout_marginBottom="16dp" />
-    <FrameLayout
-        android:id="@+id/addButton"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:background="@drawable/ellipse_background"
-        android:elevation="6dp">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/baseline_add_circle_outline_24"
-            android:scaleType="centerInside"/>
-    </FrameLayout>
+        />
+
+
 </RelativeLayout>

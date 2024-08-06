@@ -32,8 +32,13 @@ public class GreenhouseDetailsFragment extends Fragment {
     private int greenHouseId;
     private ThresholdViewModel thresholdViewModel;
     private GreenHouseViewModel greenHouseViewModel;
+    private MeasurementViewModel measurementViewModel;
     private TextView textViewGreenhouseTitle;
     private TextView textViewGreenhouseLocation;
+    private TextView co2Value;
+    private TextView humidityValue;
+    private TextView tempValue;
+    private TextView lightValue;
 
     public static GreenhouseDetailsFragment newInstance(int greenHouseId) {
         GreenhouseDetailsFragment fragment = new GreenhouseDetailsFragment();
@@ -59,8 +64,14 @@ public class GreenhouseDetailsFragment extends Fragment {
 
         textViewGreenhouseTitle = view.findViewById(R.id.textViewGreenhouseTitle);
         textViewGreenhouseLocation = view.findViewById(R.id.textViewGreenhouseLocation);
+        co2Value = view.findViewById(R.id.co2Value);
+        humidityValue = view.findViewById(R.id.humidityValue);
+        tempValue = view.findViewById(R.id.tempValue);
+        lightValue = view.findViewById(R.id.lightValue);
 
         greenHouseViewModel = new ViewModelProvider(this).get(GreenHouseViewModel.class);
+        measurementViewModel = new ViewModelProvider(this).get(MeasurementViewModel.class);
+
         greenHouseViewModel.getGreenHouseById(greenHouseId).observe(getViewLifecycleOwner(), new Observer<GreenHouse>() {
             @Override
             public void onChanged(GreenHouse greenHouse) {
@@ -79,15 +90,41 @@ public class GreenhouseDetailsFragment extends Fragment {
             }
         });
 
-        displayHardcodedMeasurements(view);
+        loadLatestMeasurements();
     }
 
-   private void displayThresholds(View view, List<Threshold> thresholds) {
-       setThreshold(view, R.id.co2MinValue, R.id.co2MaxValue, R.id.co2AddButton, MeasurementType.CO2, thresholds);
-       setThreshold(view, R.id.humidityMinValue, R.id.humidityMaxValue, R.id.humidityAddButton, MeasurementType.HUMIDITY, thresholds);
+    private void loadLatestMeasurements() {
+        greenHouseViewModel.getLatestMeasurementForType(greenHouseId, MeasurementType.CO2).observe(getViewLifecycleOwner(), measurement -> {
+            if (measurement != null) {
+                co2Value.setText(String.format("%s ppm", measurement.getValue()));
+            }
+        });
+
+        greenHouseViewModel.getLatestMeasurementForType(greenHouseId, MeasurementType.HUMIDITY).observe(getViewLifecycleOwner(), measurement -> {
+            if (measurement != null) {
+                humidityValue.setText(String.format("%s %%", measurement.getValue()));
+            }
+        });
+
+        greenHouseViewModel.getLatestMeasurementForType(greenHouseId, MeasurementType.TEMPERATURE).observe(getViewLifecycleOwner(), measurement -> {
+            if (measurement != null) {
+                tempValue.setText(String.format("%s °C", measurement.getValue()));
+            }
+        });
+
+        greenHouseViewModel.getLatestMeasurementForType(greenHouseId, MeasurementType.LIGHT).observe(getViewLifecycleOwner(), measurement -> {
+            if (measurement != null) {
+                lightValue.setText(String.format("%s lux", measurement.getValue()));
+            }
+        });
+    }
+
+    private void displayThresholds(View view, List<Threshold> thresholds) {
+        setThreshold(view, R.id.co2MinValue, R.id.co2MaxValue, R.id.co2AddButton, MeasurementType.CO2, thresholds);
+        setThreshold(view, R.id.humidityMinValue, R.id.humidityMaxValue, R.id.humidityAddButton, MeasurementType.HUMIDITY, thresholds);
         setThreshold(view, R.id.tempMinValue, R.id.tempMaxValue, R.id.tempAddButton, MeasurementType.TEMPERATURE, thresholds);
-       setThreshold(view, R.id.lightMinValue, R.id.lightMaxValue, R.id.lightAddButton, MeasurementType.LIGHT, thresholds);
-   }
+        setThreshold(view, R.id.lightMinValue, R.id.lightMaxValue, R.id.lightAddButton, MeasurementType.LIGHT, thresholds);
+    }
 
     private void setThreshold(View view, int minId, int maxId, int buttonId, MeasurementType type, List<Threshold> thresholds) {
         TextView minValue = view.findViewById(minId);
@@ -130,27 +167,7 @@ public class GreenhouseDetailsFragment extends Fragment {
         return null;
     }
 
-    private void displayHardcodedMeasurements(View view) {
-        // Hardcoded latest measurements
-        String co2Measurement = "414ppm";
-        String humidityMeasurement = "20%";
-        String tempMeasurement = "24.5C";
-        String lightMeasurement = "80%";
-
-        TextView co2Value = view.findViewById(R.id.co2Value);
-        co2Value.setText(co2Measurement);
-
-        TextView humidityValue = view.findViewById(R.id.humidityValue);
-        humidityValue.setText(humidityMeasurement);
-
-        TextView tempValue = view.findViewById(R.id.tempValue);
-        tempValue.setText(tempMeasurement);
-
-        TextView lightValue = view.findViewById(R.id.lightValue);
-        lightValue.setText(lightMeasurement);
-    }
-
-    //Helper methods
+    // Helper methods
     private String formatValue(double value) {
         if (value == (long) value) {
             return String.format("%d", (long) value);
@@ -158,6 +175,7 @@ public class GreenhouseDetailsFragment extends Fragment {
             return String.format("%s", value);
         }
     }
+
     private String getUnitForType(MeasurementType type) {
         switch (type) {
             case CO2:
@@ -165,7 +183,7 @@ public class GreenhouseDetailsFragment extends Fragment {
             case HUMIDITY:
                 return "%";
             case TEMPERATURE:
-                return "C";
+                return "°C";
             case LIGHT:
                 return "lux";
             default:

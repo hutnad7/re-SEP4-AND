@@ -1,17 +1,17 @@
 package com.example.sep4_and.view;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,17 +22,16 @@ import com.example.sep4_and.list.GreenHouseAdapter;
 import com.example.sep4_and.model.GreenHouse;
 import com.example.sep4_and.model.Measurement;
 import com.example.sep4_and.model.MeasurementType;
-import com.example.sep4_and.model.User;
+import com.example.sep4_and.utils.TokenManager;
 import com.example.sep4_and.viewmodel.GreenHouseViewModel;
 import com.example.sep4_and.viewmodel.MeasurementViewModel;
 import com.example.sep4_and.viewmodel.UserViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Date;
-import java.util.List;
 
 
-
-public class ViewGreenHousesFragment extends Fragment {
+public class CentralFragment extends Fragment {
 
     private GreenHouseViewModel greenHouseViewModel;
     private MeasurementViewModel measurementViewModel;
@@ -41,17 +40,23 @@ public class ViewGreenHousesFragment extends Fragment {
     private GreenHouseAdapter adapter;
     private TextView greenhouseCountTextView;
     private TextView helloTextView;
+    private FloatingActionButton floatingActionAddGreenhouse;
+    private FrameLayout logoutButton;
+    private FrameLayout notificationIcon;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_view_greenhouses, container, false);
+        View view = inflater.inflate(R.layout.fragment_central, container, false);
 
         recyclerView = view.findViewById(R.id.greenhouseList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         greenhouseCountTextView = view.findViewById(R.id.greenhouseCount);
         helloTextView = view.findViewById(R.id.helloText);
+        floatingActionAddGreenhouse = view.findViewById(R.id.floatingActionAddGreenhouse);
+        logoutButton = view.findViewById(R.id.logoutButton);
+        notificationIcon = view.findViewById(R.id.notificationIcon);
 
         greenHouseViewModel = new ViewModelProvider(this).get(GreenHouseViewModel.class);
         measurementViewModel = new ViewModelProvider(this).get(MeasurementViewModel.class);
@@ -76,7 +81,18 @@ public class ViewGreenHousesFragment extends Fragment {
             }
         });
 
+        floatingActionAddGreenhouse.setOnClickListener(v -> navigateToFragment(new AddGreenHouseFragment()));
+        logoutButton.setOnClickListener(v -> logout());
+        notificationIcon.setOnClickListener(v -> navigateToFragment(new ViewNotificationsFragment()));
+
         return view;
+    }
+
+    private void navigateToFragment(Fragment fragment) {
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment); // Replace current fragment
+        transaction.addToBackStack(null); // Add to back stack to allow user to navigate back
+        transaction.commit();
     }
 
     private void updateGreenhouseCount(int count) {
@@ -91,10 +107,7 @@ public class ViewGreenHousesFragment extends Fragment {
 
     private void onViewGreenhouseDetailsButtonClick(GreenHouse greenHouse) {
         GreenhouseDetailsFragment detailsFragment = GreenhouseDetailsFragment.newInstance(greenHouse.getId());
-        getParentFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, detailsFragment)
-                .addToBackStack(null)
-                .commit();
+        navigateToFragment(detailsFragment);
     }
 
     private void onViewMeasurementsButtonClick(GreenHouse greenHouse) {
@@ -104,15 +117,19 @@ public class ViewGreenHousesFragment extends Fragment {
                 measurementViewModel.insert(fictitiousMeasurement);
             } else {
                 ViewMeasurementsFragment viewMeasurementsFragment = ViewMeasurementsFragment.newInstance(greenHouse.getId());
-                getParentFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, viewMeasurementsFragment)
-                        .addToBackStack(null)
-                        .commit();
+                navigateToFragment(viewMeasurementsFragment);
             }
         });
     }
 
     private void onDeleteButtonClick(GreenHouse greenHouse) {
         greenHouseViewModel.delete(greenHouse);
+    }
+
+    private void logout() {
+        TokenManager.clearToken();
+        Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(loginIntent);
+        requireActivity().finish();
     }
 }

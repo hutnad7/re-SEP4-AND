@@ -42,7 +42,6 @@ public class AddNotificationFragment extends Fragment {
     private Button buttonAddNotification;
     private NotificationViewModel notificationViewModel;
     private UserViewModel userViewModel;
-    private List<User> users;
     private Calendar calendar;
     private Button backButton;
 
@@ -54,7 +53,7 @@ public class AddNotificationFragment extends Fragment {
         editTextMessage = view.findViewById(R.id.editTextMessage);
         buttonPickDate = view.findViewById(R.id.buttonPickDate);
         buttonPickTime = view.findViewById(R.id.buttonPickTime);
-        Switch switchRecurrent = view.findViewById(R.id.switchRecurrent);
+        switchRecurrent = view.findViewById(R.id.switchRecurrent);
         buttonAddNotification = view.findViewById(R.id.buttonAddNotification);
         backButton = view.findViewById(R.id.backButton);
 
@@ -62,46 +61,42 @@ public class AddNotificationFragment extends Fragment {
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         calendar = Calendar.getInstance();
 
-        userViewModel.getAllUsers().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
-            @Override
-            public void onChanged(List<User> userList) {
-                users = userList;
-            }
-        });
-
         buttonPickDate.setOnClickListener(v -> showDatePickerDialog());
         buttonPickTime.setOnClickListener(v -> showTimePickerDialog());
 
         buttonAddNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                addNotification();
+            }
+        });
 
-                String message = editTextMessage.getText().toString();
-                boolean isRecurrent = switchRecurrent.isChecked();
-                Date date = calendar.getTime();
+        backButton.setOnClickListener(v -> getActivity().onBackPressed());
 
-                //TODO: Fix
-                if (users != null && !users.isEmpty()) {
+        return view;
+    }
 
-                    User latestUser = users.get(users.size() - 1); // Get the latest user
-                    Notification notification = new Notification(message, date, isRecurrent, latestUser.getId());
+    private void addNotification() {
+        String message = editTextMessage.getText().toString();
+        boolean isRecurrent = switchRecurrent.isChecked();
+        Date date = calendar.getTime();
+
+        userViewModel.getCurrentUser().observe(getViewLifecycleOwner(), new Observer<User>() {
+            @Override
+            public void onChanged(User currentUser) {
+                if (currentUser != null) {
+                    Notification notification = new Notification(message, date, isRecurrent, currentUser.getId());
                     notificationViewModel.insert(notification);
                     Toast.makeText(getContext(), "Notification Added", Toast.LENGTH_SHORT).show();
+                    getParentFragmentManager().popBackStack(); // Go back to the previous fragment
 
+                    // Remove the observer to prevent multiple additions
+                    userViewModel.getCurrentUser().removeObserver(this);
                 } else {
-                    Toast.makeText(getContext(), "No users available", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "No user logged in", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-        //Previous fragment might be null
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
-        return view;
     }
 
     private void showDatePickerDialog() {
@@ -132,5 +127,4 @@ public class AddNotificationFragment extends Fragment {
         );
         timePickerDialog.show();
     }
-
 }

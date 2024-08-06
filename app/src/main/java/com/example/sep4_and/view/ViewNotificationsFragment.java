@@ -21,6 +21,7 @@ import com.example.sep4_and.model.Notification;
 import com.example.sep4_and.model.User;
 import com.example.sep4_and.viewmodel.NotificationViewModel;
 import com.example.sep4_and.viewmodel.UserViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class ViewNotificationsFragment extends Fragment {
     private RecyclerView recyclerView;
     private NotificationAdapter adapter;
     private Button backButton;
+    private FloatingActionButton fabAddNotification;
 
     @Nullable
     @Override
@@ -42,6 +44,7 @@ public class ViewNotificationsFragment extends Fragment {
         TextView pageDescription = view.findViewById(R.id.pageDescription);
         backButton = view.findViewById(R.id.backButton);
         recyclerView = view.findViewById(R.id.recyclerViewNotifications);
+        fabAddNotification = view.findViewById(R.id.fabAddNotification);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new NotificationAdapter();
@@ -61,6 +64,16 @@ public class ViewNotificationsFragment extends Fragment {
 
         backButton.setOnClickListener(v -> getActivity().onBackPressed());
 
+        fabAddNotification.setOnClickListener(v -> navigateToAddNotificationFragment());
+
         return view;
+    }
+
+    private void navigateToAddNotificationFragment() {
+        AddNotificationFragment addNotificationFragment = new AddNotificationFragment();
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, addNotificationFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
