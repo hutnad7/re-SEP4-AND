@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (savedInstanceState == null) {
-            loadFragment(new CentralFragment());
+            loadFragment(new DashBoardFragment());
         }
     }
 

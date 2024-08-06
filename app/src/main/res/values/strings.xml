@@ -6,10 +6,14 @@
     <string name="co2">Co2</string>
     <string name="humidity">Humidity</string>
 
+    <string name="dialog_delete">Are you sure you want to delete this greenhouse?</string>
+    <string name="dialog_logout">Are you sure you want to Logout</string>
+
     <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="sign_up">Sign Up</string>
     <string name="back">Back</string>
+    <string name="cancel">Cancel</string>
     <string name="save">Save</string>
 
 
@@ -49,6 +53,9 @@
     <string name="add_threshold">Add Threshold</string>
     <string name="add_notification">Add Notification</string>
     <string name="add_greenhouse">Add Greenhouse</string>
+
+    <string name="delete">Delete</string>
+    <string name="remove">Remove</string>
 
     <string name="details">Details:</string>
 

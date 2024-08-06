@@ -1,5 +1,7 @@
 package com.example.sep4_and.list;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,12 +65,37 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_greenhouse, parent, false);
         return new GreenHouseViewHolder(itemView);
     }
+    private void showConfirmDeleteDialog(Context context, GreenHouse greenHouse) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View dialogView = inflater.inflate(R.layout.dialog_confirm_delete, null);
+        builder.setView(dialogView);
 
+        AlertDialog dialog = builder.create();
+
+        TextView dialogTitle = dialogView.findViewById(R.id.dialogTitle);
+        TextView dialogMessage = dialogView.findViewById(R.id.dialogMessage);
+        Button buttonCancel = dialogView.findViewById(R.id.buttonCancel);
+        Button buttonConfirm = dialogView.findViewById(R.id.buttonConfirm);
+
+        buttonCancel.setOnClickListener(v -> dialog.dismiss());
+
+        buttonConfirm.setOnClickListener(v -> {
+            if (onDeleteButtonClickListener != null) {
+                onDeleteButtonClickListener.onDeleteButtonClick(greenHouse);
+            }
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
     @Override
     public void onBindViewHolder(@NonNull GreenHouseViewHolder holder, int position) {
         GreenHouse currentGreenHouse = greenHouses.get(position);
         holder.textViewName.setText(currentGreenHouse.getName());
         holder.textViewLocation.setText(currentGreenHouse.getLocation());
+
+        holder.buttonDeleteGreenHouse.setOnClickListener(v -> showConfirmDeleteDialog(holder.itemView.getContext(), currentGreenHouse));
 
         // Load the latest measurements for each type
         greenHouseViewModel.getLatestMeasurementForType(currentGreenHouse.getId(), MeasurementType.CO2).observe((LifecycleOwner) holder.itemView.getContext(), measurement -> {
@@ -103,11 +130,8 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
             }
         });
 
-        holder.buttonDeleteGreenHouse.setOnClickListener(v -> {
-            if (onDeleteButtonClickListener != null) {
-                onDeleteButtonClickListener.onDeleteButtonClick(currentGreenHouse);
-            }
-        });
+        holder.buttonDeleteGreenHouse.setOnClickListener(v -> showConfirmDeleteDialog(holder.itemView.getContext(), currentGreenHouse));
+
 
         holder.buttonViewDetails.setOnClickListener(v -> {
             if (onViewDetailsButtonClickListener != null) {
