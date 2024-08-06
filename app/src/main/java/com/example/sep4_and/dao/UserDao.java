@@ -22,7 +22,6 @@ public interface UserDao {
     @Query("SELECT * FROM users")
     LiveData<List<User>> getAllUsers();
 
-
     @Query("SELECT * FROM users WHERE email = :email AND password = :password LIMIT 1")
     LiveData<User> login(String email, String password);
 
@@ -31,4 +30,7 @@ public interface UserDao {
 
     @Query("SELECT * FROM users WHERE email = :email")
     User getUser(String email);
+
+    @Query("SELECT * FROM users WHERE id = :userId LIMIT 1")
+    User getUserById(int userId);
 }

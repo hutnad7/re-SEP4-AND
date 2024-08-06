@@ -26,7 +26,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
-
     private UserViewModel userViewModel;
     private EditText emailEditText, passwordEditText;
     private Button loginButton, registerButton;
@@ -81,27 +80,11 @@ public class LoginActivity extends AppCompatActivity {
             if (user != null) {
                 TokenManager.saveToken(String.valueOf(user.getId()));
                 Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
-                userViewModel.getCurrentUser().observe(this, currentUser -> {
-                    if (currentUser != null) {
-                        Log.d("LoginActivity", "Current user set: " + currentUser.getId());
-                        redirectToMainActivity();
-                    } else {
-                        Log.d("LoginActivity", "Current user is null");
-                        Toast.makeText(LoginActivity.this, "Login failed!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                redirectToMainActivity();
             } else {
                 Toast.makeText(LoginActivity.this, "Login failed!", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void saveTokenAndRedirect(String token) {
-        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("access_token", token);
-        editor.apply();
-        redirectToMainActivity();
     }
 
     private void navigateToSignup() {

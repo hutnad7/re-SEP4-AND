@@ -18,6 +18,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import com.example.sep4_and.App;
 import com.example.sep4_and.dao.AppDatabase;
 import com.example.sep4_and.dao.UserDao;
 import com.example.sep4_and.model.User;
@@ -28,6 +29,7 @@ import com.example.sep4_and.network.requests.LoginRequest;
 import com.example.sep4_and.network.requests.RegisterRequest;
 import com.example.sep4_and.network.responses.LoginResponse;
 import com.example.sep4_and.network.responses.RegisterResponse;
+import com.example.sep4_and.utils.UserSessionManager;
 
 public class UserRepository {
     private UserDao userDao;
@@ -70,6 +72,7 @@ public class UserRepository {
             User user = userDao.loginSync(email, password); // Use the synchronous method for debugging
             if (user != null) {
                 currentUser.postValue(user); // Set current user
+                UserSessionManager.saveUserId(App.getContext(), user.getId()); // Save userId to SharedPreferences
                 Log.d("UserRepository", "Current user set: " + user.getId());
             }
             userLiveData.postValue(user);
@@ -81,10 +84,12 @@ public class UserRepository {
 
     public LiveData<User> getCurrentUser() {
         Log.d("UserRepository", "getCurrentUser called");
-        if (currentUser.getValue() != null) {
-            Log.d("UserRepository", "Current user is: " + currentUser.getValue().getId());
-        } else {
-            Log.d("UserRepository", "Current user is null");
+        int userId = UserSessionManager.getUserId(App.getContext());
+        if (userId != -1) {
+            executorService.execute(() -> {
+                User user = userDao.getUserById(userId);
+                currentUser.postValue(user);
+            });
         }
         return currentUser; // Return the in-memory current user
     }
@@ -100,6 +105,7 @@ public class UserRepository {
                         User createdUser = response.body();
                         insert(createdUser);
                         currentUser.postValue(createdUser); // Set current user
+                        UserSessionManager.saveUserId(App.getContext(), createdUser.getId()); // Save userId to SharedPreferences
                         registerResult.setValue(createdUser);
                         Log.d("UserRepository", "Registration successful for user: " + createdUser.getId());
                     } else {
@@ -122,6 +128,7 @@ public class UserRepository {
             executorService.execute(() -> {
                 userDao.insert(newUser);
                 currentUser.postValue(newUser); // Set current user
+                UserSessionManager.saveUserId(App.getContext(), newUser.getId()); // Save userId to SharedPreferences
                 registerResult.postValue(newUser);
                 Log.d("UserRepository", "Registration successful for user: " + newUser.getId());
             });
