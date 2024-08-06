@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sep4_and.R;
 import com.example.sep4_and.list.ThresholdAdapter;
+import com.example.sep4_and.model.MeasurementType;
 import com.example.sep4_and.model.Threshold;
 import com.example.sep4_and.viewmodel.ThresholdViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -50,7 +51,7 @@ public class ThresholdListFragment extends Fragment {
 
         FloatingActionButton fabAddThreshold = view.findViewById(R.id.fabAddThreshold);
         fabAddThreshold.setOnClickListener(v -> {
-            AddThresholdFragment addThresholdFragment = AddThresholdFragment.newInstance(greenHouseId);
+            AddThresholdFragment addThresholdFragment = AddThresholdFragment.newInstance(greenHouseId, MeasurementType.HUMIDITY);
             getParentFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, addThresholdFragment)
                     .addToBackStack(null)

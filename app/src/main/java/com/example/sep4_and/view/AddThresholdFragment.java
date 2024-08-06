@@ -35,9 +35,10 @@ import java.util.List;
 import java.util.Map;
 
 public class AddThresholdFragment extends Fragment {
-
+    private static final String ARG_THRESHOLD_TYPE = "threshold_type";
     private static final String ARG_GREENHOUSE_ID = "greenhouse_id";
 
+    private MeasurementType thresholdType;
     private Spinner spinnerThresholdType;
     private EditText editTextMinValue;
     private EditText editTextMaxValue;
@@ -50,10 +51,11 @@ public class AddThresholdFragment extends Fragment {
     private Map<MeasurementType, Float> minValues;
     private Map<MeasurementType, Float> maxValues;
 
-    public static AddThresholdFragment newInstance(int greenHouseId) {
+    public static AddThresholdFragment newInstance(int greenHouseId, MeasurementType thresholdType) {
         AddThresholdFragment fragment = new AddThresholdFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_GREENHOUSE_ID, greenHouseId);
+        args.putSerializable(ARG_THRESHOLD_TYPE, thresholdType);
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,8 +69,6 @@ public class AddThresholdFragment extends Fragment {
         editTextMinValue = view.findViewById(R.id.editTextMinValue);
         editTextMaxValue = view.findViewById(R.id.editTextMaxValue);
         buttonAddThreshold = view.findViewById(R.id.buttonAddThreshold);
-        textViewTitle = view.findViewById(R.id.textViewTitle);
-        textViewSetLevels = view.findViewById(R.id.textViewSetLevels);
 
         ArrayAdapter<MeasurementType> typeAdapter = new ArrayAdapter<MeasurementType>(requireContext(), android.R.layout.simple_spinner_item, MeasurementType.values()) {
             @Override
@@ -92,26 +92,15 @@ public class AddThresholdFragment extends Fragment {
 
         if (getArguments() != null) {
             greenHouseId = getArguments().getInt(ARG_GREENHOUSE_ID);
+            thresholdType = (MeasurementType) getArguments().getSerializable(ARG_THRESHOLD_TYPE);
         }
 
-        // Load min and max values from resources
-        loadMeasurementLimits();
-
-        // Set up the spinner item selected listener to update hints and text
-        spinnerThresholdType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                MeasurementType selectedType = (MeasurementType) parent.getItemAtPosition(position);
-                updateMinMaxHints(selectedType);
-                updateTitleText(selectedType);
-                updateLevelText(selectedType);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Do nothing
-            }
-        });
+        // Set the spinner to the passed threshold type
+        if (thresholdType != null) {
+            int position = typeAdapter.getPosition(thresholdType);
+            spinnerThresholdType.setSelection(position);
+            spinnerThresholdType.setEnabled(false); // Disable spinner if type is pre-set
+        }
 
         buttonAddThreshold.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,10 +116,6 @@ public class AddThresholdFragment extends Fragment {
                 MeasurementType type = (MeasurementType) spinnerThresholdType.getSelectedItem();
                 float minValue = Float.parseFloat(minValueStr);
                 float maxValue = Float.parseFloat(maxValueStr);
-
-                if (!validateValues(type, minValue, maxValue)) {
-                    return;
-                }
 
                 Threshold threshold = new Threshold(type, minValue, maxValue, greenHouseId);
                 thresholdViewModel.insert(threshold);

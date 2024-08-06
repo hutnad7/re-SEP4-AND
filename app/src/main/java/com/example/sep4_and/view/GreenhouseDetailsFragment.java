@@ -112,7 +112,7 @@ public class GreenhouseDetailsFragment extends Fragment {
             maxValue.setVisibility(View.GONE);
             addButton.setVisibility(View.VISIBLE);
             addButton.setOnClickListener(v -> {
-                AddThresholdFragment addThresholdFragment = AddThresholdFragment.newInstance(greenHouseId);
+                AddThresholdFragment addThresholdFragment = AddThresholdFragment.newInstance(greenHouseId, type);
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, addThresholdFragment)
                         .addToBackStack(null)
