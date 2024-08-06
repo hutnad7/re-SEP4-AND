@@ -5,12 +5,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -50,6 +53,7 @@ public class ViewGreenHousesFragment extends Fragment {
         recyclerView = view.findViewById(R.id.greenhouseList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        FrameLayout addButton = view.findViewById(R.id.addButton);
         greenhouseCountTextView = view.findViewById(R.id.greenhouseCount);
         helloTextView = view.findViewById(R.id.helloText);
 
@@ -65,6 +69,8 @@ public class ViewGreenHousesFragment extends Fragment {
         );
 
         recyclerView.setAdapter(adapter);
+
+        addButton.setOnClickListener(v -> navigateToFragment(new AddGreenHouseFragment()));
 
         userViewModel.getCurrentUser().observe(getViewLifecycleOwner(), currentUser -> {
             if (currentUser != null) {
@@ -114,5 +120,12 @@ public class ViewGreenHousesFragment extends Fragment {
 
     private void onDeleteButtonClick(GreenHouse greenHouse) {
         greenHouseViewModel.delete(greenHouse);
+    }
+
+    private void navigateToFragment(Fragment fragment) {
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment); // Replace current fragment
+        transaction.addToBackStack(null); // Add to back stack to allow user to navigate back
+        transaction.commit();
     }
 }
