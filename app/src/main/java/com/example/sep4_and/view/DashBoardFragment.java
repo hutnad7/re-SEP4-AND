@@ -44,6 +44,7 @@ public class DashBoardFragment extends Fragment {
     private FloatingActionButton floatingActionAddGreenhouse;
     private FrameLayout logoutButton;
     private FrameLayout notificationIcon;
+    private FrameLayout settingsIcon;
 
     @Nullable
     @Override
@@ -58,6 +59,7 @@ public class DashBoardFragment extends Fragment {
         floatingActionAddGreenhouse = view.findViewById(R.id.floatingActionAddGreenhouse);
         logoutButton = view.findViewById(R.id.logoutButton);
         notificationIcon = view.findViewById(R.id.notificationIcon);
+        settingsIcon = view.findViewById(R.id.settingsIcon);
 
         greenHouseViewModel = new ViewModelProvider(this).get(GreenHouseViewModel.class);
         measurementViewModel = new ViewModelProvider(this).get(MeasurementViewModel.class);
@@ -85,12 +87,10 @@ public class DashBoardFragment extends Fragment {
         floatingActionAddGreenhouse.setOnClickListener(v -> navigateToFragment(new AddGreenHouseFragment()));
         logoutButton.setOnClickListener(v -> showLogoutDialog());
         notificationIcon.setOnClickListener(v -> navigateToFragment(new ViewNotificationsFragment()));
+        settingsIcon.setOnClickListener(v -> navigateToFragment(new EditProfileFragment())); // Add this line
 
         return view;
     }
-
-
-
 
     //TODO: Make unified method for replacing text
     private void updateGreenhouseCount(int count) {
@@ -145,6 +145,7 @@ public class DashBoardFragment extends Fragment {
         transaction.addToBackStack(null); // Add to back stack to allow user to navigate back
         transaction.commit();
     }
+
     private void logout() {
         TokenManager.clearToken();
         Intent loginIntent = new Intent(getActivity(), LoginActivity.class);

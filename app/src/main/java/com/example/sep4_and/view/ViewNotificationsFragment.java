@@ -32,7 +32,6 @@ public class ViewNotificationsFragment extends Fragment {
     private UserViewModel userViewModel;
     private RecyclerView recyclerView;
     private NotificationAdapter adapter;
-    private Button backButton;
     private FloatingActionButton fabAddNotification;
 
     @Nullable
@@ -42,7 +41,7 @@ public class ViewNotificationsFragment extends Fragment {
 
         TextView pageTitle = view.findViewById(R.id.pageTitle);
         TextView pageDescription = view.findViewById(R.id.pageDescription);
-        backButton = view.findViewById(R.id.backButton);
+
         recyclerView = view.findViewById(R.id.recyclerViewNotifications);
         fabAddNotification = view.findViewById(R.id.fabAddNotification);
 
@@ -61,8 +60,6 @@ public class ViewNotificationsFragment extends Fragment {
                 });
             }
         });
-
-        backButton.setOnClickListener(v -> getActivity().onBackPressed());
 
         fabAddNotification.setOnClickListener(v -> navigateToAddNotificationFragment());
 

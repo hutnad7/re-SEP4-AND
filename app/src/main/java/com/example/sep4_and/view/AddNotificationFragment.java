@@ -43,7 +43,7 @@ public class AddNotificationFragment extends Fragment {
     private NotificationViewModel notificationViewModel;
     private UserViewModel userViewModel;
     private Calendar calendar;
-    private Button backButton;
+
 
     @Nullable
     @Override
@@ -55,7 +55,7 @@ public class AddNotificationFragment extends Fragment {
         buttonPickTime = view.findViewById(R.id.buttonPickTime);
         switchRecurrent = view.findViewById(R.id.switchRecurrent);
         buttonAddNotification = view.findViewById(R.id.buttonAddNotification);
-        backButton = view.findViewById(R.id.backButton);
+
 
         notificationViewModel = new ViewModelProvider(this).get(NotificationViewModel.class);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
@@ -70,8 +70,6 @@ public class AddNotificationFragment extends Fragment {
                 addNotification();
             }
         });
-
-        backButton.setOnClickListener(v -> getActivity().onBackPressed());
 
         return view;
     }
