@@ -3,7 +3,6 @@ package com.example.sep4_and.view;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,23 +17,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.HashMap;
-import java.util.List;
 
 import com.example.sep4_and.R;
-import com.example.sep4_and.model.GreenHouse;
 import com.example.sep4_and.model.MeasurementType;
 import com.example.sep4_and.model.Threshold;
-import com.example.sep4_and.viewmodel.GreenHouseViewModel;
 import com.example.sep4_and.viewmodel.ThresholdViewModel;
 
-import java.util.List;
 import java.util.Map;
 
-public class AddThresholdFragment extends Fragment {
+public class ManageThresholdFragment extends Fragment {
 
     private static final String ARG_GREENHOUSE_ID = "greenhouse_id";
     private static final String ARG_THRESHOLD_TYPE = "threshold_type";
@@ -57,8 +51,8 @@ public class AddThresholdFragment extends Fragment {
     private Map<MeasurementType, Float> minValues;
     private Map<MeasurementType, Float> maxValues;
 
-    public static AddThresholdFragment newInstance(int greenHouseId, MeasurementType type, Float minValue, Float maxValue) {
-        AddThresholdFragment fragment = new AddThresholdFragment();
+    public static ManageThresholdFragment newInstance(int greenHouseId, MeasurementType type, Float minValue, Float maxValue) {
+        ManageThresholdFragment fragment = new ManageThresholdFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_GREENHOUSE_ID, greenHouseId);
         args.putSerializable(ARG_THRESHOLD_TYPE, type);
@@ -71,7 +65,7 @@ public class AddThresholdFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_threshold, container, false);
+        View view = inflater.inflate(R.layout.fragment_manage_threshold, container, false);
 
         spinnerThresholdType = view.findViewById(R.id.spinnerThresholdType);
         editTextMinValue = view.findViewById(R.id.editTextMinValue);
@@ -110,8 +104,11 @@ public class AddThresholdFragment extends Fragment {
         };
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerThresholdType.setAdapter(typeAdapter);
-        spinnerThresholdType.setSelection(typeAdapter.getPosition(thresholdType));
-        spinnerThresholdType.setEnabled(false);  // Disable the spinner to prevent changing the type
+
+        if (thresholdType != null) {
+            spinnerThresholdType.setSelection(typeAdapter.getPosition(thresholdType));
+            spinnerThresholdType.setEnabled(false);
+        }
 
         if (minValue != null) {
             editTextMinValue.setText(String.valueOf(minValue));
@@ -122,9 +119,20 @@ public class AddThresholdFragment extends Fragment {
 
         loadMeasurementLimits();
 
-        updateMinMaxHints(thresholdType);
-        updateTitleText(thresholdType);
-        updateLevelText(thresholdType);
+        spinnerThresholdType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                MeasurementType selectedType = (MeasurementType) parent.getItemAtPosition(position);
+                updateMinMaxHints(selectedType);
+                updateTitleText(selectedType);
+                updateLevelText(selectedType);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing
+            }
+        });
 
         buttonAddThreshold.setOnClickListener(v -> {
             String minValueStr = editTextMinValue.getText().toString();
@@ -135,18 +143,27 @@ public class AddThresholdFragment extends Fragment {
                 return;
             }
 
+            MeasurementType type = (MeasurementType) spinnerThresholdType.getSelectedItem();
             float minValue = Float.parseFloat(minValueStr);
             float maxValue = Float.parseFloat(maxValueStr);
 
-            if (!validateValues(thresholdType, minValue, maxValue)) {
+            if (!validateValues(type, minValue, maxValue)) {
                 return;
             }
 
-            Threshold threshold = new Threshold(thresholdType, minValue, maxValue, greenHouseId);
-            thresholdViewModel.insert(threshold);
-
-            // Navigate back to the previous fragment
-            getParentFragmentManager().popBackStack();
+            // Fetch threshold on a background thread
+            thresholdViewModel.getThresholdForGreenHouseByTypeLiveData(greenHouseId, type).observe(getViewLifecycleOwner(), existingThreshold -> {
+                if (existingThreshold != null) {
+                    existingThreshold.setMinValue(minValue);
+                    existingThreshold.setMaxValue(maxValue);
+                    thresholdViewModel.update(existingThreshold);
+                } else {
+                    Threshold threshold = new Threshold(type, minValue, maxValue, greenHouseId);
+                    thresholdViewModel.insert(threshold);
+                }
+                // Navigate back to the previous fragment
+                getParentFragmentManager().popBackStack();
+            });
         });
 
         return view;

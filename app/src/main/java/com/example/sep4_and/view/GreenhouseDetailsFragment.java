@@ -5,18 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sep4_and.R;
-import com.example.sep4_and.model.GreenHouse;
-import com.example.sep4_and.model.Measurement;
 import com.example.sep4_and.model.MeasurementType;
 import com.example.sep4_and.model.Threshold;
 import com.example.sep4_and.viewmodel.GreenHouseViewModel;
@@ -24,7 +20,6 @@ import com.example.sep4_and.viewmodel.MeasurementViewModel;
 import com.example.sep4_and.viewmodel.ThresholdViewModel;
 
 import java.util.List;
-import java.text.DecimalFormat;
 
 public class GreenhouseDetailsFragment extends Fragment {
 
@@ -122,16 +117,17 @@ public class GreenhouseDetailsFragment extends Fragment {
     }
 
     private void displayThresholds(View view, List<Threshold> thresholds) {
-        setThreshold(view, R.id.co2MinValue, R.id.co2MaxValue, R.id.co2AddButton, MeasurementType.CO2, thresholds);
-        setThreshold(view, R.id.humidityMinValue, R.id.humidityMaxValue, R.id.humidityAddButton, MeasurementType.HUMIDITY, thresholds);
-        setThreshold(view, R.id.tempMinValue, R.id.tempMaxValue, R.id.tempAddButton, MeasurementType.TEMPERATURE, thresholds);
-        setThreshold(view, R.id.lightMinValue, R.id.lightMaxValue, R.id.lightAddButton, MeasurementType.LIGHT, thresholds);
+        setThreshold(view, R.id.co2MinValue, R.id.co2MaxValue, R.id.co2AddButton, R.id.co2EditButton, MeasurementType.CO2, thresholds);
+        setThreshold(view, R.id.humidityMinValue, R.id.humidityMaxValue, R.id.humidityAddButton, R.id.humidityEditButton, MeasurementType.HUMIDITY, thresholds);
+        setThreshold(view, R.id.tempMinValue, R.id.tempMaxValue, R.id.tempAddButton, R.id.tempEditButton, MeasurementType.TEMPERATURE, thresholds);
+        setThreshold(view, R.id.lightMinValue, R.id.lightMaxValue, R.id.lightAddButton, R.id.lightEditButton, MeasurementType.LIGHT, thresholds);
     }
 
-    private void setThreshold(View view, int minId, int maxId, int buttonId, MeasurementType type, List<Threshold> thresholds) {
+    private void setThreshold(View view, int minId, int maxId, int addButtonId, int editButtonId, MeasurementType type, List<Threshold> thresholds) {
         TextView minValue = view.findViewById(minId);
         TextView maxValue = view.findViewById(maxId);
-        Button addButton = view.findViewById(buttonId);
+        Button addButton = view.findViewById(addButtonId);
+        Button editButton = view.findViewById(editButtonId);
 
         Threshold threshold = findThresholdByType(thresholds, type);
 
@@ -145,9 +141,10 @@ public class GreenhouseDetailsFragment extends Fragment {
 
             minValue.setVisibility(View.VISIBLE);
             maxValue.setVisibility(View.VISIBLE);
-            addButton.setText("Edit");
-            addButton.setOnClickListener(v -> {
-                AddThresholdFragment addThresholdFragment = AddThresholdFragment.newInstance(greenHouseId, type, threshold.getMinValue(), threshold.getMaxValue());
+            addButton.setVisibility(View.GONE);
+            editButton.setVisibility(View.VISIBLE);
+            editButton.setOnClickListener(v -> {
+                ManageThresholdFragment addThresholdFragment = ManageThresholdFragment.newInstance(greenHouseId, type, threshold.getMinValue(), threshold.getMaxValue());
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, addThresholdFragment)
                         .addToBackStack(null)
@@ -156,9 +153,10 @@ public class GreenhouseDetailsFragment extends Fragment {
         } else {
             minValue.setVisibility(View.GONE);
             maxValue.setVisibility(View.GONE);
-            addButton.setText("Add");
+            addButton.setVisibility(View.VISIBLE);
+            editButton.setVisibility(View.GONE);
             addButton.setOnClickListener(v -> {
-                AddThresholdFragment addThresholdFragment = AddThresholdFragment.newInstance(greenHouseId, type, null, null);
+                ManageThresholdFragment addThresholdFragment = ManageThresholdFragment.newInstance(greenHouseId, type, null, null);
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, addThresholdFragment)
                         .addToBackStack(null)
@@ -166,6 +164,7 @@ public class GreenhouseDetailsFragment extends Fragment {
             });
         }
     }
+
 
     private Threshold findThresholdByType(List<Threshold> thresholds, MeasurementType type) {
         for (Threshold threshold : thresholds) {
