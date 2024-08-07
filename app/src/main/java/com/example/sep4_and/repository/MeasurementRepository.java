@@ -34,4 +34,8 @@ public class MeasurementRepository {
     public LiveData<Measurement> getLatestMeasurementForType(int greenHouseId, MeasurementType type) {
         return measurementDao.getLatestMeasurementForType(greenHouseId, type);
     }
+
+    public LiveData<List<Measurement>> getMeasurementsForGreenHouseWithinDateRange(int greenHouseId, long startDate, long endDate) {
+        return measurementDao.getMeasurementsForGreenHouseWithinDateRange(greenHouseId, startDate, endDate);
+    }
 }

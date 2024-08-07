@@ -83,7 +83,7 @@ public class AddGreenHouseFragment extends Fragment {
             greenHouseViewModel.insert(greenHouse).observe(getViewLifecycleOwner(), greenHouseId -> {
                 if (greenHouseId != null) {
                     Log.d("AddGreenHouseFragment", "GreenHouse inserted with ID: " + greenHouseId);
-                    Toast.makeText(getActivity(), "GreenHouse added and paired with user", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "GreenHouse added", Toast.LENGTH_SHORT).show();
                     editTextName.setText("");
                     editTextLocation.setText("");
                     getParentFragmentManager().popBackStack();

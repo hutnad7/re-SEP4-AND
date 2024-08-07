@@ -21,4 +21,7 @@ public interface MeasurementDao {
 
     @Query("SELECT * FROM measurements WHERE greenHouseId = :greenHouseId AND type = :type ORDER BY timestamp DESC LIMIT 1")
     LiveData<Measurement> getLatestMeasurementForType(int greenHouseId, MeasurementType type);
+
+    @Query("SELECT * FROM measurements WHERE greenHouseId = :greenHouseId AND timestamp BETWEEN :startDate AND :endDate")
+    LiveData<List<Measurement>> getMeasurementsForGreenHouseWithinDateRange(int greenHouseId, long startDate, long endDate);
 }
