@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/dark_gray"
+    android:background="@color/deep_green"
     android:padding="16dp">
+
 
     <EditText
         android:id="@+id/editTextMessage"
@@ -13,14 +14,18 @@
         android:inputType="text"
         android:height="48dp"
         android:hint="@string/notification_message"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        android:layout_marginTop="72dp" />
 
-        />
 
     <LinearLayout
+        android:id="@+id/dateTimeButtonsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="2"
+        android:layout_below="@id/editTextMessage"
         android:layout_marginTop="8dp">
 
         <Button
@@ -28,16 +33,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/pick_date"
-            />
+            android:text="@string/pick_date" />
 
         <Button
             android:id="@+id/buttonPickTime"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/pick_time"
-            />
+            android:text="@string/pick_time" />
     </LinearLayout>
 
     <Switch
@@ -46,29 +49,19 @@
         android:layout_height="wrap_content"
         android:text="@string/recurrent"
         android:padding="3dp"
-        android:layout_marginTop="8dp" />
+        android:layout_below="@id/dateTimeButtonsLayout"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/white" />
 
-    <LinearLayout
+    <Button
+        android:id="@+id/buttonAddNotification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_marginTop="16dp">
-
-        <Button
-            android:id="@+id/buttonAddNotification"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/add_notification"
-            />
-
-        <Button
-            android:id="@+id/backButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/back"
-            />
-    </LinearLayout>
-</LinearLayout>
+        android:text="@string/add_notification"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="48dp"
+        android:padding="12dp"
+        android:background="@drawable/custom_button"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+</RelativeLayout>

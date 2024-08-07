@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,7 @@ public class ViewGreenHousesFragment extends Fragment {
     private TextView greenhouseCountTextView;
     private TextView helloTextView;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class ViewGreenHousesFragment extends Fragment {
         FrameLayout addButton = view.findViewById(R.id.addButton);
         greenhouseCountTextView = view.findViewById(R.id.greenhouseCount);
         helloTextView = view.findViewById(R.id.helloText);
+        FrameLayout settingsIcon = view.findViewById(R.id.settingsIcon);
 
         greenHouseViewModel = new ViewModelProvider(this).get(GreenHouseViewModel.class);
         measurementViewModel = new ViewModelProvider(this).get(MeasurementViewModel.class);
@@ -71,6 +74,8 @@ public class ViewGreenHousesFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         addButton.setOnClickListener(v -> navigateToFragment(new AddGreenHouseFragment()));
+
+        settingsIcon.setOnClickListener(v -> navigateToEditProfileFragment());
 
         userViewModel.getCurrentUser().observe(getViewLifecycleOwner(), currentUser -> {
             if (currentUser != null) {
@@ -127,5 +132,17 @@ public class ViewGreenHousesFragment extends Fragment {
         transaction.replace(R.id.fragment_container, fragment); // Replace current fragment
         transaction.addToBackStack(null); // Add to back stack to allow user to navigate back
         transaction.commit();
+    }
+
+    private void navigateToEditProfileFragment() {
+        userViewModel.getCurrentUser().observe(getViewLifecycleOwner(), currentUser -> {
+            if (currentUser != null) {
+                EditProfileFragment editProfileFragment = EditProfileFragment.newInstance(currentUser.getId());
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, editProfileFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
     }
 }

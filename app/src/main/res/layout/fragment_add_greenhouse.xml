@@ -1,24 +1,58 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/deep_green"
     android:padding="16dp">
+
+
+    <TextView
+        android:id="@+id/add_greenhouse_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:text="Add New Greenhouse"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textAlignment="viewStart" />
+
 
     <EditText
         android:id="@+id/editTextGreenHouseName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Greenhouse Name" />
+        android:layout_below="@id/add_greenhouse_title"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_background"
+        android:hint="Greenhouse Name"
+        android:padding="12dp"
+        android:textColor="@color/soft_blue_green"
+        android:textColorHint="@color/soft_blue_green" />
+
 
     <EditText
         android:id="@+id/editTextGreenHouseLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Location" />
+        android:layout_below="@id/editTextGreenHouseName"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_background"
+        android:hint="Location"
+        android:padding="12dp"
+        android:textColor="@color/soft_blue_green"
+        android:textColorHint="@color/soft_blue_green" />
 
     <Button
         android:id="@+id/buttonAddGreenHouse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Greenhouse" />
-</LinearLayout>
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="48dp"
+        android:background="@drawable/custom_button"
+        android:padding="16dp"
+        android:text="Add Greenhouse"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+</RelativeLayout>

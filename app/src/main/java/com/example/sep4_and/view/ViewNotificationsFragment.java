@@ -31,7 +31,6 @@ public class ViewNotificationsFragment extends Fragment {
     private UserViewModel userViewModel;
     private RecyclerView recyclerView;
     private NotificationAdapter adapter;
-    private Button backButton;
 
     @Nullable
     @Override
@@ -40,7 +39,6 @@ public class ViewNotificationsFragment extends Fragment {
 
         TextView pageTitle = view.findViewById(R.id.pageTitle);
         TextView pageDescription = view.findViewById(R.id.pageDescription);
-        backButton = view.findViewById(R.id.backButton);
         recyclerView = view.findViewById(R.id.recyclerViewNotifications);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -58,8 +56,6 @@ public class ViewNotificationsFragment extends Fragment {
                 });
             }
         });
-
-        backButton.setOnClickListener(v -> getActivity().onBackPressed());
 
         return view;
     }
