@@ -39,6 +39,7 @@ public class GreenhouseDetailsFragment extends Fragment {
     private TextView humidityValue;
     private TextView tempValue;
     private TextView lightValue;
+    private Button buttonHistoricalData;
 
     public static GreenhouseDetailsFragment newInstance(int greenHouseId) {
         GreenhouseDetailsFragment fragment = new GreenhouseDetailsFragment();
@@ -68,29 +69,30 @@ public class GreenhouseDetailsFragment extends Fragment {
         humidityValue = view.findViewById(R.id.humidityValue);
         tempValue = view.findViewById(R.id.tempValue);
         lightValue = view.findViewById(R.id.lightValue);
+        buttonHistoricalData = view.findViewById(R.id.buttonHistoricalData);
 
         greenHouseViewModel = new ViewModelProvider(this).get(GreenHouseViewModel.class);
         measurementViewModel = new ViewModelProvider(this).get(MeasurementViewModel.class);
 
-        greenHouseViewModel.getGreenHouseById(greenHouseId).observe(getViewLifecycleOwner(), new Observer<GreenHouse>() {
-            @Override
-            public void onChanged(GreenHouse greenHouse) {
-                if (greenHouse != null) {
-                    textViewGreenhouseTitle.setText(greenHouse.getName());
-                    textViewGreenhouseLocation.setText(greenHouse.getLocation());
-                }
+        greenHouseViewModel.getGreenHouseById(greenHouseId).observe(getViewLifecycleOwner(), greenHouse -> {
+            if (greenHouse != null) {
+                textViewGreenhouseTitle.setText(greenHouse.getName());
+                textViewGreenhouseLocation.setText(greenHouse.getLocation());
             }
         });
 
         thresholdViewModel = new ViewModelProvider(this).get(ThresholdViewModel.class);
-        thresholdViewModel.getThresholdsForGreenHouse(greenHouseId).observe(getViewLifecycleOwner(), new Observer<List<Threshold>>() {
-            @Override
-            public void onChanged(List<Threshold> thresholds) {
-                displayThresholds(view, thresholds);
-            }
-        });
+        thresholdViewModel.getThresholdsForGreenHouse(greenHouseId).observe(getViewLifecycleOwner(), thresholds -> displayThresholds(view, thresholds));
 
         loadLatestMeasurements();
+
+        buttonHistoricalData.setOnClickListener(v -> {
+            HistoricalDataFragment historicalDataFragment = HistoricalDataFragment.newInstance(greenHouseId);
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, historicalDataFragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
     }
 
     private void loadLatestMeasurements() {
@@ -143,13 +145,20 @@ public class GreenhouseDetailsFragment extends Fragment {
 
             minValue.setVisibility(View.VISIBLE);
             maxValue.setVisibility(View.VISIBLE);
-            addButton.setVisibility(View.GONE);
+            addButton.setText("Edit");
+            addButton.setOnClickListener(v -> {
+                AddThresholdFragment addThresholdFragment = AddThresholdFragment.newInstance(greenHouseId, type, threshold.getMinValue(), threshold.getMaxValue());
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, addThresholdFragment)
+                        .addToBackStack(null)
+                        .commit();
+            });
         } else {
             minValue.setVisibility(View.GONE);
             maxValue.setVisibility(View.GONE);
-            addButton.setVisibility(View.VISIBLE);
+            addButton.setText("Add");
             addButton.setOnClickListener(v -> {
-                AddThresholdFragment addThresholdFragment = AddThresholdFragment.newInstance(greenHouseId);
+                AddThresholdFragment addThresholdFragment = AddThresholdFragment.newInstance(greenHouseId, type, null, null);
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, addThresholdFragment)
                         .addToBackStack(null)

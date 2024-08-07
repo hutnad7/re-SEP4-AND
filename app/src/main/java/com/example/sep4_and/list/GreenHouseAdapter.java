@@ -16,6 +16,7 @@ import com.example.sep4_and.R;
 import com.example.sep4_and.model.GreenHouse;
 import com.example.sep4_and.model.MeasurementType;
 import com.example.sep4_and.model.Threshold;
+import com.example.sep4_and.utils.DialogHelper;
 import com.example.sep4_and.viewmodel.GreenHouseViewModel;
 
 import java.util.ArrayList;
@@ -65,30 +66,30 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_greenhouse, parent, false);
         return new GreenHouseViewHolder(itemView);
     }
+
+    //Setup dialog box
     private void showConfirmDeleteDialog(Context context, GreenHouse greenHouse) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View dialogView = inflater.inflate(R.layout.dialog_confirm_delete, null);
-        builder.setView(dialogView);
-
-        AlertDialog dialog = builder.create();
-
-        TextView dialogTitle = dialogView.findViewById(R.id.dialogTitle);
-        TextView dialogMessage = dialogView.findViewById(R.id.dialogMessage);
-        Button buttonCancel = dialogView.findViewById(R.id.buttonCancel);
-        Button buttonConfirm = dialogView.findViewById(R.id.buttonConfirm);
-
-        buttonCancel.setOnClickListener(v -> dialog.dismiss());
-
-        buttonConfirm.setOnClickListener(v -> {
-            if (onDeleteButtonClickListener != null) {
-                onDeleteButtonClickListener.onDeleteButtonClick(greenHouse);
-            }
-            dialog.dismiss();
-        });
-
-        dialog.show();
+        //Setup text
+        DialogHelper dialogHelper = new DialogHelper(
+                context,
+                "Remove Greenhouse",
+                "Are you sure you want to remove this greenhouse?",
+                "Cancel",
+                "Remove"
+        );
+        //Setup functionality
+        dialogHelper.showDialogWithObject(
+                () -> {
+                    if (onDeleteButtonClickListener != null) {
+                        onDeleteButtonClickListener.onDeleteButtonClick(greenHouse);
+                    }
+                },
+                () -> {
+                    // Do nothing if cancel
+                }
+        );
     }
+
     @Override
     public void onBindViewHolder(@NonNull GreenHouseViewHolder holder, int position) {
         GreenHouse currentGreenHouse = greenHouses.get(position);
@@ -130,6 +131,7 @@ public class GreenHouseAdapter extends RecyclerView.Adapter<GreenHouseAdapter.Gr
             }
         });
 
+        //Dialog box called
         holder.buttonDeleteGreenHouse.setOnClickListener(v -> showConfirmDeleteDialog(holder.itemView.getContext(), currentGreenHouse));
 
 

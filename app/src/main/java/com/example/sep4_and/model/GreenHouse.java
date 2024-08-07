@@ -73,4 +73,9 @@ public class GreenHouse {
     public void setThresholds(List<Threshold> thresholds) {
         this.thresholds = thresholds;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

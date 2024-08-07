@@ -111,6 +111,7 @@ public class DashBoardFragment extends Fragment {
     private void onViewMeasurementsButtonClick(GreenHouse greenHouse) {
         measurementViewModel.getMeasurementsForGreenHouse(greenHouse.getId()).observe(getViewLifecycleOwner(), measurements -> {
             if (measurements == null || measurements.isEmpty()) {
+                //TODO: Remove dummy Measurement
                 Measurement fictitiousMeasurement = new Measurement(MeasurementType.TEMPERATURE, 0.0f, new Date(), greenHouse.getId());
                 measurementViewModel.insert(fictitiousMeasurement);
             } else {
@@ -124,8 +125,18 @@ public class DashBoardFragment extends Fragment {
         greenHouseViewModel.delete(greenHouse);
     }
 
+    //Setup dialog box
     private void showLogoutDialog() {
-        DialogHelper.showLogoutDialog(getContext(), this::logout);
+        //Setup dialog text
+        DialogHelper dialogHelper = new DialogHelper(
+                getContext(),
+                "Confirm Logout",
+                "Are you sure you want to logout?",
+                "Cancel",
+                "Confirm"
+        );
+        //Dialog
+        dialogHelper.showDialog(this::logout);
     }
 
     private void navigateToFragment(Fragment fragment) {
