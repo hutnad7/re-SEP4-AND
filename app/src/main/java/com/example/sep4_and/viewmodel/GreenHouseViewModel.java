@@ -6,29 +6,39 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.sep4_and.model.GreenHouseDetailed;
+import com.example.sep4_and.model.GreenHouse;
+import com.example.sep4_and.model.Measurement;
+import com.example.sep4_and.model.MeasurementType;
 import com.example.sep4_and.repository.GreenHouseRepository;
-import com.example.sep4_and.utils.TokenManager;
+import com.example.sep4_and.repository.MeasurementRepository;
 
 import java.util.List;
 
 public class GreenHouseViewModel extends AndroidViewModel {
-    private final GreenHouseRepository repository;
-    private LiveData<List<GreenHouseDetailed>> greenhouses;
+    private GreenHouseRepository repository;
+    private MeasurementRepository measurementRepository;
 
     public GreenHouseViewModel(@NonNull Application application) {
         super(application);
         repository = new GreenHouseRepository(application);
-        greenhouses = repository.getUserGreenhouses(Integer.parseInt(TokenManager.getToken()));
+        measurementRepository = new MeasurementRepository(application);
     }
 
-    public LiveData<List<GreenHouseDetailed>> getGreenhouses() {
-        greenhouses = repository.getUserGreenhouses(Integer.parseInt(TokenManager.getToken()));
-
-        return greenhouses;
+    public LiveData<Long> insert(GreenHouse greenHouse) {
+        return repository.insert(greenHouse);
     }
 
-    public LiveData<GreenHouseDetailed> getGreenHouseById(int id) {
-        return repository.getGreenHouseById(id);
+    public LiveData<List<GreenHouse>> getGreenHousesByUserId(int userId) {
+        return repository.getGreenHousesByUserId(userId);
+    }
+    public LiveData<Measurement> getLatestMeasurementForType(int greenHouseId, MeasurementType type) {
+        return measurementRepository.getLatestMeasurementForType(greenHouseId, type);
+    }
+    public void delete(GreenHouse greenHouse) {
+        repository.delete(greenHouse);
+    }
+
+    public LiveData<GreenHouse> getGreenHouseById(int greenHouseId) {
+        return repository.getGreenHouseById(greenHouseId);
     }
 }

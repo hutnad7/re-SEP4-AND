@@ -3,20 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="8dp"
+   android:layout_marginBottom="8dp"
+    android:background="@drawable/stroke">
 
     <TextView
         android:id="@+id/textViewMeasurementType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/white"/>
 
     <TextView
         android:id="@+id/textViewMeasurementValue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textColor="@color/light_gray"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,12 +32,14 @@
             android:id="@+id/textViewMeasurementDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textColor="@color/light_gray"/>
 
         <TextView
             android:id="@+id/textViewMeasurementTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textColor="@color/light_gray"/>
     </LinearLayout>
 </LinearLayout>

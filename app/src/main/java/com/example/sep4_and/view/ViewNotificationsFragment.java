@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -18,6 +21,7 @@ import com.example.sep4_and.model.Notification;
 import com.example.sep4_and.model.User;
 import com.example.sep4_and.viewmodel.NotificationViewModel;
 import com.example.sep4_and.viewmodel.UserViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -28,38 +32,45 @@ public class ViewNotificationsFragment extends Fragment {
     private UserViewModel userViewModel;
     private RecyclerView recyclerView;
     private NotificationAdapter adapter;
-    private List<User> users;
+    private FloatingActionButton fabAddNotification;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_notifications, container, false);
 
-        recyclerView = view.findViewById(R.id.recyclerViewNotifications);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        TextView pageTitle = view.findViewById(R.id.pageTitle);
+        TextView pageDescription = view.findViewById(R.id.pageDescription);
 
+        recyclerView = view.findViewById(R.id.recyclerViewNotifications);
+        fabAddNotification = view.findViewById(R.id.fabAddNotification);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new NotificationAdapter();
         recyclerView.setAdapter(adapter);
 
         notificationViewModel = new ViewModelProvider(this).get(NotificationViewModel.class);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
-        userViewModel.getAllUsers().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
-            @Override
-            public void onChanged(List<User> userList) {
-                users = userList;
-                if (users != null && !users.isEmpty()) {
-                    User latestUser = users.get(users.size() - 1);
-                    notificationViewModel.getNotificationsForUser(latestUser.getId()).observe(getViewLifecycleOwner(), new Observer<List<Notification>>() {
-                        @Override
-                        public void onChanged(List<Notification> notifications) {
-                            adapter.setNotifications(notifications);
-                        }
-                    });
-                }
+        // Observe the current user and fetch notifications for that user
+        userViewModel.getCurrentUser().observe(getViewLifecycleOwner(), currentUser -> {
+            if (currentUser != null) {
+                notificationViewModel.getNotificationsForUser(currentUser.getId()).observe(getViewLifecycleOwner(), notifications -> {
+                    adapter.setNotifications(notifications);
+                });
             }
         });
 
+        fabAddNotification.setOnClickListener(v -> navigateToAddNotificationFragment());
+
         return view;
+    }
+
+    private void navigateToAddNotificationFragment() {
+        AddNotificationFragment addNotificationFragment = new AddNotificationFragment();
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, addNotificationFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

@@ -9,7 +9,7 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
-import com.example.sep4_and.model.DbCrossReference.UserWithGreenHouses;
+
 import com.example.sep4_and.model.User;
 
 import java.util.List;
@@ -22,13 +22,18 @@ public interface UserDao {
     @Query("SELECT * FROM users")
     LiveData<List<User>> getAllUsers();
 
-    @Transaction
-    @Query("SELECT * FROM users")
-    LiveData<List<UserWithGreenHouses>> getUsersWithGreenHouses();
+    @Query("SELECT * FROM users WHERE email = :email AND password = :password LIMIT 1")
+    LiveData<User> login(String email, String password);
 
-    @Query("SELECT * FROM users WHERE email = :email LIMIT 1")
-    LiveData<User> login(String email);
+    @Query("SELECT * FROM users WHERE email = :email AND password = :password LIMIT 1")
+    User loginSync(String email, String password);
 
     @Query("SELECT * FROM users WHERE email = :email")
     User getUser(String email);
+
+    @Query("SELECT * FROM users WHERE id = :userId LIMIT 1")
+    User getUserById(int userId);
+
+    @Update
+    void update(User user);
 }

@@ -24,7 +24,6 @@ public class MeasurementsFragment extends Fragment {
 
     private TextView textViewGreenHouseName;
     private RecyclerView recyclerViewMeasurements;
-    private Button buttonBackToMain;
     private MeasurementAdapter measurementAdapter;
 
     @Nullable
@@ -34,7 +33,6 @@ public class MeasurementsFragment extends Fragment {
 
         textViewGreenHouseName = view.findViewById(R.id.textViewGreenHouseName);
         recyclerViewMeasurements = view.findViewById(R.id.recyclerViewMeasurements);
-        buttonBackToMain = view.findViewById(R.id.buttonBackToMain);
 
         // Hardcoded data for testing
         String greenHouseName = "Test GreenHouse";
@@ -50,12 +48,6 @@ public class MeasurementsFragment extends Fragment {
         recyclerViewMeasurements.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewMeasurements.setAdapter(measurementAdapter);
 
-        buttonBackToMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requireActivity().getSupportFragmentManager().popBackStack();
-            }
-        });
 
         return view;
     }

@@ -49,7 +49,7 @@ public class ThresholdAdapter extends RecyclerView.Adapter<ThresholdAdapter.Thre
 
     @Override
     public int getItemCount() {
-        return thresholds.size();
+        return thresholds != null ? thresholds.size() : 0;
     }
 
     public void setThresholds(List<Threshold> thresholds) {

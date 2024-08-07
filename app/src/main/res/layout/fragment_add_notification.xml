@@ -1,37 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/deep_green"
     android:padding="16dp">
 
     <EditText
         android:id="@+id/editTextMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Message" />
+        android:inputType="text"
+        android:height="48dp"
+        android:hint="@string/notification_message"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        android:layout_marginTop="72dp" />
 
-    <Button
-        android:id="@+id/buttonPickDate"
+    <LinearLayout
+        android:id="@+id/dateTimeButtonsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pick Date" />
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_below="@id/editTextMessage"
+        android:layout_marginTop="8dp">
 
-    <Button
-        android:id="@+id/buttonPickTime"
+        <Button
+            android:id="@+id/buttonPickDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/pick_date" />
+
+        <Button
+            android:id="@+id/buttonPickTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/pick_time" />
+    </LinearLayout>
+
+    <Switch
+        android:id="@+id/switchRecurrent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pick Time" />
+        android:text="@string/recurrent"
+        android:padding="3dp"
+        android:layout_below="@id/dateTimeButtonsLayout"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/white" />
 
-    <CheckBox
-        android:id="@+id/checkBoxRecurrent"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Recurrent" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="64dp"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/buttonAddNotification"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Notification" />
-</LinearLayout>
+        <Button
+            android:id="@+id/buttonAddNotification"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/custom_button"
+            android:padding="12dp"
+            android:text="@string/add_notification"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+</RelativeLayout>

@@ -1,14 +1,65 @@
 <resources>
     <string name="measurements">Measurements</string>
+
     <string name="temperature">Temperature </string>
     <string name="lighting">Lighting</string>
     <string name="co2">Co2</string>
-    <string name="add_threshold">Add Threshold</string>
-    <string name="empty"></string>
-    <string name="Lorem_ipsum">Lorem ipsum dolor sit amet, ea mel consul definitiones reprehendunt, ne detraxit rationibus quo. Pro te facer latine pertinax</string>
     <string name="humidity">Humidity</string>
+
+    <string name="dialog_delete">Are you sure you want to delete this greenhouse?</string>
+    <string name="dialog_logout">Are you sure you want to Logout</string>
+
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="back">Back</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+
+
+    <string name="waver_warning">The entered data is not encrypted, so please be cautious with the entered information.
+        We highly suggest to enter fake/placeholder values.</string>
+    <string name="personal_information">Personal information</string>
+    <string name="existing_account">Already have an account? Log in</string>
+    <string name="create_account">Create an account</string>
+
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="Date">Date</string>
+    <string name="empty"></string>
+    <string name="replaced">Text to be replaced</string>
+    <string name="Lorem_ipsum">Lorem ipsum dolor sit amet, ea mel consul definitiones reprehendunt, ne detraxit rationibus quo. Pro te facer latine pertinax</string>
+
+    <string name="name">Name</string>
+    <string name="location">Location</string>
+
+
+    <string name="set_level">Set Level</string>
+    <string name="minimum">Minimum</string>
+    <string name="maximum">Maximum</string>
     <string name="last_record">Latest record:</string>
     <string name="data_not_loaded_title">Title not loaded</string>
+
+
+    <string name="your_notifications">Your notifications</string>
+    <string name="notification">Notification</string>
+    <string name="notification_message">Message</string>
+    <string name="pick_date">Pick a date</string>
+    <string name="pick_time">Pick a time</string>
+    <string name="recurrent">Recurrent</string>
+
+    <string name="add_threshold">Add Threshold</string>
+    <string name="add_notification">Add Notification</string>
+    <string name="add_greenhouse">Add Greenhouse</string>
+
+    <string name="delete">Delete</string>
+    <string name="remove">Remove</string>
+    <string name="edit">Edit</string>
+
+    <string name="details">Details:</string>
+
     <string name="app_name">SEP4-AND</string>
     <string name="co2_value">CO2: %d ppm</string>
     <!-- TODO: Remove or change this placeholder text -->

@@ -11,7 +11,6 @@ import java.util.List;
 
 public class NotificationViewModel extends AndroidViewModel {
     private NotificationRepository repository;
-    private LiveData<List<Notification>> notifications;
 
     public NotificationViewModel(Application application) {
         super(application);

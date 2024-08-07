@@ -3,7 +3,6 @@ package com.example.sep4_and.view;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,42 +17,47 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.HashMap;
-import java.util.List;
 
 import com.example.sep4_and.R;
-import com.example.sep4_and.model.GreenHouse;
 import com.example.sep4_and.model.MeasurementType;
 import com.example.sep4_and.model.Threshold;
-import com.example.sep4_and.viewmodel.GreenHouseViewModel;
 import com.example.sep4_and.viewmodel.ThresholdViewModel;
 
-import java.util.List;
 import java.util.Map;
 
-public class AddThresholdFragment extends Fragment {
+public class ManageThresholdFragment extends Fragment {
 
     private static final String ARG_GREENHOUSE_ID = "greenhouse_id";
+    private static final String ARG_THRESHOLD_TYPE = "threshold_type";
+    private static final String ARG_MIN_VALUE = "min_value";
+    private static final String ARG_MAX_VALUE = "max_value";
+
+    private int greenHouseId;
+    private MeasurementType thresholdType;
+    private Float minValue;
+    private Float maxValue;
 
     private Spinner spinnerThresholdType;
     private EditText editTextMinValue;
     private EditText editTextMaxValue;
     private Button buttonAddThreshold;
-    private ThresholdViewModel thresholdViewModel;
-    private int greenHouseId;
     private TextView textViewTitle;
     private TextView textViewSetLevels;
+    private ThresholdViewModel thresholdViewModel;
 
     private Map<MeasurementType, Float> minValues;
     private Map<MeasurementType, Float> maxValues;
 
-    public static AddThresholdFragment newInstance(int greenHouseId) {
-        AddThresholdFragment fragment = new AddThresholdFragment();
+    public static ManageThresholdFragment newInstance(int greenHouseId, MeasurementType type, Float minValue, Float maxValue) {
+        ManageThresholdFragment fragment = new ManageThresholdFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_GREENHOUSE_ID, greenHouseId);
+        args.putSerializable(ARG_THRESHOLD_TYPE, type);
+        if (minValue != null) args.putFloat(ARG_MIN_VALUE, minValue);
+        if (maxValue != null) args.putFloat(ARG_MAX_VALUE, maxValue);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,7 +65,7 @@ public class AddThresholdFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_threshold, container, false);
+        View view = inflater.inflate(R.layout.fragment_manage_threshold, container, false);
 
         spinnerThresholdType = view.findViewById(R.id.spinnerThresholdType);
         editTextMinValue = view.findViewById(R.id.editTextMinValue);
@@ -69,6 +73,19 @@ public class AddThresholdFragment extends Fragment {
         buttonAddThreshold = view.findViewById(R.id.buttonAddThreshold);
         textViewTitle = view.findViewById(R.id.textViewTitle);
         textViewSetLevels = view.findViewById(R.id.textViewSetLevels);
+
+        thresholdViewModel = new ViewModelProvider(this).get(ThresholdViewModel.class);
+
+        if (getArguments() != null) {
+            greenHouseId = getArguments().getInt(ARG_GREENHOUSE_ID);
+            thresholdType = (MeasurementType) getArguments().getSerializable(ARG_THRESHOLD_TYPE);
+            if (getArguments().containsKey(ARG_MIN_VALUE)) {
+                minValue = getArguments().getFloat(ARG_MIN_VALUE);
+            }
+            if (getArguments().containsKey(ARG_MAX_VALUE)) {
+                maxValue = getArguments().getFloat(ARG_MAX_VALUE);
+            }
+        }
 
         ArrayAdapter<MeasurementType> typeAdapter = new ArrayAdapter<MeasurementType>(requireContext(), android.R.layout.simple_spinner_item, MeasurementType.values()) {
             @Override
@@ -88,16 +105,20 @@ public class AddThresholdFragment extends Fragment {
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerThresholdType.setAdapter(typeAdapter);
 
-        thresholdViewModel = new ViewModelProvider(this).get(ThresholdViewModel.class);
-
-        if (getArguments() != null) {
-            greenHouseId = getArguments().getInt(ARG_GREENHOUSE_ID);
+        if (thresholdType != null) {
+            spinnerThresholdType.setSelection(typeAdapter.getPosition(thresholdType));
+            spinnerThresholdType.setEnabled(false);
         }
 
-        // Load min and max values from resources
+        if (minValue != null) {
+            editTextMinValue.setText(String.valueOf(minValue));
+        }
+        if (maxValue != null) {
+            editTextMaxValue.setText(String.valueOf(maxValue));
+        }
+
         loadMeasurementLimits();
 
-        // Set up the spinner item selected listener to update hints and text
         spinnerThresholdType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -113,31 +134,36 @@ public class AddThresholdFragment extends Fragment {
             }
         });
 
-        buttonAddThreshold.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String minValueStr = editTextMinValue.getText().toString();
-                String maxValueStr = editTextMaxValue.getText().toString();
+        buttonAddThreshold.setOnClickListener(v -> {
+            String minValueStr = editTextMinValue.getText().toString();
+            String maxValueStr = editTextMaxValue.getText().toString();
 
-                if (TextUtils.isEmpty(minValueStr) || TextUtils.isEmpty(maxValueStr)) {
-                    Toast.makeText(getContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                    return;
+            if (TextUtils.isEmpty(minValueStr) || TextUtils.isEmpty(maxValueStr)) {
+                Toast.makeText(getContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            MeasurementType type = (MeasurementType) spinnerThresholdType.getSelectedItem();
+            float minValue = Float.parseFloat(minValueStr);
+            float maxValue = Float.parseFloat(maxValueStr);
+
+            if (!validateValues(type, minValue, maxValue)) {
+                return;
+            }
+
+            // Fetch threshold on a background thread
+            thresholdViewModel.getThresholdForGreenHouseByTypeLiveData(greenHouseId, type).observe(getViewLifecycleOwner(), existingThreshold -> {
+                if (existingThreshold != null) {
+                    existingThreshold.setMinValue(minValue);
+                    existingThreshold.setMaxValue(maxValue);
+                    thresholdViewModel.update(existingThreshold);
+                } else {
+                    Threshold threshold = new Threshold(type, minValue, maxValue, greenHouseId);
+                    thresholdViewModel.insert(threshold);
                 }
-
-                MeasurementType type = (MeasurementType) spinnerThresholdType.getSelectedItem();
-                float minValue = Float.parseFloat(minValueStr);
-                float maxValue = Float.parseFloat(maxValueStr);
-
-                if (!validateValues(type, minValue, maxValue)) {
-                    return;
-                }
-
-                Threshold threshold = new Threshold(type, minValue, maxValue, greenHouseId);
-                thresholdViewModel.insert(threshold);
-
                 // Navigate back to the previous fragment
                 getParentFragmentManager().popBackStack();
-            }
+            });
         });
 
         return view;

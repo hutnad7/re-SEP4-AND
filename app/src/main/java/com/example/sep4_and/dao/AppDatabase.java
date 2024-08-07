@@ -7,7 +7,7 @@ import androidx.room.TypeConverters;
 import android.content.Context;
 
 import com.example.sep4_and.convertors.DateConverter;
-import com.example.sep4_and.model.DbCrossReference.GreenHouseUserCrossRef;
+
 import com.example.sep4_and.model.GreenHouse;
 import com.example.sep4_and.model.Measurement;
 import com.example.sep4_and.convertors.MeasurementTypeConverter;
@@ -23,7 +23,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import android.content.Context;
 
-@Database(entities = {User.class, GreenHouse.class, GreenHouseUserCrossRef.class, Measurement.class, Threshold.class, Notification.class}, version = 14, exportSchema = false)
+@Database(entities = {User.class, GreenHouse.class, Measurement.class, Threshold.class, Notification.class}, version = 17, exportSchema = false)
 @TypeConverters({MeasurementTypeConverter.class, DateConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     private static volatile AppDatabase INSTANCE;
