@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (savedInstanceState == null) {
-            loadFragment(new MainPageFragment());
+            loadFragment(new DashBoardFragment());
         }
 
         setupToolbar();
