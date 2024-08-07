@@ -4,57 +4,55 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    android:background="@drawable/stroke">
-
+    android:background="@drawable/stroke"
+    android:padding="16dp"
+    android:layout_marginBottom="8dp"
+    android:elevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="4dp">
-
-        <ImageView
-            android:id="@+id/imageViewWarning"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center_vertical"
-            app:srcCompat="@drawable/baseline_warning_amber_24" />
+        android:gravity="center_vertical"
+        android:paddingBottom="8dp">
 
         <TextView
             android:id="@+id/textViewNotificationType"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|center"
+            android:layout_weight="1"
             android:text="@string/notification"
-            android:textColor="@android:color/holo_red_dark"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/soft_blue_green"
+            android:paddingEnd="8dp" />
 
         <TextView
             android:id="@+id/textViewNotificationDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:text="@string/Date"
+            android:textColor="@color/soft_blue_green"
             android:textSize="14sp"
-            android:textColor="@android:color/black" />
-
+            android:gravity="end" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="4dp"
-        android:background="@drawable/rounded_background">
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:background="@drawable/rounded_corners"
+        android:elevation="2dp">
 
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/baseline_notifications_24" />
+            android:src="@drawable/baseline_notifications_24"
+            app:tint="@color/soft_blue_green"
+            android:layout_marginRight="16dp" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -68,20 +66,19 @@
                 android:id="@+id/textViewNotificationMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:text="@string/replaced"
-                android:textColor="@android:color/black"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@android:color/white" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/textViewNotificationRecurrent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:text="@string/replaced"
-            android:textSize="14sp"
-            android:textColor="@android:color/black"
-            android:layout_gravity="center_vertical" />
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
     </LinearLayout>
 </LinearLayout>

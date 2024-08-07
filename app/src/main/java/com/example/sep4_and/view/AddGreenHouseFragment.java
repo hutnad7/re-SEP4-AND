@@ -86,6 +86,7 @@ public class AddGreenHouseFragment extends Fragment {
                     Toast.makeText(getActivity(), "GreenHouse added and paired with user", Toast.LENGTH_SHORT).show();
                     editTextName.setText("");
                     editTextLocation.setText("");
+                    getParentFragmentManager().popBackStack();
                 } else {
                     Log.d("AddGreenHouseFragment", "Failed to insert GreenHouse");
                     Toast.makeText(getActivity(), "Failed to add GreenHouse", Toast.LENGTH_SHORT).show();
