@@ -65,4 +65,9 @@ public class UserViewModel extends AndroidViewModel {
     public LiveData<User> register(RegisterRequest registerRequest) {
         return repository.register(registerRequest);
     }
+
+
+    public void updateUserDetails(String firstName, String lastName, String email, String password) {
+        repository.updateUserDetails( firstName, lastName, email, password);
+    }
 }

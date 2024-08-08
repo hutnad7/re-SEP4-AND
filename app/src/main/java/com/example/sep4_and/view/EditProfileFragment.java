@@ -12,9 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.sep4_and.R;
 import com.example.sep4_and.dao.AppDatabase;
 import com.example.sep4_and.model.User;
+import com.example.sep4_and.viewmodel.UserViewModel;
 
 public class EditProfileFragment extends Fragment {
 
@@ -26,8 +29,7 @@ public class EditProfileFragment extends Fragment {
     private EditText passwordEditText;
     private Button saveChangesButton;
 
-    private AppDatabase appDatabase;
-    private User user;
+    private UserViewModel userViewModel;
     private int userId;
 
     public static EditProfileFragment newInstance(int userId) {
@@ -44,7 +46,7 @@ public class EditProfileFragment extends Fragment {
         if (getArguments() != null) {
             userId = getArguments().getInt(ARG_USER_ID);
         }
-        appDatabase = AppDatabase.getDatabase(requireActivity());
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
     }
 
     @Nullable
@@ -53,7 +55,7 @@ public class EditProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
 
         initViews(view);
-        loadUser(userId);
+        loadUser();
 
         saveChangesButton.setOnClickListener(v -> saveProfileChanges());
 
@@ -68,8 +70,17 @@ public class EditProfileFragment extends Fragment {
         saveChangesButton = view.findViewById(R.id.save_changes_button);
     }
 
-    private void loadUser(int userId) {
-        new LoadUserTask().execute(userId);
+    private void loadUser() {
+        userViewModel.getUser().observe(getViewLifecycleOwner(), user -> {
+            if (user != null) {
+                firstNameEditText.setText(user.getFirstName());
+                lastNameEditText.setText(user.getLastName());
+                emailEditText.setText(user.getEmail());
+                passwordEditText.setText(user.getPassword());
+            } else {
+                Toast.makeText(getActivity(), "Failed to load user. Please try again.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void saveProfileChanges() {
@@ -79,15 +90,9 @@ public class EditProfileFragment extends Fragment {
         String password = passwordEditText.getText().toString().trim();
 
         if (isValidInput(firstName, lastName, email, password)) {
-            if (user == null) {
-                Toast.makeText(getActivity(), "User not loaded. Please try again.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-            user.setEmail(email);
-            user.setPassword(password);
-            new UpdateUserTask().execute(user);
+            userViewModel.updateUserDetails( firstName, lastName, email, password);
+            Toast.makeText(getActivity(), "Profile updated successfully", Toast.LENGTH_SHORT).show();
+            getParentFragmentManager().popBackStack();
         } else {
             Toast.makeText(getActivity(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
         }
@@ -95,55 +100,5 @@ public class EditProfileFragment extends Fragment {
 
     private boolean isValidInput(String firstName, String lastName, String email, String password) {
         return !firstName.isEmpty() && !lastName.isEmpty() && !email.isEmpty() && !password.isEmpty();
-    }
-
-    private class LoadUserTask extends AsyncTask<Integer, Void, User> {
-        @Override
-        protected User doInBackground(Integer... userIds) {
-            if (userIds.length > 0) {
-                int userId = userIds[0];
-                Log.d("LoadUserTask", "Querying user with ID: " + userId);
-                User user = appDatabase.userDao().getUserById(userId);
-                if (user != null) {
-                    Log.d("LoadUserTask", "User found: " + user.getFirstName() + " " + user.getLastName());
-                } else {
-                    Log.d("LoadUserTask", "No user found with ID: " + userId);
-                }
-                return user;
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(User loadedUser) {
-            if (loadedUser != null) {
-                user = loadedUser;
-                firstNameEditText.setText(user.getFirstName());
-                lastNameEditText.setText(user.getLastName());
-                emailEditText.setText(user.getEmail());
-                passwordEditText.setText(user.getPassword());
-            } else {
-                Toast.makeText(getActivity(), "Failed to load user. Please try again.", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    private class UpdateUserTask extends AsyncTask<User, Void, Void> {
-        @Override
-        protected Void doInBackground(User... users) {
-            appDatabase.userDao().update(users[0]);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            showToastAndGoBack("Profile updated successfully");
-        }
-    }
-
-    private void showToastAndGoBack(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        fragmentManager.popBackStack();
     }
 }
