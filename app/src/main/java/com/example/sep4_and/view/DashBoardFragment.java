@@ -87,7 +87,14 @@ public class DashBoardFragment extends Fragment {
         floatingActionAddGreenhouse.setOnClickListener(v -> navigateToFragment(new AddGreenHouseFragment()));
         logoutButton.setOnClickListener(v -> showLogoutDialog());
         notificationIcon.setOnClickListener(v -> navigateToFragment(new ViewNotificationsFragment()));
-        settingsIcon.setOnClickListener(v -> navigateToFragment(new EditProfileFragment())); // Add this line
+        settingsIcon.setOnClickListener(v -> {
+            userViewModel.getCurrentUser().observe(getViewLifecycleOwner(), currentUser -> {
+                if (currentUser != null) {
+                    EditProfileFragment editProfileFragment = EditProfileFragment.newInstance(currentUser.getId());
+                    navigateToFragment(editProfileFragment);
+                }
+            });
+        });
 
         return view;
     }
