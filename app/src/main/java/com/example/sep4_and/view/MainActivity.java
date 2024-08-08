@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (TokenManager.getToken() == null) {
-            redirectToLogin();
+            loadFragment(new LaunchFragment());
             return;
         }
 

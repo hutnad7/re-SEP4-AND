@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/deep_green">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/deep_green"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/launchImage"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@drawable/greenhouse"
+            android:adjustViewBounds="true"/>
+
+        <TextView
+            android:id="@+id/pageTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp"
+            android:text="Manage your Greenhouses"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/pageDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/launch"
+            android:textSize="17sp"
+            android:textColor="@color/soft_blue_green"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Login"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/soft_blue_green"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/signupButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create an account"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:backgroundTint="@color/soft_blue_green" />
+    </LinearLayout>
+</FrameLayout>

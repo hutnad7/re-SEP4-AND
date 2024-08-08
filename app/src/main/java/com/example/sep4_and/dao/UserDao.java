@@ -34,6 +34,6 @@ public interface UserDao {
     @Query("SELECT * FROM users WHERE id = :userId LIMIT 1")
     User getUserById(int userId);
 
-    @Update
-    void update(User user);
+    @Query("UPDATE users SET firstName = :firstName, lastName = :lastName, email = :email, password = :password ")
+    void updateUserDetails(String firstName, String lastName, String email, String password);
 }

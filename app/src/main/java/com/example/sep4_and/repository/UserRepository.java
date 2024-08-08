@@ -135,4 +135,11 @@ public class UserRepository {
             return registerResult;
         }
     }
+
+    public void updateUserDetails( String firstName, String lastName, String email, String password) {
+        executorService.execute(() -> {
+            userDao.updateUserDetails( firstName, lastName, email, password);
+            Log.d("UserRepository", "User details updated for user: " + firstName);
+        });
+    }
 }

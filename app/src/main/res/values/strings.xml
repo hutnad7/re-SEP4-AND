@@ -35,6 +35,8 @@
     <string name="threshold">Set and adjust optimal ranges for temperature, humidity, Co2, and light.</string>
     <string name="name">Name</string>
     <string name="location">Location</string>
+    <string name="launch">Easily monitor and manage your greenhouse with precise measurement thresholds. Optimize growth and efficiency with our smart solutions.</string>
+
 
 
     <string name="set_level">Set Level</string>
