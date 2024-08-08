@@ -9,11 +9,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.sep4_and.R;
 import com.example.sep4_and.utils.SharedPreferencesManager;
 import com.example.sep4_and.utils.TokenManager;
-
 
 public class MainActivity extends AppCompatActivity {
     private SharedPreferencesManager sharedPreferencesManager;
@@ -54,10 +54,21 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportFragmentManager().addOnBackStackChangedListener(() -> updateToolbar());
+
+        updateToolbar();
+    }
+
+    private void updateToolbar() {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_24); // Your back arrow drawable
+            if (currentFragment instanceof DashBoardFragment) {
+                actionBar.setDisplayHomeAsUpEnabled(false);
+            } else {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_24); // Your back arrow drawable
+            }
         }
     }
 
@@ -82,7 +93,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null); // Add this to handle the back stack
+        transaction.commit();
     }
 
     private void redirectToLogin() {

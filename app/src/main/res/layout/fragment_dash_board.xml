@@ -19,6 +19,7 @@
         android:clickable="true"
         app:backgroundTint="@color/mid_deep_green"
         app:srcCompat="@drawable/baseline_add_circle_outline_24"
+        app:tint="@color/soft_blue_green"
         />
 
     <RelativeLayout
@@ -37,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="@string/replaced"
             android:textColor="@color/white"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:layout_marginBottom="8dp" />
 
         <FrameLayout
@@ -102,7 +103,7 @@
             android:layout_height="wrap_content"
             android:text="@string/replaced"
             android:textColor="@color/soft_blue_green"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:layout_below="@id/helloText"
             android:layout_marginBottom="16dp" />
     </RelativeLayout>

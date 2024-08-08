@@ -30,8 +30,9 @@
     <string name="Date">Date</string>
     <string name="empty"></string>
     <string name="replaced">Text to be replaced</string>
+    <string name="NotificationText">Stay informed about your greenhouse with the latest updates, reminders, and alerts. Check back regularly to ensure your plants are thriving.</string>
     <string name="Lorem_ipsum">Lorem ipsum dolor sit amet, ea mel consul definitiones reprehendunt, ne detraxit rationibus quo. Pro te facer latine pertinax</string>
-
+    <string name="threshold">Set and adjust optimal ranges for temperature, humidity, Co2, and light.</string>
     <string name="name">Name</string>
     <string name="location">Location</string>
 
@@ -60,7 +61,7 @@
 
     <string name="details">Details:</string>
 
-    <string name="app_name">SEP4-AND</string>
+    <string name="app_name">GreenHouse</string>
     <string name="co2_value">CO2: %d ppm</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -34,7 +34,7 @@ public class GreenhouseDetailsFragment extends Fragment {
     private TextView humidityValue;
     private TextView tempValue;
     private TextView lightValue;
-    private Button buttonHistoricalData;
+    private TextView historicalData;
 
     public static GreenhouseDetailsFragment newInstance(int greenHouseId) {
         GreenhouseDetailsFragment fragment = new GreenhouseDetailsFragment();
@@ -64,7 +64,7 @@ public class GreenhouseDetailsFragment extends Fragment {
         humidityValue = view.findViewById(R.id.humidityValue);
         tempValue = view.findViewById(R.id.tempValue);
         lightValue = view.findViewById(R.id.lightValue);
-        buttonHistoricalData = view.findViewById(R.id.buttonHistoricalData);
+        historicalData = view.findViewById(R.id.historicalData);
 
         greenHouseViewModel = new ViewModelProvider(this).get(GreenHouseViewModel.class);
         measurementViewModel = new ViewModelProvider(this).get(MeasurementViewModel.class);
@@ -81,7 +81,7 @@ public class GreenhouseDetailsFragment extends Fragment {
 
         loadLatestMeasurements();
 
-        buttonHistoricalData.setOnClickListener(v -> {
+        historicalData.setOnClickListener(v -> {
             HistoricalDataFragment historicalDataFragment = HistoricalDataFragment.newInstance(greenHouseId);
             getParentFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, historicalDataFragment)

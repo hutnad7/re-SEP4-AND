@@ -38,9 +38,9 @@ public class SignupFragment extends Fragment {
         EditText emailEditText = view.findViewById(R.id.email);
         EditText passwordEditText = view.findViewById(R.id.password);
         Button signupButton = view.findViewById(R.id.signup_button);
-        TextView loginText = view.findViewById(R.id.login_text);
+        Button loginButton = view.findViewById(R.id.login_button);
 
-        loginText.setOnClickListener(v -> {
+        loginButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
             requireActivity().finish();

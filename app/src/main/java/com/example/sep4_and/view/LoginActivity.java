@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.password);
         loginButton = findViewById(R.id.login_button);
         registerButton = findViewById(R.id.signup_button);
-        togglePasswordVisibility = findViewById(R.id.toggle_password_visibility);
+        togglePasswordVisibility = findViewById(R.id.togglePasswordVisibility);
 
         loginButton.setOnClickListener(v -> handleLogin());
         registerButton.setOnClickListener(v -> navigateToSignup());

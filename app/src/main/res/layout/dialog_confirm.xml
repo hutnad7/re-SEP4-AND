@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/soft_blue_green">
+    android:background="@drawable/dialog_stroke_background">
 
     <TextView
         android:id="@+id/dialogTitle"
@@ -13,6 +13,7 @@
         android:text="@string/logout"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:textColor="@color/white"
         android:layout_marginBottom="8dp" />
 
     <TextView
@@ -21,6 +22,7 @@
         android:layout_height="wrap_content"
         android:text="@string/dialog_logout"
         android:textSize="16sp"
+        android:textColor="@color/soft_blue_green"
         android:layout_marginBottom="16dp" />
 
     <LinearLayout
@@ -34,12 +36,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cancel"
+           android:backgroundTint="@color/jungle_green"
             android:layout_marginEnd="8dp" />
 
         <Button
             android:id="@+id/buttonConfirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/logout" />
+            android:text="@string/logout"
+            android:backgroundTint="@color/jungle_green"
+            android:layout_marginEnd="8dp"/>
     </LinearLayout>
 </LinearLayout>
