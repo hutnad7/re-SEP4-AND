@@ -1,5 +1,7 @@
 package com.example.sep4_and.network.api;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.sep4_and.model.Measurement;
 
 import java.util.List;
@@ -12,8 +14,8 @@ import retrofit2.http.Path;
 
 public interface MeasurementApi {
     @POST("measurements")
-    Call<Measurement> createMeasurement(@Body Measurement measurement);
+    LiveData<Measurement> createMeasurement(@Body Measurement measurement);
 
     @GET("measurements/{greenHouseId}")
-    Call<List<Measurement>> getMeasurements(@Path("greenHouseId") int greenHouseId);
+    LiveData<List<Measurement>> getMeasurements(@Path("greenHouseId") int greenHouseId);
 }
