@@ -1,16 +1,20 @@
 package com.example.sep4_and.view;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,8 +29,19 @@ import com.example.sep4_and.viewmodel.GreenHouseViewModel;
 import com.example.sep4_and.viewmodel.MeasurementViewModel;
 import com.example.sep4_and.viewmodel.UserViewModel;
 
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.datepicker.MaterialDatePicker;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class HistoricalDataFragment extends Fragment {
@@ -36,12 +51,16 @@ public class HistoricalDataFragment extends Fragment {
     private Spinner spinnerGreenhouse;
     private Spinner spinnerMeasurementType;
     private RecyclerView recyclerViewHistoricalData;
+    private Button buttonSelectDateRange;
+    private Button buttonClearDateRange;
     private MeasurementViewModel measurementViewModel;
     private GreenHouseViewModel greenHouseViewModel;
     private UserViewModel userViewModel;
     private List<GreenHouse> greenHouses;
     private List<MeasurementType> measurementTypes;
     private HistoricalDataAdapter adapter;
+    private Long startDate;
+    private Long endDate;
 
     public static HistoricalDataFragment newInstance(int greenHouseId) {
         HistoricalDataFragment fragment = new HistoricalDataFragment();
@@ -71,6 +90,8 @@ public class HistoricalDataFragment extends Fragment {
         spinnerGreenhouse = view.findViewById(R.id.spinnerGreenhouse);
         spinnerMeasurementType = view.findViewById(R.id.spinnerMeasurementType);
         recyclerViewHistoricalData = view.findViewById(R.id.recyclerViewHistoricalData);
+        buttonSelectDateRange = view.findViewById(R.id.buttonSelectDateRange);
+        buttonClearDateRange = view.findViewById(R.id.buttonClearDateRange);
         recyclerViewHistoricalData.setLayoutManager(new LinearLayoutManager(getContext()));
 
         setupSpinners();
@@ -80,6 +101,9 @@ public class HistoricalDataFragment extends Fragment {
                 loadGreenHouses(currentUser.getId());
             }
         });
+
+        buttonSelectDateRange.setOnClickListener(v -> showDateRangePicker());
+        buttonClearDateRange.setOnClickListener(v -> clearDateRange());
 
         return view;
     }
@@ -135,9 +159,15 @@ public class HistoricalDataFragment extends Fragment {
         MeasurementType selectedMeasurementType = (MeasurementType) spinnerMeasurementType.getSelectedItem();
 
         if (selectedGreenHouse != null && selectedMeasurementType != null) {
-            measurementViewModel.getMeasurementsForGreenHouse(selectedGreenHouse.getId()).observe(getViewLifecycleOwner(), measurements -> {
+            LiveData<List<Measurement>> measurementsLiveData;
+            if (startDate != null && endDate != null) {
+                measurementsLiveData = measurementViewModel.getMeasurementsForGreenHouseWithinDateRange(selectedGreenHouse.getId(), startDate, endDate);
+            } else {
+                measurementsLiveData = measurementViewModel.getMeasurementsForGreenHouse(selectedGreenHouse.getId());
+            }
+
+            measurementsLiveData.observe(getViewLifecycleOwner(), measurements -> {
                 List<Measurement> filteredMeasurements = filterMeasurementsByType(measurements, selectedMeasurementType);
-                // Use adapter to display filteredMeasurements in recyclerViewHistoricalData
                 adapter = new HistoricalDataAdapter(filteredMeasurements);
                 recyclerViewHistoricalData.setAdapter(adapter);
             });
@@ -152,5 +182,29 @@ public class HistoricalDataFragment extends Fragment {
             }
         }
         return filteredMeasurements;
+    }
+
+    private void showDateRangePicker() {
+        CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
+        MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker()
+                .setTitleText("Select Date Range")
+                .setCalendarConstraints(constraintsBuilder.build());
+
+        MaterialDatePicker<Pair<Long, Long>> datePicker = builder.build();
+        datePicker.show(getParentFragmentManager(), datePicker.toString());
+
+        datePicker.addOnPositiveButtonClickListener(selection -> {
+            if (selection != null) {
+                startDate = selection.first;
+                endDate = selection.second;
+                loadHistoricalData();
+            }
+        });
+    }
+
+    private void clearDateRange() {
+        startDate = null;
+        endDate = null;
+        loadHistoricalData();
     }
 }
