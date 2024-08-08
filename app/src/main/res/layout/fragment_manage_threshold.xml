@@ -2,37 +2,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="#002A30">
-
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:background="@color/deep_green">
 
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="24dp"
+        android:paddingBottom="12dp"
         android:text="@string/add_threshold"
-        android:textSize="24sp"
         android:textColor="@color/white"
-        android:layout_gravity="center_horizontal"
-        android:paddingBottom="8dp"/>
-
+        android:textSize="24sp"
+        android:textAlignment="viewStart"/>
 
     <TextView
         android:id="@+id/textViewDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Lorem_ipsum"
-        android:textColor="@color/light_gray"
-        android:textSize="16sp"
-        android:paddingBottom="16dp"/>
-
-    <!-- Divider -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/dark_gray"
-        android:paddingBottom="16dp"/>
-
+        android:paddingBottom="24dp"
+        android:text="@string/threshold"
+        android:textColor="@color/soft_blue_green"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/textViewSetLevels"
@@ -41,17 +35,15 @@
         android:text="@string/replaced"
         android:textColor="@color/white"
         android:textSize="18sp"
-        android:paddingBottom="16dp"/>
+        android:layout_marginBottom="24dp"/>
 
-    <!-- Spinner for Threshold Type -->
     <Spinner
         android:id="@+id/spinnerThresholdType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:spinnerMode="dropdown"
-        android:paddingBottom="16dp"
+        android:layout_marginBottom="24dp"
         style="@style/MainSpinnerStyle"/>
-
 
     <EditText
         android:id="@+id/editTextMinValue"
@@ -59,10 +51,11 @@
         android:layout_height="wrap_content"
         android:hint="@string/minimum"
         android:inputType="numberDecimal"
-        android:background="@drawable/edit_text_background"
+        android:background="@drawable/rounded_background"
         android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:padding="12dp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="24dp"/>
 
     <EditText
         android:id="@+id/editTextMaxValue"
@@ -70,11 +63,16 @@
         android:layout_height="wrap_content"
         android:hint="@string/maximum"
         android:inputType="numberDecimal"
-        android:background="@drawable/edit_text_background"
+        android:background="@drawable/rounded_background"
         android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:padding="12dp"
         android:layout_marginBottom="32dp"/>
 
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <Button
         android:id="@+id/buttonAddThreshold"
@@ -82,7 +80,8 @@
         android:layout_height="wrap_content"
         android:text="@string/save"
         android:textColor="@color/white"
+        android:background="@drawable/custom_button"
         android:padding="16dp"
+        android:layout_marginBottom="48dp"
         android:layout_gravity="center_horizontal"/>
-
 </LinearLayout>

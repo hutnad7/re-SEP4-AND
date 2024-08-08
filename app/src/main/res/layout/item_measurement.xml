@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp"
-   android:layout_marginBottom="8dp"
-    android:background="@drawable/stroke">
+    android:background="@drawable/stroke"
+    android:padding="16dp"
+    android:layout_marginBottom="8dp">
 
     <TextView
         android:id="@+id/textViewMeasurementType"
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:textColor="@color/light_gray"/>
+        android:textColor="@color/white"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,13 +33,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:textColor="@color/light_gray"/>
+            android:textColor="@color/soft_blue_green"/>
 
         <TextView
             android:id="@+id/textViewMeasurementTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:textColor="@color/light_gray"/>
+            android:textColor="@color/soft_blue_green"/>
     </LinearLayout>
 </LinearLayout>

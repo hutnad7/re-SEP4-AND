@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
+    <style name="ToolbarTitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
     <style name="MainSpinnerStyle" parent="Widget.AppCompat.Spinner">
-        <item name="android:background">@drawable/stroke_light</item>
+        <item name="android:background">@drawable/ellipse_background</item>
         <item name="android:padding">8dp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">16sp</item>
