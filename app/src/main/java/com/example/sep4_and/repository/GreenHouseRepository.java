@@ -43,6 +43,10 @@ public class GreenHouseRepository {
                 greenHouseApi.createGreenHouse(greenHouse).observeForever(response -> {
                     if (response != null) {
                         result.postValue((long) response.getId()); // Convert int to Long
+                        if (Config.isEchoToLocalDatabase()) {
+                            greenHouse.setId(response.getId()); // Ensure local DB has correct ID
+                            greenHouseDao.insert(greenHouse); // Echo to local DB
+                        }
                     } else {
                         result.postValue(null);
                     }
@@ -58,7 +62,12 @@ public class GreenHouseRepository {
     public LiveData<List<GreenHouse>> getGreenHousesByUserId(int userId) {
         if (Config.isUseApi()) {
             MutableLiveData<List<GreenHouse>> result = new MutableLiveData<>();
-            greenHouseApi.getUserGreenhouses(userId).observeForever(result::postValue);
+            greenHouseApi.getUserGreenhouses(userId).observeForever(greenHouses -> {
+                result.postValue(greenHouses);
+                if (Config.isEchoToLocalDatabase()) {
+                    // No need to echo for view only data
+                }
+            });
             return result;
         } else {
             return greenHouseDao.getGreenHousesByUserId(userId);
@@ -69,7 +78,10 @@ public class GreenHouseRepository {
         executorService.execute(() -> {
             if (Config.isUseApi()) {
                 greenHouseApi.deleteGreenHouse(greenHouse.getId()).observeForever(response -> {
-                    // handle API response
+                    //Always false, TODO: Observe LiveData and handle the data accordingly.
+                    if (Config.isEchoToLocalDatabase() && response != null) {
+                        greenHouseDao.delete(greenHouse); // Echo deletion to local DB
+                    }
                 });
             } else {
                 greenHouseDao.delete(greenHouse);
@@ -80,7 +92,12 @@ public class GreenHouseRepository {
     public LiveData<GreenHouse> getGreenHouseById(int greenHouseId) {
         if (Config.isUseApi()) {
             MutableLiveData<GreenHouse> result = new MutableLiveData<>();
-            greenHouseApi.getGreenhouseById(greenHouseId).observeForever(result::postValue);
+            greenHouseApi.getGreenhouseById(greenHouseId).observeForever(greenHouse -> {
+                result.postValue(greenHouse);
+                if (Config.isEchoToLocalDatabase() && greenHouse != null) {
+                    executorService.execute(() -> greenHouseDao.insert(greenHouse)); // Echo to local DB
+                }
+            });
             return result;
         } else {
             return greenHouseDao.getGreenHouseById(greenHouseId);

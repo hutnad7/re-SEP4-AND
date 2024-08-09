@@ -38,7 +38,9 @@ public class ThresholdRepository {
         executorService.execute(() -> {
             if (Config.isUseApi()) {
                 thresholdApi.createThreshold(threshold).observeForever(apiResponse -> {
-                    // handle API result if needed
+                    if (Config.isEchoToLocalDatabase() && apiResponse != null) {
+                        thresholdDao.insert(threshold); // Echo to local DB
+                    }
                 });
             } else {
                 thresholdDao.insert(threshold);
@@ -50,7 +52,9 @@ public class ThresholdRepository {
         executorService.execute(() -> {
             if (Config.isUseApi()) {
                 thresholdApi.updateThreshold(threshold.getId(), threshold).observeForever(apiResponse -> {
-                    // handle API result if needed
+                    if (Config.isEchoToLocalDatabase() && apiResponse != null) {
+                        thresholdDao.update(threshold); // Echo to local DB
+                    }
                 });
             } else {
                 thresholdDao.update(threshold);
@@ -60,7 +64,14 @@ public class ThresholdRepository {
 
     public LiveData<List<Threshold>> getThresholdsForGreenHouse(int greenHouseId) {
         if (Config.isUseApi()) {
-            return thresholdApi.getThresholdsForGreenHouse(greenHouseId);
+            MutableLiveData<List<Threshold>> result = new MutableLiveData<>();
+            thresholdApi.getThresholdsForGreenHouse(greenHouseId).observeForever(thresholds -> {
+                result.postValue(thresholds);
+                if (Config.isEchoToLocalDatabase()) {
+                    // No need to echo for view only data
+                }
+            });
+            return result;
         } else {
             return thresholdDao.getThresholdsForGreenHouse(greenHouseId);
         }
@@ -68,7 +79,14 @@ public class ThresholdRepository {
 
     public LiveData<Threshold> getThresholdForGreenHouseByTypeLiveData(int greenHouseId, MeasurementType type) {
         if (Config.isUseApi()) {
-            return thresholdApi.getThresholdForGreenHouseByType(greenHouseId, type);
+            MutableLiveData<Threshold> result = new MutableLiveData<>();
+            thresholdApi.getThresholdForGreenHouseByType(greenHouseId, type).observeForever(threshold -> {
+                result.postValue(threshold);
+                if (Config.isEchoToLocalDatabase()) {
+                    executorService.execute(() -> thresholdDao.insert(threshold)); // Echo to local DB
+                }
+            });
+            return result;
         } else {
             MutableLiveData<Threshold> thresholdLiveData = new MutableLiveData<>();
             executorService.execute(() -> {
@@ -83,7 +101,9 @@ public class ThresholdRepository {
         executorService.execute(() -> {
             if (Config.isUseApi()) {
                 thresholdApi.deleteThreshold(threshold.getId()).observeForever(apiResponse -> {
-                    // handle API result if needed
+                    if (Config.isEchoToLocalDatabase() && apiResponse != null) {
+                        thresholdDao.delete(threshold); // Echo to local DB
+                    }
                 });
             } else {
                 thresholdDao.delete(threshold);
