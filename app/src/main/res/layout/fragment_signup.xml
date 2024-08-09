@@ -1,148 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/deep_green"
     android:padding="16dp">
 
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/signup_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <TextView
-        android:id="@+id/create_account_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="72dp"
-        android:layout_marginLeft="24dp"
-        android:text="Create your account"
-        android:textColor="@color/white"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textAlignment="viewStart" />
-
-
-    <TextView
-        android:id="@+id/create_account_subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/create_account_title"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="24dp"
-        android:text="Join GreenHouse and experience the future of sustainable living. Our innovative solutions connect you with nature while ensuring a greener tomorrow."
-        android:textColor="@color/soft_blue_green"
-        android:textSize="14sp"
-        android:textAlignment="viewStart" />
-
-
-    <TextView
-        android:id="@+id/have_account_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/create_account_subtitle"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="24dp"
-        android:text="You have an account?"
-        android:textColor="@color/white"
-        android:textSize="13sp"
-        android:textAlignment="viewStart" />
-
-
-    <Button
-        android:id="@+id/login_button"
-        android:layout_width="236dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/have_account_text"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="87dp"
-        android:layout_marginTop="-32dp"
-        android:background="@android:color/transparent"
-        android:text="Login"
-        android:textAllCaps="false"
-        android:textColor="@color/soft_blue_green"
-        android:textSize="13sp" />
-
-
-    <TextView
-        android:id="@+id/account_details_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/login_button"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="32dp"
-        android:layout_marginLeft="24dp"
-        android:text="Account Details"
-        android:textColor="@color/soft_blue_green"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textAlignment="viewStart" />
-
-
-    <LinearLayout
-        android:id="@+id/details_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/account_details_text"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:layout_alignParentStart="true">
-
-
-        <EditText
-            android:id="@+id/firstName"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/rounded_background"
-            android:hint="First Name"
-            android:padding="12dp"
-            android:textColor="@color/soft_blue_green"
-            android:textColorHint="@color/soft_blue_green" />
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/lastName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/rounded_background"
-            android:hint="Last Name"
-            android:padding="12dp"
-            android:textColor="@color/soft_blue_green"
-            android:textColorHint="@color/soft_blue_green" />
+            <TextView
+                android:id="@+id/create_account_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:layout_marginLeft="24dp"
+                android:text="Create your account"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textAlignment="viewStart" />
 
+            <TextView
+                android:id="@+id/create_account_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="24dp"
+                android:text="Join GreenHouse and experience the future of sustainable living. Our innovative solutions connect you with nature while ensuring a greener tomorrow."
+                android:textColor="@color/soft_blue_green"
+                android:textSize="14sp"
+                android:textAlignment="viewStart" />
 
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/rounded_background"
-            android:hint="Email"
-            android:padding="12dp"
-            android:textColor="@color/soft_blue_green"
-            android:textColorHint="@color/soft_blue_green" />
+            <TextView
+                android:id="@+id/have_account_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="24dp"
+                android:text="You have an account?"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:textAlignment="viewStart" />
 
+            <Button
+                android:id="@+id/login_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="24dp"
+                android:background="@android:color/transparent"
+                android:text="Login"
+                android:textAllCaps="false"
+                android:textColor="@color/soft_blue_green"
+                android:textSize="13sp" />
 
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:background="@drawable/rounded_background"
-            android:padding="12dp"
-            android:textColor="@color/soft_blue_green"
-            android:textColorHint="@color/soft_blue_green" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/account_details_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginLeft="24dp"
+                android:text="Account Details"
+                android:textColor="@color/soft_blue_green"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textAlignment="viewStart" />
 
+            <LinearLayout
+                android:id="@+id/details_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/firstName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/rounded_background"
+                    android:hint="First Name"
+                    android:padding="12dp"
+                    android:textColor="@color/soft_blue_green"
+                    android:textColorHint="@color/soft_blue_green" />
+
+                <EditText
+                    android:id="@+id/lastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/rounded_background"
+                    android:hint="Last Name"
+                    android:padding="12dp"
+                    android:textColor="@color/soft_blue_green"
+                    android:textColorHint="@color/soft_blue_green" />
+
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/rounded_background"
+                    android:hint="Email"
+                    android:padding="12dp"
+                    android:textColor="@color/soft_blue_green"
+                    android:textColorHint="@color/soft_blue_green" />
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:background="@drawable/rounded_background"
+                    android:padding="12dp"
+                    android:textColor="@color/soft_blue_green"
+                    android:textColorHint="@color/soft_blue_green" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/signup_button"
-        android:layout_width="353dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="40dp"
         android:layout_marginLeft="24dp"
@@ -151,5 +148,9 @@
         android:padding="16dp"
         android:text="Create Account"
         android:textAllCaps="false"
-        android:textColor="@color/white" />
-</RelativeLayout>
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

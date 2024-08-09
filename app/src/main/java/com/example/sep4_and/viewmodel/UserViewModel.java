@@ -67,7 +67,8 @@ public class UserViewModel extends AndroidViewModel {
     }
 
 
-    public void updateUserDetails(String firstName, String lastName, String email, String password) {
-        repository.updateUserDetails( firstName, lastName, email, password);
+    public void updateUserDetails(int userId, String firstName, String lastName, String email, String password) {
+        // Convert userId to String and call the repository method
+        repository.updateUserDetails(userId, firstName, lastName, email, password);
     }
 }

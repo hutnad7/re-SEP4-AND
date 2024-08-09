@@ -202,10 +202,28 @@ public class UserRepository {
             return registerResult;
         }
     }
-    public void updateUserDetails( String firstName, String lastName, String email, String password) {
+    public void updateUserDetails(int userId, String firstName, String lastName, String email, String password) {
         executorService.execute(() -> {
-            userDao.updateUserDetails( firstName, lastName, email, password);
-            Log.d("UserRepository", "User details updated for user: " + firstName);
+            if (Config.isUseApi()) {
+                userApi.updateUser(userId, firstName, lastName, email, password).enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            Log.d("UserRepository", "User details updated for user: " + userId);
+                        } else {
+                            Log.d("UserRepository", "Failed to update user via API.");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.d("UserRepository", "User update API call failed: " + t.getMessage());
+                    }
+                });
+            } else {
+                userDao.updateUserDetails(userId, firstName, lastName, email, password);
+                Log.d("UserRepository", "User details updated for user: " + userId);
+            }
         });
     }
 }

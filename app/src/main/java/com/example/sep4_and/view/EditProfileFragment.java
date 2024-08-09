@@ -90,7 +90,7 @@ public class EditProfileFragment extends Fragment {
         String password = passwordEditText.getText().toString().trim();
 
         if (isValidInput(firstName, lastName, email, password)) {
-            userViewModel.updateUserDetails( firstName, lastName, email, password);
+            userViewModel.updateUserDetails(userId, firstName, lastName, email, password);
             Toast.makeText(getActivity(), "Profile updated successfully", Toast.LENGTH_SHORT).show();
             getParentFragmentManager().popBackStack();
         } else {
