@@ -83,7 +83,8 @@ public class ThresholdRepository {
             thresholdApi.getThresholdForGreenHouseByType(greenHouseId, type).observeForever(threshold -> {
                 result.postValue(threshold);
                 if (Config.isEchoToLocalDatabase()) {
-                    executorService.execute(() -> thresholdDao.insert(threshold)); // Echo to local DB
+                    // No need to echo for view only data
+                    // executorService.execute(() -> thresholdDao.insert(threshold)); // Echo to local DB
                 }
             });
             return result;
@@ -101,6 +102,7 @@ public class ThresholdRepository {
         executorService.execute(() -> {
             if (Config.isUseApi()) {
                 thresholdApi.deleteThreshold(threshold.getId()).observeForever(apiResponse -> {
+                    //Always false, TODO: Observe LiveData and handle the data accordingly.
                     if (Config.isEchoToLocalDatabase() && apiResponse != null) {
                         thresholdDao.delete(threshold); // Echo to local DB
                     }

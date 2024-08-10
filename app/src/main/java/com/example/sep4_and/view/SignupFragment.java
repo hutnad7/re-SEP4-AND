@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.sep4_and.R;
 import com.example.sep4_and.model.User;
 import com.example.sep4_and.network.requests.RegisterRequest;
+import com.example.sep4_and.utils.ToastHelper;
 import com.example.sep4_and.utils.TokenManager;
 import com.example.sep4_and.viewmodel.UserViewModel;
 
@@ -58,17 +59,20 @@ public class SignupFragment extends Fragment {
                 userViewModel.register(newUser).observe(getViewLifecycleOwner(), user -> {
                     if (user != null) {
                         TokenManager.saveToken(String.valueOf(user.getId()));
-                        Toast.makeText(getActivity(), "User registered Successfully", Toast.LENGTH_SHORT).show();
+                        ToastHelper.showCustomToast(getContext(),"User registered Successfully");
+
                         // Redirect back to LoginActivity
                         Intent intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
                         requireActivity().finish();
                     } else {
-                        Toast.makeText(getActivity(), "Failed to register the user", Toast.LENGTH_SHORT).show();
+                        ToastHelper.showCustomToast(getContext(),"Failed to register the user",R.drawable.system_problem);
+
                     }
                 });
             } else {
-                Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+                ToastHelper.showCustomToast(getContext(),"Please fill all fields",R.drawable.empty_box);
+
             }
         });
 

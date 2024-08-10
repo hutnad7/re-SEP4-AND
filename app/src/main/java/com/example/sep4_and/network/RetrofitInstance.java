@@ -17,7 +17,7 @@ public class RetrofitInstance {
     //Replace with baseUrl or replace baseUrl with the UI in the config
     private static final String MockUrL = "https://2df19db1-b773-4c0c-a100-e4309c0cb80c.mock.pstmn.io";
 
-    public static Retrofit getClient(String MockUrL) {
+    public static Retrofit getClient(String baseUrl) {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -27,7 +27,7 @@ public class RetrofitInstance {
 
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(MockUrL)
+                    .baseUrl(baseUrl)
                     .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(new LiveDataCallAdapterFactory())

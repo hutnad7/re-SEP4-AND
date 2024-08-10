@@ -48,14 +48,6 @@ public class ThresholdListFragment extends Fragment {
         });
         recyclerView.setAdapter(adapter);
 
-        FloatingActionButton fabAddThreshold = view.findViewById(R.id.fabAddThreshold);
-//        fabAddThreshold.setOnClickListener(v -> {
-//            AddThresholdFragment addThresholdFragment = AddThresholdFragment.newInstance(greenHouseId);
-//            getParentFragmentManager().beginTransaction()
-//                    .replace(R.id.fragment_container, addThresholdFragment)
-//                    .addToBackStack(null)
-//                    .commit();
-//        });
 
         if (getArguments() != null) {
             greenHouseId = getArguments().getInt(ARG_GREENHOUSE_ID);

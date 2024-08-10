@@ -3,6 +3,8 @@ package com.example.sep4_and.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+
+//Should incorporate in the SharedPreferencesManager
 public class UserSessionManager {
     private static final String PREFS_NAME = "user_prefs";
     private static final String KEY_USER_ID = "user_id";

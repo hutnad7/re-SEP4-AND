@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.sep4_and.R;
 import com.example.sep4_and.dao.AppDatabase;
 import com.example.sep4_and.model.User;
+import com.example.sep4_and.utils.ToastHelper;
 import com.example.sep4_and.viewmodel.UserViewModel;
 
 public class EditProfileFragment extends Fragment {
@@ -33,18 +34,23 @@ public class EditProfileFragment extends Fragment {
     private int userId;
 
     public static EditProfileFragment newInstance(int userId) {
+
         EditProfileFragment fragment = new EditProfileFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_USER_ID, userId);
         fragment.setArguments(args);
+
         return fragment;
+
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+
             userId = getArguments().getInt(ARG_USER_ID);
+
         }
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
     }
@@ -63,38 +69,50 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void initViews(View view) {
+
         firstNameEditText = view.findViewById(R.id.firstName);
         lastNameEditText = view.findViewById(R.id.lastName);
         emailEditText = view.findViewById(R.id.email);
         passwordEditText = view.findViewById(R.id.password);
         saveChangesButton = view.findViewById(R.id.save_changes_button);
+
     }
 
     private void loadUser() {
         userViewModel.getUser().observe(getViewLifecycleOwner(), user -> {
             if (user != null) {
+
                 firstNameEditText.setText(user.getFirstName());
                 lastNameEditText.setText(user.getLastName());
                 emailEditText.setText(user.getEmail());
                 passwordEditText.setText(user.getPassword());
+
             } else {
-                Toast.makeText(getActivity(), "Failed to load user. Please try again.", Toast.LENGTH_SHORT).show();
+
+                ToastHelper.showCustomToast(getContext(),"Failed to load user. Please try again",R.drawable.system_problem);
+
             }
         });
     }
 
     private void saveProfileChanges() {
+
         String firstName = firstNameEditText.getText().toString().trim();
         String lastName = lastNameEditText.getText().toString().trim();
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
 
         if (isValidInput(firstName, lastName, email, password)) {
+
             userViewModel.updateUserDetails(userId, firstName, lastName, email, password);
-            Toast.makeText(getActivity(), "Profile updated successfully", Toast.LENGTH_SHORT).show();
+            ToastHelper.showCustomToast(getContext(),"Profile updated successfully!");
+
             getParentFragmentManager().popBackStack();
+
         } else {
-            Toast.makeText(getActivity(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
+
+            ToastHelper.showCustomToast(getContext(),"Please fill out all fields",R.drawable.empty_box);
+
         }
     }
 

@@ -21,6 +21,7 @@ public interface ThresholdDao {
 
     @Update
     void update(Threshold threshold);
+
     @Query("SELECT * FROM thresholds WHERE greenHouseId = :greenHouseId")
     LiveData<List<Threshold>> getThresholdsForGreenHouse(int greenHouseId);
 

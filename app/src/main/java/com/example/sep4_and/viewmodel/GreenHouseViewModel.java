@@ -16,6 +16,8 @@ import java.util.List;
 
 public class GreenHouseViewModel extends AndroidViewModel {
     private GreenHouseRepository repository;
+    //Should separate at fragment level to keep (SRP). Not the worse since the two are closely related
+    //TLDR: Keep as is = bloat ; Separate = Boilerplate ; Boilerplate>bloat
     private MeasurementRepository measurementRepository;
 
     public GreenHouseViewModel(@NonNull Application application) {

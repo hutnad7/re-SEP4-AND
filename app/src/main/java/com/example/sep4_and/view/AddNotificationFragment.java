@@ -3,6 +3,7 @@ package com.example.sep4_and.view;
 import com.example.sep4_and.R;
 import com.example.sep4_and.model.Notification;
 import com.example.sep4_and.model.User;
+import com.example.sep4_and.utils.ToastHelper;
 import com.example.sep4_and.viewmodel.NotificationViewModel;
 import com.example.sep4_and.viewmodel.UserViewModel;
 
@@ -75,6 +76,7 @@ public class AddNotificationFragment extends Fragment {
     }
 
     private void addNotification() {
+
         String message = editTextMessage.getText().toString();
         boolean isRecurrent = switchRecurrent.isChecked();
         Date date = calendar.getTime();
@@ -83,21 +85,27 @@ public class AddNotificationFragment extends Fragment {
             @Override
             public void onChanged(User currentUser) {
                 if (currentUser != null) {
+
                     Notification notification = new Notification(message, date, isRecurrent, currentUser.getId());
                     notificationViewModel.insert(notification);
-                    Toast.makeText(getContext(), "Notification Added", Toast.LENGTH_SHORT).show();
+                    ToastHelper.showCustomToast(getContext(),"Notification added!");
                     getParentFragmentManager().popBackStack(); // Go back to the previous fragment
 
                     // Remove the observer to prevent multiple additions
                     userViewModel.getCurrentUser().removeObserver(this);
+
                 } else {
-                    Toast.makeText(getContext(), "No user logged in", Toast.LENGTH_SHORT).show();
+
+                    ToastHelper.showCustomToast(getContext(),"No user logged in", R.drawable.system_problem);
+
                 }
             }
         });
+
     }
 
     private void showDatePickerDialog() {
+
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 getContext(),
                 (view, year, month, dayOfMonth) -> {
@@ -110,9 +118,11 @@ public class AddNotificationFragment extends Fragment {
                 calendar.get(Calendar.DAY_OF_MONTH)
         );
         datePickerDialog.show();
+
     }
 
     private void showTimePickerDialog() {
+
         TimePickerDialog timePickerDialog = new TimePickerDialog(
                 getContext(),
                 (view, hourOfDay, minute) -> {
@@ -124,5 +134,6 @@ public class AddNotificationFragment extends Fragment {
                 true // 24 hour format
         );
         timePickerDialog.show();
+
     }
 }

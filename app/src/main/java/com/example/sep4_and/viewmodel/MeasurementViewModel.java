@@ -26,6 +26,7 @@ public class MeasurementViewModel extends AndroidViewModel {
         return repository.getMeasurementsForGreenHouse(greenHouseId);
     }
 
+    //Long name but very fitting
     public LiveData<List<Measurement>> getMeasurementsForGreenHouseWithinDateRange(int greenHouseId, long startDate, long endDate) {
         return repository.getMeasurementsForGreenHouseWithinDateRange(greenHouseId, startDate, endDate);
     }

@@ -44,7 +44,7 @@ public class GreenHouseRepository {
                     if (response != null) {
                         result.postValue((long) response.getId()); // Convert int to Long
                         if (Config.isEchoToLocalDatabase()) {
-                            greenHouse.setId(response.getId()); // Ensure local DB has correct ID
+                            greenHouse.setId(response.getId()); // Ensure local DB has correct ID (might crash the app)
                             greenHouseDao.insert(greenHouse); // Echo to local DB
                         }
                     } else {
@@ -95,7 +95,8 @@ public class GreenHouseRepository {
             greenHouseApi.getGreenhouseById(greenHouseId).observeForever(greenHouse -> {
                 result.postValue(greenHouse);
                 if (Config.isEchoToLocalDatabase() && greenHouse != null) {
-                    executorService.execute(() -> greenHouseDao.insert(greenHouse)); // Echo to local DB
+                    // No need to echo for view only data
+                    // executorService.execute(() -> greenHouseDao.insert(greenHouse)); // Echo to local DB
                 }
             });
             return result;

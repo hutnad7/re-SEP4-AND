@@ -24,6 +24,7 @@ import java.util.HashMap;
 import com.example.sep4_and.R;
 import com.example.sep4_and.model.MeasurementType;
 import com.example.sep4_and.model.Threshold;
+import com.example.sep4_and.utils.ToastHelper;
 import com.example.sep4_and.viewmodel.ThresholdViewModel;
 
 import java.util.Map;
@@ -139,7 +140,7 @@ public class ManageThresholdFragment extends Fragment {
             String maxValueStr = editTextMaxValue.getText().toString();
 
             if (TextUtils.isEmpty(minValueStr) || TextUtils.isEmpty(maxValueStr)) {
-                Toast.makeText(getContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                ToastHelper.showCustomToast(getContext(),"Please fill in all fields",R.drawable.empty_box);
                 return;
             }
 
@@ -168,7 +169,7 @@ public class ManageThresholdFragment extends Fragment {
 
         return view;
     }
-
+        //TODO: Change to handle loading data the same as in
     private void loadMeasurementLimits() {
         minValues = new HashMap<>();
         maxValues = new HashMap<>();

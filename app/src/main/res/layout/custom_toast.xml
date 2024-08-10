@@ -3,13 +3,14 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:background="@drawable/toast_background">
 
     <ImageView
         android:id="@+id/toast_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/garden" /> <!-- Replace with your icon -->
+        android:src="@drawable/garden" />
 
     <TextView
         android:id="@+id/toast_message"

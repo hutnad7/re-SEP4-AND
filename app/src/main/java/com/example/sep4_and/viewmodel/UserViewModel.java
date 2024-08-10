@@ -37,19 +37,21 @@ public class UserViewModel extends AndroidViewModel {
         return currentUser;
     }
 
+    //Should be used, isn't, app works, something went wrong
     public LiveData<String> getAuthError() {
         return new MutableLiveData<>(); // TODO: Implement
     }
-
+    //Should be used, isn't, app works, something went wrong
     public LiveData<String> getToken() {
         return new MutableLiveData<>(); // TODO: Implement
     }
 
     public LiveData<User> login(String email, String password) {
-        Log.d("UserViewModel", "Login called with email: " + email);
+        Log.d("UserViewModel", "Login called with email: " + email);  //Added when login was not working, kept in case it decides to not work again
         return repository.login(email, password);
     }
 
+    //Ideally, we don't let a user get our entire user table
     public LiveData<List<User>> getAllUsers() {
         return allUsers;
     }
@@ -68,7 +70,7 @@ public class UserViewModel extends AndroidViewModel {
 
 
     public void updateUserDetails(int userId, String firstName, String lastName, String email, String password) {
-        // Convert userId to String and call the repository method
+        // Convert userId to String and call the repository method //Maybe do it at start of call chain
         repository.updateUserDetails(userId, firstName, lastName, email, password);
     }
 }
