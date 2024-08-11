@@ -23,13 +23,16 @@ import com.example.sep4_and.model.GreenHouse;
 import com.example.sep4_and.model.Measurement;
 import com.example.sep4_and.model.MeasurementType;
 import com.example.sep4_and.utils.DialogHelper;
+import com.example.sep4_and.utils.ToastHelper;
 import com.example.sep4_and.utils.TokenManager;
 import com.example.sep4_and.viewmodel.GreenHouseViewModel;
 import com.example.sep4_and.viewmodel.MeasurementViewModel;
 import com.example.sep4_and.viewmodel.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class DashBoardFragment extends Fragment {
@@ -82,6 +85,12 @@ public class DashBoardFragment extends Fragment {
                 });
                 updateHelloText(currentUser.getFirstName());
             }
+            else
+            {
+                //User is sent back before app can make unexpected requests
+                ToastHelper.showCustomToast(getContext(),"We seen to have technical troubles, please try again later",R.drawable.system_problem);
+                logout();
+            }
         });
 
         floatingActionAddGreenhouse.setOnClickListener(v -> navigateToFragment(new AddGreenHouseFragment()));
@@ -93,13 +102,18 @@ public class DashBoardFragment extends Fragment {
                     EditProfileFragment editProfileFragment = EditProfileFragment.newInstance(currentUser.getId());
                     navigateToFragment(editProfileFragment);
                 }
+                else
+                {
+                    //User is sent back before app can make unexpected requests
+                    ToastHelper.showCustomToast(getContext(),"We seen to have technical troubles, please try again later",R.drawable.system_problem);
+                    logout();
+                }
             });
         });
 
         return view;
     }
 
-    //TODO: Make unified method for replacing text
     private void updateGreenhouseCount(int count) {
         String text = "You have " + count + " Greenhouses";
         greenhouseCountTextView.setText(text);
@@ -117,10 +131,9 @@ public class DashBoardFragment extends Fragment {
 
     private void onViewMeasurementsButtonClick(GreenHouse greenHouse) {
         measurementViewModel.getMeasurementsForGreenHouse(greenHouse.getId()).observe(getViewLifecycleOwner(), measurements -> {
+            //Emulate actual data
             if (measurements == null || measurements.isEmpty()) {
-                //TODO: Remove dummy Measurement
-                Measurement fictitiousMeasurement = new Measurement(MeasurementType.TEMPERATURE, 0.0f, new Date(), greenHouse.getId());
-                measurementViewModel.insert(fictitiousMeasurement);
+                addFictitiousMeasurements(5, 5,greenHouse.getId());
             } else {
                 ViewMeasurementsFragment viewMeasurementsFragment = ViewMeasurementsFragment.newInstance(greenHouse.getId());
                 navigateToFragment(viewMeasurementsFragment);
@@ -130,6 +143,21 @@ public class DashBoardFragment extends Fragment {
 
     private void onDeleteButtonClick(GreenHouse greenHouse) {
         greenHouseViewModel.delete(greenHouse);
+    }
+
+
+    private void navigateToFragment(Fragment fragment) {
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null); // Add to back stack to allow user to navigate back
+        transaction.commit();
+    }
+
+    private void logout() {
+        TokenManager.clearToken();
+        Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(loginIntent);
+        requireActivity().finish();
     }
 
     //Setup dialog box
@@ -146,17 +174,37 @@ public class DashBoardFragment extends Fragment {
         dialogHelper.showDialog(this::logout);
     }
 
-    private void navigateToFragment(Fragment fragment) {
-        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null); // Add to back stack to allow user to navigate back
-        transaction.commit();
+    public void addFictitiousMeasurements(int numberOfMeasurements, int maxDaysInPast, int greenhouseId) {
+
+        // Load limits
+        // Could use the same hash map as in ManageThresholdFragment for consistency, but we don't need to due to local scope
+        int tempMin = getResources().getInteger(R.integer.min_temperature);
+        int tempMax = getResources().getInteger(R.integer.max_temperature);
+        int humidityMin = getResources().getInteger(R.integer.min_humidity);
+        int humidityMax = getResources().getInteger(R.integer.max_humidity);
+        int co2Min = getResources().getInteger(R.integer.min_co2);
+        int co2Max = getResources().getInteger(R.integer.max_co2);
+        int lightMin = getResources().getInteger(R.integer.min_light);
+        int lightMax = getResources().getInteger(R.integer.max_light);
+
+
+        Date currentDate = new Date();
+
+
+        for (int i = 0; i < numberOfMeasurements; i++) {
+
+            // Generate a random date within the past maxDaysInPast days
+            Date randomDate = new Date(currentDate.getTime() - (long)(Math.random() * maxDaysInPast * 24 * 60 * 60 * 1000));
+
+            measurementViewModel.insert(new Measurement(MeasurementType.TEMPERATURE, getRandomValue(tempMin, tempMax), randomDate, greenhouseId));
+            measurementViewModel.insert(new Measurement(MeasurementType.HUMIDITY, getRandomValue(humidityMin, humidityMax), randomDate, greenhouseId));
+            measurementViewModel.insert(new Measurement(MeasurementType.CO2, getRandomValue(co2Min, co2Max), randomDate, greenhouseId));
+            measurementViewModel.insert(new Measurement(MeasurementType.LIGHT, getRandomValue(lightMin, lightMax), randomDate, greenhouseId));
+        }
     }
 
-    private void logout() {
-        TokenManager.clearToken();
-        Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
-        startActivity(loginIntent);
-        requireActivity().finish();
+    private float getRandomValue(int min, int max) {
+        float randomValue = min + (float)(Math.random() * (max - min));
+        return Math.round(randomValue * 100.0f) / 100.0f;
     }
 }

@@ -40,7 +40,7 @@ public class HistoricalDataAdapter extends RecyclerView.Adapter<HistoricalDataAd
 
     @Override
     public int getItemCount() {
-        return measurements.size();
+        return measurements != null ? measurements.size() : 0;
     }
 
     static class HistoricalDataViewHolder extends RecyclerView.ViewHolder {

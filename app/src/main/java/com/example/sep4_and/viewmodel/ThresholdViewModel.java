@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ThresholdViewModel extends AndroidViewModel {
     private ThresholdRepository repository;
-    private LiveData<List<Threshold>> thresholds;
+    private LiveData<List<Threshold>> thresholds; //Not used, might get used, keeping just in case
 
     public ThresholdViewModel(@NonNull Application application) {
         super(application);

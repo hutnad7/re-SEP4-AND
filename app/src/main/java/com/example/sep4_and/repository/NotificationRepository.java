@@ -32,7 +32,9 @@ public class NotificationRepository {
         executorService.execute(() -> {
             if (Config.isUseApi()) {
                 notificationApi.createNotification(notification).observeForever(apiResult -> {
-                    // handle API result
+                    if (Config.isEchoToLocalDatabase() && apiResult != null) {
+                        notificationDao.insert(notification); // Echo to local DB
+                    }
                 });
             } else {
                 notificationDao.insert(notification);
@@ -42,7 +44,14 @@ public class NotificationRepository {
 
     public LiveData<List<Notification>> getNotificationsForUser(int userId) {
         if (Config.isUseApi()) {
-            return notificationApi.getNotifications(userId);
+            MutableLiveData<List<Notification>> result = new MutableLiveData<>();
+            notificationApi.getNotifications(userId).observeForever(notifications -> {
+                result.postValue(notifications);
+                if (Config.isEchoToLocalDatabase()) {
+                     // No need to echo for view only data
+                }
+            });
+            return result;
         } else {
             return notificationDao.getNotificationsForUser(userId);
         }

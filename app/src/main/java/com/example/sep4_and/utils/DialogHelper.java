@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.sep4_and.R;
 
 public class DialogHelper {
+
     private Context context;
     private String title;
     private String message;
@@ -25,6 +26,7 @@ public class DialogHelper {
     }
 
     public void showDialog(Runnable onConfirm) {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = LayoutInflater.from(context);
         View dialogView = inflater.inflate(R.layout.dialog_confirm, null);
@@ -55,6 +57,7 @@ public class DialogHelper {
     }
 
     public void showDialogWithObject(Runnable onConfirm, Runnable onCancel) {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = LayoutInflater.from(context);
         View dialogView = inflater.inflate(R.layout.dialog_confirm, null);

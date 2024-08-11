@@ -53,7 +53,11 @@ public class UserRepository {
                 @Override
                 public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                     if (response.isSuccessful()) {
-                        result.postValue(response.body());
+                        List<User> users = response.body();
+                        result.postValue(users);
+                        if (Config.isEchoToLocalDatabase()) {
+                            // No need to echo for view only data
+                        }
                     } else {
                         result.postValue(null);
                     }
@@ -77,7 +81,9 @@ public class UserRepository {
                 userApi.register(registerRequest).enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
-                        // handle API result
+                        if (response.isSuccessful() && Config.isEchoToLocalDatabase()) {
+                            userDao.insert(response.body()); // Save API result to local DB
+                        }
                     }
 
                     @Override
@@ -105,6 +111,9 @@ public class UserRepository {
                         if (user != null) {
                             currentUser.postValue(user); // Set current user
                             UserSessionManager.saveUserId(App.getContext(), user.getId()); // Save userId to SharedPreferences
+                            if (Config.isEchoToLocalDatabase()) {
+                                userDao.insert(user); // Save to local DB
+                            }
                             Log.d("UserRepository", "Current user set: " + user.getId());
                         }
                         userLiveData.postValue(user);
@@ -144,6 +153,9 @@ public class UserRepository {
                             User user = response.body();
                             if (user != null) {
                                 currentUser.postValue(user);
+                                if (Config.isEchoToLocalDatabase()) {
+                                    userDao.insert(user); // Save to local DB
+                                }
                             }
                         }
 
@@ -202,10 +214,30 @@ public class UserRepository {
             return registerResult;
         }
     }
-    public void updateUserDetails( String firstName, String lastName, String email, String password) {
+
+    public void updateUserDetails(int userId, String firstName, String lastName, String email, String password) {
         executorService.execute(() -> {
-            userDao.updateUserDetails( firstName, lastName, email, password);
-            Log.d("UserRepository", "User details updated for user: " + firstName);
+            if (Config.isUseApi()) {
+                userApi.updateUser(userId, firstName, lastName, email, password).enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful() && Config.isEchoToLocalDatabase()) {
+                            userDao.updateUserDetails(userId, firstName, lastName, email, password); // Update local DB
+                            Log.d("UserRepository", "User details updated for user: " + userId);
+                        } else {
+                            Log.d("UserRepository", "Failed to update user via API.");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.d("UserRepository", "User update API call failed: " + t.getMessage());
+                    }
+                });
+            } else {
+                userDao.updateUserDetails(userId, firstName, lastName, email, password);
+                Log.d("UserRepository", "User details updated for user: " + userId);
+            }
         });
     }
 }

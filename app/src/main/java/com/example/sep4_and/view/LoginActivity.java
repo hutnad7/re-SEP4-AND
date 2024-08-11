@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sep4_and.R;
+import com.example.sep4_and.utils.ToastHelper;
 import com.example.sep4_and.utils.TokenManager;
 import com.example.sep4_and.viewmodel.UserViewModel;
 
@@ -72,17 +73,17 @@ public class LoginActivity extends AppCompatActivity {
         String password = passwordEditText.getText().toString();
 
         if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(LoginActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+            ToastHelper.showCustomToast(this, "Please fill all fields",R.drawable.system_problem);
             return;
         }
 
         userViewModel.login(email, password).observe(this, user -> {
             if (user != null) {
                 TokenManager.saveToken(String.valueOf(user.getId()));
-                Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                ToastHelper.showCustomToast(this, "Login successful!");
                 redirectToMainActivity();
             } else {
-                Toast.makeText(LoginActivity.this, "Login failed!", Toast.LENGTH_SHORT).show();
+                ToastHelper.showCustomToast(this, "Login failed!",R.drawable.system_problem);
             }
         });
     }

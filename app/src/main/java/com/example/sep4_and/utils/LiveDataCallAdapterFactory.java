@@ -13,6 +13,9 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+//Inspired by https://gist.github.com/AkshayChordiya/15cfe7ca1842d6b959e77c04a073a98f
+// Created by an amalgamation of methods found through online resources and a healthy amount of pain
+
 public class LiveDataCallAdapterFactory extends CallAdapter.Factory {
     @Override
     public CallAdapter<?, ?> get(Type returnType, Annotation[] annotations, Retrofit retrofit) {

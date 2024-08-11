@@ -20,6 +20,8 @@ import com.example.sep4_and.model.MeasurementType;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+//Not used
 public class MeasurementsFragment extends Fragment {
 
     private TextView textViewGreenHouseName;

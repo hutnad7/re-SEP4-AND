@@ -90,6 +90,7 @@ public class GreenhouseDetailsFragment extends Fragment {
         });
     }
 
+    //----------------UI stuff, there must be a better way to handle this-------------------------------
     private void loadLatestMeasurements() {
         greenHouseViewModel.getLatestMeasurementForType(greenHouseId, MeasurementType.CO2).observe(getViewLifecycleOwner(), measurement -> {
             if (measurement != null) {
@@ -123,6 +124,7 @@ public class GreenhouseDetailsFragment extends Fragment {
         setThreshold(view, R.id.lightMinValue, R.id.lightMaxValue, R.id.lightAddButton, R.id.lightEditButton, MeasurementType.LIGHT, thresholds);
     }
 
+    //Big ugly and necessary :,)
     private void setThreshold(View view, int minId, int maxId, int addButtonId, int editButtonId, MeasurementType type, List<Threshold> thresholds) {
         TextView minValue = view.findViewById(minId);
         TextView maxValue = view.findViewById(maxId);
@@ -164,8 +166,9 @@ public class GreenhouseDetailsFragment extends Fragment {
             });
         }
     }
+    //-------------------------------------------------------------------------------------------------------------
 
-
+    // Helper methods
     private Threshold findThresholdByType(List<Threshold> thresholds, MeasurementType type) {
         for (Threshold threshold : thresholds) {
             if (threshold.getType() == type) {
@@ -175,7 +178,7 @@ public class GreenhouseDetailsFragment extends Fragment {
         return null;
     }
 
-    // Helper methods
+
     private String formatValue(double value) {
         if (value == (long) value) {
             return String.format("%d", (long) value);

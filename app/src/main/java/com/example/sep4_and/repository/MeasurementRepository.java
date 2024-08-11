@@ -34,7 +34,9 @@ public class MeasurementRepository {
         executorService.execute(() -> {
             if (Config.isUseApi()) {
                 measurementApi.createMeasurement(measurement).observeForever(apiResult -> {
-                    // handle API result
+                    if (Config.isEchoToLocalDatabase() && apiResult != null) {
+                        measurementDao.insert(measurement); // Echo to local DB
+                    }
                 });
             } else {
                 measurementDao.insert(measurement);
@@ -44,7 +46,14 @@ public class MeasurementRepository {
 
     public LiveData<List<Measurement>> getMeasurementsForGreenHouse(int greenHouseId) {
         if (Config.isUseApi()) {
-            return measurementApi.getMeasurements(greenHouseId);
+            MutableLiveData<List<Measurement>> result = new MutableLiveData<>();
+            measurementApi.getMeasurements(greenHouseId).observeForever(measurements -> {
+                result.postValue(measurements);
+                if (Config.isEchoToLocalDatabase()) {
+                    // No need to echo for view only data
+                }
+            });
+            return result;
         } else {
             return measurementDao.getMeasurementsForGreenHouse(greenHouseId);
         }
@@ -52,8 +61,14 @@ public class MeasurementRepository {
 
     public LiveData<Measurement> getLatestMeasurementForType(int greenHouseId, MeasurementType type) {
         if (Config.isUseApi()) {
-            // Implement API call
-            return new MutableLiveData<>();
+            MutableLiveData<Measurement> result = new MutableLiveData<>();
+            measurementApi.getLatestMeasurementForType(greenHouseId, type).observeForever(measurement -> {
+                result.postValue(measurement);
+                if (Config.isEchoToLocalDatabase() && measurement != null) {
+                    // No need to echo for view only data
+                }
+            });
+            return result;
         } else {
             return measurementDao.getLatestMeasurementForType(greenHouseId, type);
         }
@@ -61,8 +76,14 @@ public class MeasurementRepository {
 
     public LiveData<List<Measurement>> getMeasurementsForGreenHouseWithinDateRange(int greenHouseId, long startDate, long endDate) {
         if (Config.isUseApi()) {
-            // Implement API call
-            return new MutableLiveData<>(new ArrayList<>());
+            MutableLiveData<List<Measurement>> result = new MutableLiveData<>();
+            measurementApi.getMeasurementsForGreenHouseWithinDateRange(greenHouseId, startDate, endDate).observeForever(measurements -> {
+                result.postValue(measurements);
+                if (Config.isEchoToLocalDatabase()) {
+                    // No need to echo for view only data
+                }
+            });
+            return result;
         } else {
             return measurementDao.getMeasurementsForGreenHouseWithinDateRange(greenHouseId, startDate, endDate);
         }

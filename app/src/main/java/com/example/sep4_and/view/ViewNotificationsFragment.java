@@ -52,7 +52,7 @@ public class ViewNotificationsFragment extends Fragment {
         notificationViewModel = new ViewModelProvider(this).get(NotificationViewModel.class);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
-        // Observe the current user and fetch notifications for that user
+        // Observe the current user and fetch notifications
         userViewModel.getCurrentUser().observe(getViewLifecycleOwner(), currentUser -> {
             if (currentUser != null) {
                 notificationViewModel.getNotificationsForUser(currentUser.getId()).observe(getViewLifecycleOwner(), notifications -> {

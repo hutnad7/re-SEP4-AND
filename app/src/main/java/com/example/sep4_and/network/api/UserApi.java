@@ -12,7 +12,9 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface UserApi {
     @POST("user")
@@ -26,4 +28,7 @@ public interface UserApi {
 
     @GET("users")
     Call<List<User>> getAllUsers();
+
+    @PUT("user/{id}")
+    Call<Void> updateUser(@Path("id") int id, @Query("firstName") String firstName, @Query("lastName") String lastName, @Query("email") String email, @Query("password") String password);
 }
