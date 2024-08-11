@@ -1,4 +1,5 @@
 <resources>
+    <!-- TODO: Add strings for all text, nobody uses it I gave up half way through the app -->
     <string name="measurements">Measurements</string>
 
     <string name="temperature">Temperature </string>
@@ -22,6 +23,9 @@
     <string name="personal_information">Personal information</string>
     <string name="existing_account">Already have an account? Log in</string>
     <string name="create_account">Create an account</string>
+
+    <string name="indoctrination">Join GreenHouse and experience the future of sustainable living. Our innovative solutions connect you with nature while ensuring a greener tomorrow.
+</string>
 
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>

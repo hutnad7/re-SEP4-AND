@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 actionBar.setDisplayHomeAsUpEnabled(false);
             } else {
                 actionBar.setDisplayHomeAsUpEnabled(true);
-                actionBar.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_24); // Your back arrow drawable
+                actionBar.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_24);
             }
         }
     }
